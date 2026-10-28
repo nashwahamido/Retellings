@@ -51,10 +51,10 @@ python3 -m http.server 8000
 
 | Name | Role |
 | --- | --- |
+| Nashwa Hamido | Accessibility reviewer, logo designer, front-end developer |
 | Emma Sun | Wireframer, copywriter, illustrator, front-end developer |
 | Ge You | Interface designer, image editor, front-end developer |
 | Logan Dulski | Project manager, logo designer, audio editor, front-end developer |
-| Nashwa Hamido | Accessibility reviewer, logo designer, front-end developer |
 | Yayi Liu | Photographer, copywriter, front-end developer |
 
 Created for academic purposes as part of the MSc in Interactive Digital Media at Trinity College Dublin.
