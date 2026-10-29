@@ -1,0 +1,423 @@
+/* =====================================================================
+   book.css — the interactive book (chapter browser + location modal)
+   Reads the shared data in app/js/locations-data.js via app/js/book.js.
+   Uses the site's existing palette (variable.css) and dark-mode system.
+   ===================================================================== */
+
+/* ---- page intro ---- */
+.book-intro {
+  max-width: 60rem;
+}
+.book-intro h1 {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  margin-bottom: var(--sp-md);
+}
+.book-intro .page-lead {
+  font-size: var(--fs-h6);
+  font-weight: var(--fw-regular);
+  max-width: 48rem;
+}
+
+/* ---- overall two-column book layout ---- */
+.book {
+  display: grid;
+  grid-template-columns: 19rem 1fr;
+  gap: var(--sp-2xl);
+  align-items: start;
+  margin-top: var(--sp-xl);
+}
+
+/* ===================== table of contents ===================== */
+.book-toc {
+  position: sticky;
+  top: 1.5rem;
+  border: 2px solid var(--accent-navy);
+  border-radius: 0.4rem;
+  padding: var(--sp-lg);
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+}
+body.dark .book-toc {
+  border-color: var(--accent-gold);
+}
+.book-toc h2 {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: var(--fs-h5);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  padding-bottom: var(--sp-sm);
+  margin-bottom: var(--sp-sm);
+  border-bottom: 1px solid currentColor;
+}
+.toc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+.toc-entry {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr auto;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: 100%;
+  background: none;
+  border: none;
+  border-radius: 0.3rem;
+  text-align: left;
+  padding: 0.5rem 0.5rem;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.toc-entry .toc-num {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  opacity: 0.75;
+}
+.toc-entry .toc-title {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
+}
+.toc-entry .toc-count {
+  font-size: var(--fs-small);
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+.toc-entry:hover,
+.toc-entry:focus-visible {
+  background-color: var(--faded-navy);
+  color: var(--accent-cream);
+  outline: none;
+}
+.toc-entry[aria-current="true"] {
+  background-color: var(--accent-navy);
+  color: var(--accent-cream);
+}
+body.dark .toc-entry[aria-current="true"] {
+  background-color: var(--accent-gold);
+  color: var(--accent-navy);
+}
+.toc-entry[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.toc-entry[disabled]:hover {
+  background: none;
+  color: inherit;
+}
+.toc-divider {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.3;
+  margin: var(--sp-sm) 0;
+}
+
+/* ===================== chapter content ===================== */
+.chapter-head {
+  margin-bottom: var(--sp-lg);
+  padding-bottom: var(--sp-md);
+  border-bottom: 2px solid currentColor;
+}
+.chapter-eyebrow {
+  font-family: "EB Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: var(--fs-h6);
+  opacity: 0.7;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.chapter-head h2 {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+}
+.chapter-count {
+  font-size: var(--fs-body);
+  opacity: 0.7;
+  margin-top: 0.25rem;
+}
+
+/* grid of location cards */
+.location-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--sp-lg);
+}
+
+.loc-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background: none;
+  border: 1px solid var(--faded-navy);
+  border-radius: 0.4rem;
+  overflow: hidden;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  padding: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+body.dark .loc-card {
+  border-color: var(--accent-gold);
+}
+.loc-card:hover,
+.loc-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px #7f6f5acc;
+  outline: none;
+}
+body.dark .loc-card:hover,
+body.dark .loc-card:focus-visible {
+  box-shadow: 0 8px 18px #53659799;
+}
+.loc-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+.loc-card-body {
+  padding: var(--sp-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+.loc-card .loc-tag {
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+}
+.loc-card h3 {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: var(--fs-h5);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-heading);
+}
+.loc-card:hover h3,
+.loc-card:focus-visible h3 {
+  color: var(--accent-red);
+}
+body.dark .loc-card:hover h3,
+body.dark .loc-card:focus-visible h3 {
+  color: var(--accent-gold);
+}
+.loc-card .loc-stories {
+  margin-top: auto;
+  font-size: var(--fs-small);
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.chapter-empty {
+  font-size: var(--fs-h6);
+  font-style: italic;
+  opacity: 0.8;
+  padding: var(--sp-xl) 0;
+}
+
+/* ===================== location modal ===================== */
+.loc-modal[hidden] {
+  display: none;
+}
+.loc-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-lg);
+}
+.loc-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: #000000a8;
+  backdrop-filter: blur(2px);
+}
+.loc-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(44rem, 100%);
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  background-color: var(--light-base-color);
+  color: var(--light-text-color);
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 60px #000000a0;
+  animation: modal-rise 0.25s ease;
+}
+body.dark .loc-modal__dialog {
+  background-color: var(--dark-base-color);
+  color: var(--dark-text-color);
+}
+@keyframes modal-rise {
+  from { opacity: 0; transform: translateY(1rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.loc-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background-color: #00000066;
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.loc-modal__close:hover,
+.loc-modal__close:focus-visible {
+  background-color: var(--accent-red);
+  outline: none;
+}
+.loc-modal__img {
+  width: 100%;
+  max-height: 22rem;
+  object-fit: cover;
+  display: block;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+.loc-modal__figure { margin: 0; }
+.loc-modal__caption {
+  font-size: var(--fs-small);
+  opacity: 0.7;
+  padding: 0.5rem var(--sp-xl) 0;
+}
+.loc-modal__body {
+  padding: var(--sp-lg) var(--sp-xl) var(--sp-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+}
+.loc-modal__tag {
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+}
+.loc-modal__title {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+}
+.loc-modal__stories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+.loc-modal__stories .label {
+  font-style: italic;
+  opacity: 0.7;
+  font-size: var(--fs-small);
+}
+.story-chip {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  padding: 0.25rem 0.7rem;
+  border: 1px solid currentColor;
+  border-radius: 100px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.story-chip:hover,
+.story-chip:focus-visible {
+  background-color: var(--accent-navy);
+  color: var(--accent-cream);
+  outline: none;
+}
+body.dark .story-chip:hover,
+body.dark .story-chip:focus-visible {
+  background-color: var(--accent-gold);
+  color: var(--accent-navy);
+}
+.loc-modal__desc {
+  font-size: var(--fs-body);
+  line-height: 1.5;
+}
+.loc-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+  margin-top: var(--sp-sm);
+}
+.loc-modal__maplink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.4rem;
+  text-decoration: none;
+  font-weight: var(--fw-medium);
+  background-color: var(--accent-navy);
+  color: var(--accent-cream);
+  transition: background-color 0.3s ease;
+}
+.loc-modal__maplink:hover {
+  background-color: var(--accent-red);
+}
+body.dark .loc-modal__maplink {
+  background-color: var(--accent-gold);
+  color: var(--accent-navy);
+}
+body.dark .loc-modal__maplink:hover {
+  background-color: var(--accent-cream);
+}
+
+/* ===================== responsive ===================== */
+@media (max-width: 960px) {
+  .book {
+    grid-template-columns: 1fr;
+    gap: var(--sp-lg);
+  }
+  .book-toc {
+    position: static;
+    max-height: none;
+  }
+  .toc-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .location-grid {
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    gap: var(--sp-md);
+  }
+  .loc-modal__body {
+    padding: var(--sp-md) var(--sp-lg) var(--sp-lg);
+  }
+  .loc-modal__caption {
+    padding-left: var(--sp-lg);
+    padding-right: var(--sp-lg);
+  }
+}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .loc-card,
+  .loc-modal__dialog { transition: none; animation: none; }
+}
