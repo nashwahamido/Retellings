@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="../app/css/locations.css" />
     <link rel="stylesheet" href="../app/css/book.css" />
     <script src="../app/js/locations-data.js" defer></script>
+    <script src="../app/js/book-text.js" defer></script>
+    <script src="../app/js/vendor/page-flip.browser.js" defer></script>
     <script src="../app/js/book.js" defer></script>
     <script src="../app/js/script.js" defer></script>
   </head>
@@ -71,27 +73,34 @@
 
     <main>
       <!-- SECTION 1 - THE INTERACTIVE BOOK -->
-      <section aria-label="The Dubliners by chapter">
+      <section aria-label="Dubliners — the interactive book">
         <div class="book-intro">
-          <h1>Following the Dubliners</h1>
+          <h1>Read the Dubliners</h1>
           <p class="page-lead">
-            Read Dublin as Joyce wrote it. Turn to any story in the table of
-            contents to see the places it moves through, then open a location to
-            read its history and map it out. These places have changed over the
-            years &mdash; some street names and buildings are long gone &mdash;
-            so each card notes how Joyce&rsquo;s Dublin became the city today.
+            Turn the pages of Joyce&rsquo;s Dublin. Each story is retold in
+            brief, and wherever a place is named in the text it is
+            <strong>underlined</strong> &mdash; select it to read its history and
+            map it out. Drag a corner or use the arrows to turn the leaf.
           </p>
         </div>
 
-        <div class="book">
-          <!-- Table of contents -->
-          <nav class="book-toc" aria-label="Table of contents">
-            <h2>Contents</h2>
-            <ul class="toc-list" id="toc-list"></ul>
-          </nav>
+        <!-- Flip-book (hidden in plain-text mode) -->
+        <div class="book-stage" id="book-stage">
+          <div class="book-viewport">
+            <div id="flipbook"></div>
+          </div>
+        </div>
 
-          <!-- Selected chapter's locations -->
-          <div id="book-content" aria-live="polite"></div>
+        <!-- Accessible plain-reading fallback (built by book.js) -->
+        <article class="book-plain" id="book-plain" aria-label="Dubliners retellings, plain text" hidden></article>
+
+        <!-- Controls (always visible, so you can switch back from plain mode) -->
+        <div class="book-controls">
+          <button type="button" class="book-btn" id="book-prev" aria-label="Previous page">&lsaquo; Previous</button>
+          <button type="button" class="book-btn" id="book-contents">Contents</button>
+          <span class="book-progress" id="book-progress" aria-live="polite" role="status"></span>
+          <button type="button" class="book-btn" id="book-next" aria-label="Next page">Next &rsaquo;</button>
+          <button type="button" class="book-btn" id="book-mode" aria-pressed="false">Read as plain text</button>
         </div>
       </section>
 
