@@ -6,11 +6,13 @@
     <title>Dubliner's Walking Tour</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../app/css/variable.css">
     <link rel="stylesheet" href="../app/css/walking-tour.css">
+    <link rel="stylesheet" href="../app/css/faq.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
     <script src="../app/js/script.js" defer></script>
+    <script src="../app/js/faq.js" defer></script>
   </head>
   <body>
 
@@ -117,61 +119,73 @@
             </div>
         </section>
 
-        <!-- SECTION 3 - NAVIGATING DUBLIN (FAQ) -->
-        <section aria-label="Navigating Dublin FAQ">
-            <h2>Navigating Dublin</h2>
-            <p class="section-lead">Frequently asked questions about Dublin's public transport system.</p>
+        <!-- SECTION 3 - NAVIGATING DUBLIN (transport guide) -->
+        <section class="transit-guide" aria-label="Navigating Dublin FAQ">
+            <div class="tg-head">
+                <h2>Navigating Dublin</h2>
+                <p class="tg-lead">A quick guide to getting around the city by public transport. Choose a question to read its answer.</p>
+                <hr class="tg-rule">
+            </div>
 
-            <!-- FAQ ITEM 1 -->
-            <details>
-                <summary>01 What are the main types of public transport in Dublin Centre?</summary>
-                <p>Dublin's public transport network includes buses, trams, trains, and bike sharing schemes. Routes, maps, planning a journey, ticketing, real-time traffic and travel updates can all be found at <a href="https://www.transportforireland.ie/" target="_blank" rel="noopener noreferrer">TransportforIreland</a>.</p>
-                <br>
-                <p><strong><a href="https://www.dublinbikes.ie/en/mapping" target="_blank" rel="noopener noreferrer">DublinBikes</a></strong> is a self-service rental system open to everyone aged 14 and up. Users must purchase a ticket (1-day, 3-day, or annual subscription) to access the service. Within each ticket, the first 30 minutes of every individual journey are free. You can view nearby stations and available bikes via the official RedClick dublinbikes app or at a station terminal. Payment is via TFI Leap Card or a dublinbikes card. <a href="https://bleeperactive.com/" target="_blank" rel="noopener noreferrer">Bleeper</a> and <a href="https://mobybikes.com/" target="_blank" rel="noopener noreferrer">MOBY Bikes</a> are two stationless bike sharing services also operating in Dublin, mainly in areas not covered by DublinBikes.</p>
-                <br>
-                <p><strong>Dublin Bus</strong> serves Dublin and the Greater Dublin Area, covering the broadest area among all. Services generally run from around 5:30am to 11:30pm, though some <a href="https://www.dublinbus.ie/24-hour-timetables" target="_blank" rel="noopener noreferrer">24-hour routes</a> are in operation and <a href="https://www.dublinbus.ie/nitelink-timetables" target="_blank" rel="noopener noreferrer">Nitelink</a> services are available on weekend nights. You can check out their <a href="https://www.transportforireland.ie/plan-a-journey/timetables/" target="_blank" rel="noopener noreferrer">timetable</a>, or use <a href="https://www.transportforireland.ie/plan-a-journey/live-departures/" target="_blank" rel="noopener noreferrer">TFI Live</a> (app version available) to learn about specific operation times for your bus.</p>
-                <br>
-                <p><strong><a href="https://www.luas.ie/" target="_blank" rel="noopener noreferrer">Luas</a></strong> (Irish for 'speed') is Dublin's tram network, with two lines serving the city. The Green Line runs north–south through the city centre, while the Red Line connects the southwest to the Docklands. Luas operates on a frequency-based system, not a fixed timetable. You can check real time information for any stop <a href="https://www.transportforireland.ie/plan-a-journey/live-departures/" target="_blank" rel="noopener noreferrer">here</a>.</p>
-                <br>
-                <p><strong><a href="https://www.irishrail.ie/en-ie/about-us/iarnrod-eireann-services/dart-commuter" target="_blank" rel="noopener noreferrer">DART</a></strong> is Dublin's electric train system, one of the fastest ways to move through Dublin city centre and out to other parts of the city, running along the coast of the Irish Sea from Malahide or Howth in North County Dublin southwards as far as Greystones, Co. Wicklow. Commuter rail services extend further beyond the DART, reaching into the surrounding counties.</p>
-                <br>
-                <p><strong>Payment Method:</strong> Dublin Bus accepts coins only. Exact fare is required and no change is given. Card and contactless payments are not yet available on board.</p>
-            </details>
-            <hr>
+            <div class="tg-grid">
+                <!-- question list -->
+                <div class="tg-nav" role="tablist" aria-label="Transport questions" aria-orientation="vertical">
+                    <button class="tg-q" role="tab" id="tg-tab-1" aria-controls="tg-panel-1" aria-selected="true" tabindex="0" data-short="Basics">
+                        <span class="tg-num">01</span><span class="tg-qt">What are the main types of public transport?</span>
+                    </button>
+                    <button class="tg-q" role="tab" id="tg-tab-2" aria-controls="tg-panel-2" aria-selected="false" tabindex="-1" data-short="Apps">
+                        <span class="tg-num">02</span><span class="tg-qt">What apps can I use for transport info?</span>
+                    </button>
+                    <button class="tg-q" role="tab" id="tg-tab-3" aria-controls="tg-panel-3" aria-selected="false" tabindex="-1" data-short="Access">
+                        <span class="tg-num">03</span><span class="tg-qt">How accessible is Dublin public transport?</span>
+                    </button>
+                    <button class="tg-q" role="tab" id="tg-tab-4" aria-controls="tg-panel-4" aria-selected="false" tabindex="-1" data-short="At night">
+                        <span class="tg-num">04</span><span class="tg-qt">Is there public transport late at night?</span>
+                    </button>
+                    <button class="tg-q" role="tab" id="tg-tab-5" aria-controls="tg-panel-5" aria-selected="false" tabindex="-1" data-short="Airport">
+                        <span class="tg-num">05</span><span class="tg-qt">How do I get from Dublin Airport to the city?</span>
+                    </button>
+                </div>
 
-            <!-- FAQ ITEM 2 -->
-            <details>
-                <summary>02 What apps can I use for transport-related information?</summary>
-                <p><strong><a href="https://www.transportforireland.ie/available-apps/tfi-live/" target="_blank" rel="noopener noreferrer">TFI Live</a></strong> is the official Transport for Ireland app. It provides real-time departures for Dublin Bus, Go-Ahead Ireland, Bus Éireann, Luas, and Irish Rail, alongside timetables, interactive maps, and accessibility information including wheelchair-accessible stops and services. You can also save your favourite journeys, stops, and timetables for quick access on the go.</p>
-                <p><strong><a href="https://www.transportforireland.ie/tfi-go-app/" target="_blank" rel="noopener noreferrer">TFI Go</a></strong> App allows you to buy tickets for participating Transport for Ireland bus services and participating commercial bus operators directly from your phone. Your ticket is downloaded to the TFI Go App and can be used to travel straight away.</p>
-            </details>
-            <hr>
+                <!-- answer panels -->
+                <div class="tg-panels">
+                    <div class="tg-a" role="tabpanel" id="tg-panel-1" aria-labelledby="tg-tab-1" tabindex="0">
+                        <h3 class="tg-a-title">The main types of public transport</h3>
+                        <p>Dublin's public transport network includes buses, trams, trains, and bike sharing schemes. Routes, maps, planning a journey, ticketing, real-time traffic and travel updates can all be found at <a href="https://www.transportforireland.ie/" target="_blank" rel="noopener noreferrer">TransportforIreland</a>.</p>
+                        <p><strong><a href="https://www.dublinbikes.ie/en/mapping" target="_blank" rel="noopener noreferrer">DublinBikes</a></strong> is a self-service rental system open to everyone aged 14 and up. Users must purchase a ticket (1-day, 3-day, or annual subscription) to access the service. Within each ticket, the first 30 minutes of every individual journey are free. You can view nearby stations and available bikes via the official RedClick dublinbikes app or at a station terminal. Payment is via TFI Leap Card or a dublinbikes card. <a href="https://bleeperactive.com/" target="_blank" rel="noopener noreferrer">Bleeper</a> and <a href="https://mobybikes.com/" target="_blank" rel="noopener noreferrer">MOBY Bikes</a> are two stationless bike sharing services also operating in Dublin, mainly in areas not covered by DublinBikes.</p>
+                        <p><strong>Dublin Bus</strong> serves Dublin and the Greater Dublin Area, covering the broadest area among all. Services generally run from around 5:30am to 11:30pm, though some <a href="https://www.dublinbus.ie/24-hour-timetables" target="_blank" rel="noopener noreferrer">24-hour routes</a> are in operation and <a href="https://www.dublinbus.ie/nitelink-timetables" target="_blank" rel="noopener noreferrer">Nitelink</a> services are available on weekend nights. You can check out their <a href="https://www.transportforireland.ie/plan-a-journey/timetables/" target="_blank" rel="noopener noreferrer">timetable</a>, or use <a href="https://www.transportforireland.ie/plan-a-journey/live-departures/" target="_blank" rel="noopener noreferrer">TFI Live</a> (app version available) to learn about specific operation times for your bus.</p>
+                        <p><strong><a href="https://www.luas.ie/" target="_blank" rel="noopener noreferrer">Luas</a></strong> (Irish for 'speed') is Dublin's tram network, with two lines serving the city. The Green Line runs north–south through the city centre, while the Red Line connects the southwest to the Docklands. Luas operates on a frequency-based system, not a fixed timetable. You can check real time information for any stop <a href="https://www.transportforireland.ie/plan-a-journey/live-departures/" target="_blank" rel="noopener noreferrer">here</a>.</p>
+                        <p><strong><a href="https://www.irishrail.ie/en-ie/about-us/iarnrod-eireann-services/dart-commuter" target="_blank" rel="noopener noreferrer">DART</a></strong> is Dublin's electric train system, one of the fastest ways to move through Dublin city centre and out to other parts of the city, running along the coast of the Irish Sea from Malahide or Howth in North County Dublin southwards as far as Greystones, Co. Wicklow. Commuter rail services extend further beyond the DART, reaching into the surrounding counties.</p>
+                        <p><strong>Payment Method:</strong> Dublin Bus accepts coins only. Exact fare is required and no change is given. Card and contactless payments are not yet available on board.</p>
+                    </div>
 
-            <!-- FAQ ITEM 3 -->
-            <details>
-                <summary>03 How accessible is Dublin public transport?</summary>
-                <p>Dublin's public transport is generally accessible, though the level of support varies by mode. <a href="https://www.transportforireland.ie/plan-a-journey/" target="_blank" rel="noopener noreferrer">TFI Journey Planner</a> shows whether your chosen service is wheelchair accessible.</p>
-                <p>Dublin Bus uses low-floor, wheelchair-accessible buses on all routes. Each bus has one dedicated wheelchair space, accessible via a ramp at the front doors. Luas provides step-free access at all stops and all trams are wheelchair accessible. DART stations are mostly step and gate free, with the exceptions of Greystones, Killiney and Sutton. Wheelchair ramps and staff assistance are available at most stations. If you need to <a href="https://www.transportforireland.ie/accessibility/#:~:text=Booking%20Accessibility%20Assistance" target="_blank" rel="noopener noreferrer">book accessibility assistance</a> for any TFI service, advance notice is required. For full accessibility information across all modes, visit <a href="https://www.transportforireland.ie/accessibility/" target="_blank" rel="noopener noreferrer">transportforireland.ie/accessibility</a>.</p>
-                <p>Additionally, <a href="https://www.transportforireland.ie/accessibility/independent-travel-support/" target="_blank" rel="noopener noreferrer">Independent Travel Support</a> is a free scheme helping people with disabilities travel confidently across all modes.</p>
-            </details>
-            <hr>
+                    <div class="tg-a" role="tabpanel" id="tg-panel-2" aria-labelledby="tg-tab-2" tabindex="0" hidden>
+                        <h3 class="tg-a-title">Apps for transport information</h3>
+                        <p><strong><a href="https://www.transportforireland.ie/available-apps/tfi-live/" target="_blank" rel="noopener noreferrer">TFI Live</a></strong> is the official Transport for Ireland app. It provides real-time departures for Dublin Bus, Go-Ahead Ireland, Bus Éireann, Luas, and Irish Rail, alongside timetables, interactive maps, and accessibility information including wheelchair-accessible stops and services. You can also save your favourite journeys, stops, and timetables for quick access on the go.</p>
+                        <p><strong><a href="https://www.transportforireland.ie/tfi-go-app/" target="_blank" rel="noopener noreferrer">TFI Go</a></strong> App allows you to buy tickets for participating Transport for Ireland bus services and participating commercial bus operators directly from your phone. Your ticket is downloaded to the TFI Go App and can be used to travel straight away.</p>
+                    </div>
 
-            <!-- FAQ ITEM 4 -->
-            <details>
-                <summary>04 Is there public transport late at night?</summary>
-                <p><strong><a href="https://www.transportforireland.ie/getting-around/by-bus/night-services-dublin/" target="_blank" rel="noopener noreferrer">24-hour Routes</a></strong>: Dublin Bus offer fifteen 24-hour services which are in operation seven days a week across ten routes: 15, 39a, 41, C1, C2, C5, C6, E1, E2, G1, G2, N4, F1, F2, 80. Full timetables are available at <a href="https://www.dublinbus.ie/24-hour-timetables" target="_blank" rel="noopener noreferrer">dublinbus.ie/24-hour-timetables</a>.</p>
-                <p><strong><a href="https://www.transportforireland.ie/getting-around/by-bus/night-services-dublin/" target="_blank" rel="noopener noreferrer">Nitelink</a></strong>: Twelve Nitelink bus routes depart from Dublin City Centre every Friday and Saturday night to suburbs all over Dublin: 7n, 29n, 31n, 33n, 42n, 46n, 49n, 69n, 70n, 77n, 84n, 88n. Full timetables are available at <a href="https://www.dublinbus.ie/nitelink-timetables" target="_blank" rel="noopener noreferrer">dublinbus.ie/nitelink-timetables</a>.</p>
-            </details>
-            <hr>
+                    <div class="tg-a" role="tabpanel" id="tg-panel-3" aria-labelledby="tg-tab-3" tabindex="0" hidden>
+                        <h3 class="tg-a-title">Accessibility</h3>
+                        <p>Dublin's public transport is generally accessible, though the level of support varies by mode. <a href="https://www.transportforireland.ie/plan-a-journey/" target="_blank" rel="noopener noreferrer">TFI Journey Planner</a> shows whether your chosen service is wheelchair accessible.</p>
+                        <p>Dublin Bus uses low-floor, wheelchair-accessible buses on all routes. Each bus has one dedicated wheelchair space, accessible via a ramp at the front doors. Luas provides step-free access at all stops and all trams are wheelchair accessible. DART stations are mostly step and gate free, with the exceptions of Greystones, Killiney and Sutton. Wheelchair ramps and staff assistance are available at most stations. If you need to <a href="https://www.transportforireland.ie/accessibility/#:~:text=Booking%20Accessibility%20Assistance" target="_blank" rel="noopener noreferrer">book accessibility assistance</a> for any TFI service, advance notice is required. For full accessibility information across all modes, visit <a href="https://www.transportforireland.ie/accessibility/" target="_blank" rel="noopener noreferrer">transportforireland.ie/accessibility</a>.</p>
+                        <p>Additionally, <a href="https://www.transportforireland.ie/accessibility/independent-travel-support/" target="_blank" rel="noopener noreferrer">Independent Travel Support</a> is a free scheme helping people with disabilities travel confidently across all modes.</p>
+                    </div>
 
-            <!-- FAQ ITEM 5 -->
-            <details>
-                <summary>05 How do I get from Dublin Airport to the city?</summary>
-                <p><strong><a href="https://www.dublinbus.ie/journey-information/dublin-airport-hub" target="_blank" rel="noopener noreferrer">Dublin Bus</a></strong> (routes 16, 19, 24, 41): Dublin Bus routes 16, 19, 24 and 41 operate between city centre and the airport. You can pay on the bus in coins or by a Leap Card. These are slower but cheaper options.</p>
-                <p><strong><a href="https://www.dublinexpress.ie/dublin-airport" target="_blank" rel="noopener noreferrer">Dublin Express</a></strong> (routes 782, 783, 784): Dublin Express provides three express routes between Dublin Airport and Dublin City Centre. Tickets can be booked through the <a href="https://www.dublinexpress.ie/" target="_blank" rel="noopener noreferrer">Dublin Express website</a> or purchased on board by card only (no cash, no Leap Card). Young Adult and Student Leap Card holders receive a discounted fare.</p>
-                <p><strong><a href="https://www.aircoach.ie/timetables" target="_blank" rel="noopener noreferrer">Aircoach</a></strong> (routes 700 &amp; 700X): The Aircoach service operates up to every 15 minutes between Dublin Airport and Dublin City Centre, continuing onward to Leopardstown. Tickets can be bought on the website, through the Aircoach mobile app, on board, or at the Aircoach departure stand at Terminal 1 (Zone 2) and Terminal 2 (Zone 20). Most services accept both cash and contactless payments on board. Leap Cards are also accepted on Aircoach services for single journey fares.</p>
-            </details>
-            <hr>
+                    <div class="tg-a" role="tabpanel" id="tg-panel-4" aria-labelledby="tg-tab-4" tabindex="0" hidden>
+                        <h3 class="tg-a-title">Late-night services</h3>
+                        <p><strong><a href="https://www.transportforireland.ie/getting-around/by-bus/night-services-dublin/" target="_blank" rel="noopener noreferrer">24-hour Routes</a></strong>: Dublin Bus offer fifteen 24-hour services which are in operation seven days a week across ten routes: 15, 39a, 41, C1, C2, C5, C6, E1, E2, G1, G2, N4, F1, F2, 80. Full timetables are available at <a href="https://www.dublinbus.ie/24-hour-timetables" target="_blank" rel="noopener noreferrer">dublinbus.ie/24-hour-timetables</a>.</p>
+                        <p><strong><a href="https://www.transportforireland.ie/getting-around/by-bus/night-services-dublin/" target="_blank" rel="noopener noreferrer">Nitelink</a></strong>: Twelve Nitelink bus routes depart from Dublin City Centre every Friday and Saturday night to suburbs all over Dublin: 7n, 29n, 31n, 33n, 42n, 46n, 49n, 69n, 70n, 77n, 84n, 88n. Full timetables are available at <a href="https://www.dublinbus.ie/nitelink-timetables" target="_blank" rel="noopener noreferrer">dublinbus.ie/nitelink-timetables</a>.</p>
+                    </div>
+
+                    <div class="tg-a" role="tabpanel" id="tg-panel-5" aria-labelledby="tg-tab-5" tabindex="0" hidden>
+                        <h3 class="tg-a-title">From Dublin Airport to the city</h3>
+                        <p><strong><a href="https://www.dublinbus.ie/journey-information/dublin-airport-hub" target="_blank" rel="noopener noreferrer">Dublin Bus</a></strong> (routes 16, 19, 24, 41): Dublin Bus routes 16, 19, 24 and 41 operate between city centre and the airport. You can pay on the bus in coins or by a Leap Card. These are slower but cheaper options.</p>
+                        <p><strong><a href="https://www.dublinexpress.ie/dublin-airport" target="_blank" rel="noopener noreferrer">Dublin Express</a></strong> (routes 782, 783, 784): Dublin Express provides three express routes between Dublin Airport and Dublin City Centre. Tickets can be booked through the <a href="https://www.dublinexpress.ie/" target="_blank" rel="noopener noreferrer">Dublin Express website</a> or purchased on board by card only (no cash, no Leap Card). Young Adult and Student Leap Card holders receive a discounted fare.</p>
+                        <p><strong><a href="https://www.aircoach.ie/timetables" target="_blank" rel="noopener noreferrer">Aircoach</a></strong> (routes 700 &amp; 700X): The Aircoach service operates up to every 15 minutes between Dublin Airport and Dublin City Centre, continuing onward to Leopardstown. Tickets can be bought on the website, through the Aircoach mobile app, on board, or at the Aircoach departure stand at Terminal 1 (Zone 2) and Terminal 2 (Zone 20). Most services accept both cash and contactless payments on board. Leap Cards are also accepted on Aircoach services for single journey fares.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- SECTION 4 - TOUR STOPS -->
