@@ -236,52 +236,95 @@ body.dark .book-btn:hover:not(:disabled), body.dark .book-btn:focus-visible:not(
 .book-plain .place-chip { border-color: currentColor; }
 .book-plain .place-chip:hover { background-color: var(--accent-navy); color: var(--accent-cream); border-color: var(--accent-navy); }
 
-/* ===================== location modal (reused, site-themed) ===================== */
-.loc-modal[hidden] { display: none; }
-.loc-modal { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; padding: var(--sp-lg); }
-.loc-modal__backdrop { position: absolute; inset: 0; background: #000000a8; backdrop-filter: blur(2px); }
-.loc-modal__dialog {
-  position: relative; z-index: 1; width: min(44rem, 100%); max-height: calc(100vh - 3rem); overflow-y: auto;
-  background-color: var(--light-base-color); color: var(--light-text-color);
-  border-radius: 0.5rem; box-shadow: 0 20px 60px #000000a0; animation: modal-rise .25s ease;
+/* ===================== draggable location windows (classical) ===================== */
+.window-layer {
+  position: fixed; inset: 0; z-index: 2000; overflow: hidden;
+  pointer-events: none; /* clicks pass through to the book behind */
+  /* window palette (classical, fixed in both site themes) */
+  --win-paper: #f4ecd6;
+  --win-ink: #35301f;
+  --win-ink-soft: #6c6244;
+  --win-leather-1: #3a2c1d;
+  --win-leather-2: #241a11;
+  --win-gold: #cfae6b;
+  --win-rule: #c6b488;
+  --win-red: #8f2a24;
 }
-body.dark .loc-modal__dialog { background-color: var(--dark-base-color); color: var(--dark-text-color); }
-@keyframes modal-rise { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: translateY(0); } }
-.loc-modal__close {
-  position: absolute; top: 0.75rem; right: 0.75rem; width: 2.5rem; height: 2.5rem;
-  display: flex; align-items: center; justify-content: center; border: none; border-radius: 50%;
-  background-color: #00000066; color: #fff; font-size: 1.5rem; line-height: 1; cursor: pointer; transition: background-color .2s;
+.loc-window {
+  pointer-events: auto;
+  position: absolute;
+  width: min(30rem, calc(100vw - 2rem));
+  max-height: min(82vh, 44rem);
+  display: flex; flex-direction: column;
+  background: var(--win-paper); color: var(--win-ink);
+  border: 1px solid var(--win-leather-2);
+  border-radius: 0.35rem;
+  box-shadow: 0 18px 44px -10px #000000a6, 0 6px 16px -8px #0000008c;
+  font-family: "EB Garamond", Georgia, serif;
+  animation: win-open .18s ease;
 }
-.loc-modal__close:hover, .loc-modal__close:focus-visible { background-color: var(--accent-red); outline: none; }
-.loc-modal__img { width: 100%; max-height: 22rem; object-fit: cover; display: block; border-radius: 0.5rem 0.5rem 0 0; }
-.loc-modal__figure { margin: 0; }
-.loc-modal__caption { font-size: var(--fs-small); opacity: .7; padding: 0.5rem var(--sp-xl) 0; }
-.loc-modal__body { padding: var(--sp-lg) var(--sp-xl) var(--sp-xl); display: flex; flex-direction: column; gap: var(--sp-md); }
-.loc-modal__tag { font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 0.08em; opacity: .75; }
-.loc-modal__title { font-family: "EB Garamond", Georgia, serif; font-size: var(--fs-h3); font-weight: var(--fw-bold); line-height: var(--lh-heading); }
-.loc-modal__stories { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
-.loc-modal__stories .label { font-style: italic; opacity: .7; font-size: var(--fs-small); }
-.story-chip {
-  font-size: var(--fs-small); font-weight: var(--fw-medium); padding: 0.25rem 0.7rem;
-  border: 1px solid currentColor; border-radius: 100px; background: none; color: inherit; cursor: pointer;
-  font-family: inherit; transition: background-color .2s, color .2s;
+@keyframes win-open { from { opacity: 0; transform: translateY(8px) scale(.985); } to { opacity: 1; transform: none; } }
+/* a thin gold keyline just inside the frame */
+.loc-window::after {
+  content: ""; position: absolute; inset: 4px; border: 1px solid #cfae6b66;
+  border-radius: 0.2rem; pointer-events: none;
 }
-.story-chip:hover, .story-chip:focus-visible { background-color: var(--accent-navy); color: var(--accent-cream); outline: none; }
-body.dark .story-chip:hover, body.dark .story-chip:focus-visible { background-color: var(--accent-gold); color: var(--accent-navy); }
-.loc-modal__desc { font-size: var(--fs-body); line-height: 1.5; }
-.loc-modal__actions { display: flex; flex-wrap: wrap; gap: var(--sp-md); margin-top: var(--sp-sm); }
-.loc-modal__maplink {
-  display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.4rem; border-radius: 0.4rem;
-  text-decoration: none; font-weight: var(--fw-medium); background-color: var(--accent-navy); color: var(--accent-cream); transition: background-color .3s;
-}
-.loc-modal__maplink:hover { background-color: var(--accent-red); }
-body.dark .loc-modal__maplink { background-color: var(--accent-gold); color: var(--accent-navy); }
-body.dark .loc-modal__maplink:hover { background-color: var(--accent-cream); }
 
-/* ===================== responsive ===================== */
-@media (max-width: 768px) {
-  .loc-modal__body { padding: var(--sp-md) var(--sp-lg) var(--sp-lg); }
-  .loc-modal__caption { padding-left: var(--sp-lg); padding-right: var(--sp-lg); }
-  .book-plain .rec-quote.plain { font-size: 1rem; }
+/* title bar (leather + gold), the drag handle */
+.win-bar {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 0.6rem 0.5rem 0.8rem;
+  background: linear-gradient(145deg, var(--win-leather-1), var(--win-leather-2));
+  color: #e9d8a7; cursor: grab; user-select: none;
+  border-bottom: 2px solid #cfae6b55;
+  border-radius: 0.3rem 0.3rem 0 0;
 }
-@media (prefers-reduced-motion: reduce) { .loc-modal__dialog { animation: none; } }
+.win-bar.dragging { cursor: grabbing; }
+.win-orn { color: var(--win-gold); font-size: 0.95rem; opacity: .9; }
+.win-title {
+  flex: 1; margin: 0; font-size: 1.12rem; font-weight: var(--fw-semibold);
+  letter-spacing: 0.02em; color: #f0e2b4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.loc-window:not(.is-active) .win-bar { filter: saturate(.7) brightness(.9); }
+.win-close {
+  flex: none; width: 1.7rem; height: 1.7rem; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid #cfae6b88; background: #00000026; color: #e9d8a7;
+  font-size: 1.1rem; line-height: 1; cursor: pointer; transition: background-color .15s, color .15s;
+}
+.win-close:hover, .win-close:focus-visible { background: var(--win-red); color: #fff; border-color: var(--win-red); outline: none; }
+
+/* body */
+.win-body { overflow-y: auto; }
+.win-figure { margin: 0; }
+.win-img { width: 100%; max-height: 15rem; object-fit: cover; display: block; }
+.win-caption { font-size: 0.74rem; color: var(--win-ink-soft); padding: 0.4rem 1.1rem 0; }
+.win-content { padding: 0.8rem 1.1rem 1.1rem; display: flex; flex-direction: column; gap: 0.7rem; }
+.win-tag { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--win-ink-soft); }
+.win-stories { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.win-stories .label { font-style: italic; color: var(--win-ink-soft); font-size: 0.82rem; }
+.story-chip {
+  font-size: 0.8rem; font-weight: var(--fw-medium); padding: 0.18rem 0.6rem;
+  border: 1px solid var(--win-rule); border-radius: 100px; background: none; color: inherit; cursor: pointer;
+  font-family: inherit; transition: background-color .15s, color .15s, border-color .15s;
+}
+.story-chip:hover, .story-chip:focus-visible { background: var(--win-leather-1); color: #e9d8a7; border-color: var(--win-leather-1); outline: none; }
+.win-desc { font-size: 1rem; line-height: 1.5; }
+.win-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.1rem; }
+.win-maplink {
+  display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.2rem; border-radius: 0.3rem;
+  text-decoration: none; font-weight: var(--fw-medium);
+  background: linear-gradient(145deg, var(--win-leather-1), var(--win-leather-2)); color: #e9d8a7;
+  border: 1px solid #cfae6b55; transition: filter .2s;
+}
+.win-maplink:hover { filter: brightness(1.15); }
+
+/* mobile: pin centred, no dragging */
+.loc-window.is-mobile {
+  left: 50% !important; top: 50% !important; transform: translate(-50%, -50%);
+  width: calc(100vw - 1.5rem); max-height: 86vh;
+}
+.loc-window.is-mobile .win-bar { cursor: default; }
+
+@media (max-width: 768px) { .book-plain .rec-quote.plain { font-size: 1rem; } }
+@media (prefers-reduced-motion: reduce) { .loc-window { animation: none; } }

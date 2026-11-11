@@ -33,11 +33,7 @@
   var elMode = document.getElementById("book-mode");
   var elProgress = document.getElementById("book-progress");
 
-  var modal = document.getElementById("loc-modal");
-  var modalDialog = modal.querySelector(".loc-modal__dialog");
-  var modalBody = modal.querySelector(".loc-modal__body-slot");
-  var modalFigure = modal.querySelector(".loc-modal__figure");
-  var modalClose = modal.querySelector(".loc-modal__close");
+  var winLayer = document.getElementById("window-layer");
 
   var pageFlip = null, contentsIndex = 0, chapterStartIndex = {}, portrait = false;
 
@@ -334,67 +330,141 @@
     if (!plain) updateNav();
   }
 
-  // ---- modal (reused) ----
-  var lastFocused = null;
-  function openModal(id, trigger) {
-    var l = byId[id]; if (!l) return;
-    lastFocused = trigger || document.activeElement;
-    modalFigure.innerHTML =
-      '<img class="loc-modal__img" src="' + esc(l.image) + '" alt="' + esc(l.alt) + '">' +
-      '<figcaption class="loc-modal__caption">' + esc(l.alt) + "</figcaption>";
+  // ================= draggable location windows (desktop style) =============
+  var openWins = {};     // id -> window element
+  var winOrder = [];     // focus stack (last = topmost)
+  var zTop = 2000;
+  var cascade = 0;
+
+  function windowBody(l) {
     var storiesHtml = '<span class="label">Appears in:</span>' +
       l.stories.map(function (s) {
         return '<button type="button" class="story-chip" data-story="' + esc(s) + '">' + esc(s) + "</button>";
       }).join("");
     var mapHtml = l.mapLink
-      ? '<a class="loc-modal__maplink" href="' + esc(l.mapLink) + '" target="_blank" rel="noopener noreferrer">Map it out ' +
+      ? '<a class="win-maplink" href="' + esc(l.mapLink) + '" target="_blank" rel="noopener noreferrer">Map it out ' +
         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
         '<path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"/></svg></a>' : "";
-    modalBody.innerHTML =
-      '<p class="loc-modal__tag">' + esc(l.categoryLabel) + "</p>" +
-      '<h2 class="loc-modal__title" id="loc-modal-title">' + esc(l.name) + "</h2>" +
-      '<div class="loc-modal__stories">' + storiesHtml + "</div>" +
-      '<p class="loc-modal__desc">' + esc(l.description) + "</p>" +
-      (mapHtml ? '<div class="loc-modal__actions">' + mapHtml + "</div>" : "");
-    modalBody.querySelectorAll(".story-chip").forEach(function (chip) {
+    return (
+      '<figure class="win-figure">' +
+        '<img class="win-img" src="' + esc(l.image) + '" alt="' + esc(l.alt) + '">' +
+        '<figcaption class="win-caption">' + esc(l.alt) + "</figcaption>" +
+      "</figure>" +
+      '<div class="win-content">' +
+        '<p class="win-tag">' + esc(l.categoryLabel) + "</p>" +
+        '<div class="win-stories">' + storiesHtml + "</div>" +
+        '<p class="win-desc">' + esc(l.description) + "</p>" +
+        (mapHtml ? '<div class="win-actions">' + mapHtml + "</div>" : "") +
+      "</div>"
+    );
+  }
+
+  function focusWindow(win) {
+    win.style.zIndex = ++zTop;
+    var i = winOrder.indexOf(win);
+    if (i !== -1) winOrder.splice(i, 1);
+    winOrder.push(win);
+    winOrder.forEach(function (w) { w.classList.toggle("is-active", w === win); });
+  }
+
+  function closeWindow(win) {
+    var id = win.dataset.id;
+    var i = winOrder.indexOf(win);
+    if (i !== -1) winOrder.splice(i, 1);
+    delete openWins[id];
+    var opener = win._opener;
+    win.remove();
+    if (winOrder.length) focusWindow(winOrder[winOrder.length - 1]);
+    else if (opener && opener.focus) opener.focus();
+  }
+
+  function openWindow(id, trigger) {
+    var l = byId[id]; if (!l) return;
+    if (openWins[id]) { focusWindow(openWins[id]); openWins[id].focus(); return; }
+
+    var win = el("div", "loc-window");
+    win.dataset.id = id;
+    win.setAttribute("role", "dialog");
+    win.setAttribute("aria-label", l.name);
+    win.tabIndex = -1;
+    win._opener = trigger || document.activeElement;
+
+    var titleId = "win-title-" + id;
+    win.innerHTML =
+      '<div class="win-bar">' +
+        '<span class="win-orn" aria-hidden="true">&#10087;</span>' +
+        '<h2 class="win-title" id="' + titleId + '">' + esc(l.name) + "</h2>" +
+        '<button type="button" class="win-close" aria-label="Close ' + esc(l.name) + '">&times;</button>' +
+      "</div>" +
+      '<div class="win-body">' + windowBody(l) + "</div>";
+    win.setAttribute("aria-labelledby", titleId);
+
+    // position: centred-ish with a cascade offset; mobile = pinned
+    var mobile = window.innerWidth <= 640;
+    win.classList.toggle("is-mobile", mobile);
+    winLayer.appendChild(win);
+    if (!mobile) {
+      var lw = win.offsetWidth, lh = win.offsetHeight;
+      var baseX = Math.max(12, (winLayer.clientWidth - lw) / 2 - 80);
+      var baseY = Math.max(12, (winLayer.clientHeight - lh) / 2 - 60);
+      var off = (cascade % 6) * 26;
+      cascade++;
+      win.style.left = Math.min(baseX + off, Math.max(12, winLayer.clientWidth - lw - 12)) + "px";
+      win.style.top = Math.min(baseY + off, Math.max(12, winLayer.clientHeight - lh - 12)) + "px";
+    }
+
+    openWins[id] = win;
+    focusWindow(win);
+
+    // wire controls
+    win.querySelector(".win-close").addEventListener("click", function () { closeWindow(win); });
+    win.addEventListener("pointerdown", function () { focusWindow(win); }, true);
+    win.querySelectorAll(".story-chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
         var num = null;
         BOOK.chapters.forEach(function (c) { if (c.title === chip.dataset.story) num = c.number; });
-        closeModal();
         if (!plainMode && num != null && chapterStartIndex[num] != null) flipTo(chapterStartIndex[num]);
       });
     });
-    modal.hidden = false;
-    document.body.style.overflow = "hidden";
-    document.addEventListener("keydown", onModalKey);
-    modalClose.focus();
+    makeDraggable(win, win.querySelector(".win-bar"));
+    win.focus();
   }
-  function closeModal() {
-    if (modal.hidden) return;
-    modal.hidden = true;
-    document.body.style.overflow = "";
-    document.removeEventListener("keydown", onModalKey);
-    if (lastFocused && lastFocused.focus) lastFocused.focus();
-  }
-  function onModalKey(e) {
-    if (e.key === "Escape") return closeModal();
-    if (e.key !== "Tab") return;
-    var f = modalDialog.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])');
-    if (!f.length) return;
-    var first = f[0], last = f[f.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+
+  function makeDraggable(win, handle) {
+    handle.addEventListener("pointerdown", function (e) {
+      if (e.target.closest(".win-close")) return;
+      if (win.classList.contains("is-mobile")) return;
+      focusWindow(win);
+      var r = win.getBoundingClientRect(), lr = winLayer.getBoundingClientRect();
+      var offX = e.clientX - r.left, offY = e.clientY - r.top;
+      handle.classList.add("dragging");
+      function move(ev) {
+        var x = ev.clientX - lr.left - offX, y = ev.clientY - lr.top - offY;
+        x = Math.max(0, Math.min(x, winLayer.clientWidth - 56));
+        y = Math.max(0, Math.min(y, winLayer.clientHeight - 30));
+        win.style.left = x + "px"; win.style.top = y + "px";
+      }
+      function up() {
+        handle.classList.remove("dragging");
+        document.removeEventListener("pointermove", move);
+        document.removeEventListener("pointerup", up);
+      }
+      document.addEventListener("pointermove", move);
+      document.addEventListener("pointerup", up);
+      e.preventDefault();
+    });
   }
 
   // delegation
   document.addEventListener("click", function (e) {
     var mention = e.target.closest(".loc-mention, .place-chip");
-    if (mention) { e.preventDefault(); openModal(mention.dataset.id, mention); return; }
+    if (mention) { e.preventDefault(); openWindow(mention.dataset.id, mention); return; }
     var tl = e.target.closest(".toc-link");
     if (tl) { e.preventDefault(); flipTo(parseInt(tl.dataset.flip, 10)); }
   });
   document.addEventListener("keydown", function (e) {
-    if (!modal.hidden || plainMode) return;
+    if (e.key === "Escape" && winOrder.length) { closeWindow(winOrder[winOrder.length - 1]); return; }
+    if (winOrder.length || plainMode) return;
     if (e.key === "ArrowLeft") goPrev();
     else if (e.key === "ArrowRight") goNext();
   });
@@ -403,8 +473,6 @@
   elNext.addEventListener("click", goNext);
   elContents.addEventListener("click", function () { flipTo(contentsIndex); });
   elMode.addEventListener("click", function () { setMode(!plainMode); });
-  modalClose.addEventListener("click", closeModal);
-  modal.querySelector(".loc-modal__backdrop").addEventListener("click", closeModal);
 
   var rt = null;
   window.addEventListener("resize", function () {
