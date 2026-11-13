@@ -160,6 +160,7 @@
   function render(fit) {
     var ids = (editable() ? TourStore.list() : suggestedIds()).filter(function (id) { return Places.get(id); });
     var stops = ids.map(function (id) { return Places.get(id); });
+    currentStops = stops;
 
     // list
     listEl.innerHTML = "";
@@ -227,6 +228,7 @@
       else map.setView(DUBLIN, 14);
     }
     lastIds = key;
+    drawNearby();
     fillAddSelect(TourStore.list());
   }
 
@@ -324,6 +326,7 @@
     document.getElementById("planner-add").hidden = !mine;
     document.getElementById("actions-mine").hidden = !mine;
     document.getElementById("clear-tour").disabled = !n;
+    document.getElementById("best-order").disabled = n < 3;
     document.getElementById("actions-suggested").hidden = mine;
     document.getElementById("suggested-card").hidden = mine;
     var missing = suggestedIds().filter(function (id) { return !TourStore.has(id); }).length;
@@ -392,6 +395,146 @@
             tour.intro.transcript.map(function (p) { return "<p>" + p + "</p>"; }).join("") + "</details>" : "");
     }
   })();
+
+  // ================= best order =================
+  // Shortest walk that keeps the visitor's first stop as the start:
+  // nearest-neighbour, then 2-opt improvement on the open path.
+  function pathKm(list) {
+    var t = 0; for (var i = 1; i < list.length; i++) t += km(list[i - 1], list[i]); return t;
+  }
+  function bestOrder(list) {
+    var pts = list.filter(function (p) { return p.lat != null; });
+    var rest = list.filter(function (p) { return p.lat == null; });
+    if (pts.length < 3) return list.slice();
+    var route = [pts[0]], left = pts.slice(1);
+    while (left.length) {
+      var last = route[route.length - 1], bi = 0, bd = Infinity;
+      left.forEach(function (p, i) { var d = km(last, p); if (d < bd) { bd = d; bi = i; } });
+      route.push(left.splice(bi, 1)[0]);
+    }
+    var improved = true, guard = 0;
+    while (improved && guard++ < 200) {
+      improved = false;
+      for (var i = 1; i < route.length - 1; i++) {
+        for (var j = i + 1; j < route.length; j++) {
+          var a = route[i - 1], b = route[i], c = route[j], d = route[j + 1];
+          var before = km(a, b) + (d ? km(c, d) : 0);
+          var after = km(a, c) + (d ? km(b, d) : 0);
+          if (after + 1e-9 < before) {
+            route = route.slice(0, i).concat(route.slice(i, j + 1).reverse(), route.slice(j + 1));
+            improved = true;
+          }
+        }
+      }
+    }
+    return route.concat(rest);
+  }
+  document.getElementById("best-order").addEventListener("click", function () {
+    var before = TourStore.list();
+    var list = before.map(function (id) { return Places.get(id); }).filter(Boolean);
+    var sorted = bestOrder(list);
+    var saved = pathKm(list) - pathKm(sorted);
+    if (saved < 0.01) { toast("Your stops are already in the shortest order."); return; }
+    TourStore.set(sorted.map(function (p) { return p.id; }));
+    toast("Reordered for the shortest walk — " + fmtDist(saved) + " shorter, starting from " + sorted[0].name + ".", "Undo", function () {
+      TourStore.set(before);
+    });
+  });
+
+  // ================= eat & rest nearby =================
+  var NEAR_KM = 0.25;
+  var PINS_PER_KIND = 3;
+  var KIND_LABEL = { cafe: "Café", food: "Food", pub: "Pub", wc: "Public toilets", water: "Drinking water", park: "Park" };
+  var KIND_FILTER = { cafe: "cafe", food: "food", pub: "pub", wc: "wc", water: "wc", park: "park" };
+  var GLYPH = {
+    cafe: '<path d="M3 5h8v3a4 4 0 0 1-4 4 4 4 0 0 1-4-4z M11 6h1.5a1.5 1.5 0 0 1 0 3H11" />',
+    food: '<path d="M4 2v4a1.5 1.5 0 0 0 3 0V2 M5.5 2v12 M11 2c-1.5 1-2 3-2 5h2v7" />',
+    pub: '<path d="M4 3h7l-1 11H5z M4.5 6h6" />',
+    wc: '<text x="7.5" y="11" text-anchor="middle" font-size="7" font-weight="700" stroke="none" fill="currentColor" font-family="Epilogue, sans-serif">WC</text>',
+    water: '<path d="M7.5 2c2 3 4 5 4 7.5a4 4 0 0 1-8 0C3.5 7 5.5 5 7.5 2z" />',
+    park: '<path d="M7.5 2l4 6H9.5l3 4h-10l3-4H3.5z M7.5 12v2.5" />'
+  };
+  var nearbyOn = false;
+  var kindsOn = { cafe: true, food: true, pub: true, wc: true, park: true };
+  var nearbyLayer = L.layerGroup();
+  var currentStops = [];
+  var toggleBtn = document.getElementById("toggle-nearby");
+  var filtersEl = document.getElementById("nearby-filters");
+
+  function nearbyIcon(kind) {
+    return L.divIcon({
+      className: "pin-near pin-near--" + kind,
+      html: '<span><svg viewBox="0 0 15 15" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + GLYPH[kind] + "</svg></span>",
+      iconSize: [22, 22], iconAnchor: [11, 11]
+    });
+  }
+  function popupHtml(item, stopName) {
+    var x = item[4] || {};
+    return '<div class="near-pop"><p class="np-kind">' + esc(KIND_LABEL[item[2]]) + "</p>" +
+      '<p class="np-name">' + esc(item[3] || KIND_LABEL[item[2]]) + "</p>" +
+      (x.h ? '<p class="np-meta">Hours: ' + esc(x.h) + "</p>" : "") +
+      (x.w ? '<p class="np-meta">Wheelchair access: ' + esc(x.w) + "</p>" : "") +
+      (x.f ? '<p class="np-meta">Fee: ' + esc(x.f) + "</p>" : "") +
+      '<p class="np-near">Near ' + esc(stopName) + "</p></div>";
+  }
+  function drawNearby() {
+    nearbyLayer.clearLayers();
+    listEl.querySelectorAll(".stop-nearby").forEach(function (n) { n.remove(); });
+    if (!nearbyOn || !window.NEARBY) return;
+    var stops = currentStops.filter(function (p) { return p.lat != null; });
+    var perStop = {}, picks = {};
+    NEARBY.items.forEach(function (it) {
+      var f = KIND_FILTER[it[2]]; if (!kindsOn[f]) return;
+      var best = null, bd = Infinity;
+      stops.forEach(function (p) { var d = km({ lat: it[0], lng: it[1] }, p) / STREET_FACTOR; if (d < bd) { bd = d; best = p; } });
+      if (!best || bd > NEAR_KM) return;
+      var c = perStop[best.id] = perStop[best.id] || {};
+      c[it[2]] = (c[it[2]] || 0) + 1;
+      var key = best.id + "|" + it[2];
+      (picks[key] = picks[key] || []).push({ it: it, d: bd, stop: best });
+    });
+    // only the closest few of each kind per stop go on the map, so it stays legible
+    Object.keys(picks).forEach(function (key) {
+      picks[key].sort(function (a, b) { return a.d - b.d; }).slice(0, PINS_PER_KIND).forEach(function (o) {
+        var it = o.it;
+        L.marker([it[0], it[1]], { icon: nearbyIcon(it[2]), zIndexOffset: -1000, title: (it[3] || KIND_LABEL[it[2]]) + " (" + KIND_LABEL[it[2]] + ")", keyboard: true })
+          .bindPopup(popupHtml(it, o.stop.name), { className: "near-popup", closeButton: true })
+          .addTo(nearbyLayer);
+      });
+    });
+    // a short "nearby" line under each stop in the list
+    var ORDER = ["cafe", "food", "pub", "wc", "water", "park"];
+    var WORD = { cafe: ["café", "cafés"], food: ["eatery", "eateries"], pub: ["pub", "pubs"], wc: ["toilets", "toilets"], water: ["water", "water"], park: ["park", "parks"] };
+    Object.keys(perStop).forEach(function (id) {
+      var row = listEl.querySelector('.stop[data-id="' + id + '"] .stop-main'); if (!row) return;
+      var parts = ORDER.filter(function (k) { return perStop[id][k]; }).map(function (k) {
+        var n = perStop[id][k]; return (k === "wc" || k === "water") ? WORD[k][0] : n + " " + WORD[k][n === 1 ? 0 : 1];
+      });
+      var line = document.createElement("span");
+      line.className = "stop-nearby";
+      line.textContent = "Nearby: " + parts.join(" · ");
+      row.appendChild(line);
+    });
+  }
+  function setNearby(on) {
+    nearbyOn = on;
+    toggleBtn.setAttribute("aria-pressed", String(on));
+    filtersEl.hidden = !on;
+    if (on) nearbyLayer.addTo(map); else map.removeLayer(nearbyLayer);
+    drawNearby();
+  }
+  toggleBtn.addEventListener("click", function () { setNearby(!nearbyOn); });
+  filtersEl.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-kind]"); if (!b) return;
+    kindsOn[b.dataset.kind] = !kindsOn[b.dataset.kind];
+    b.setAttribute("aria-pressed", String(kindsOn[b.dataset.kind]));
+    drawNearby();
+  });
+  if (window.NEARBY) {
+    map.attributionControl.addAttribution("Eat &amp; rest data &copy; OpenStreetMap contributors (ODbL), " + esc(NEARBY.updated));
+  } else {
+    toggleBtn.hidden = true;
+  }
 
   document.addEventListener("tour:change", function () { render(false); });
   render(true);

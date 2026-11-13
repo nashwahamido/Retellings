@@ -267,3 +267,58 @@ body.dark .deco-dialog { border-image-source: url("deco/window-ink.svg"); }
   .deco-dialog-backdrop, .deco-dialog { animation: none; }
   .deco-toast { transition: none; }
 }
+
+/* ---- eat & rest: map chips ---- */
+.map-tools {
+  position: absolute; top: 0.6rem; right: 0.6rem; z-index: 500;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem;
+  max-width: calc(100% - 4rem);
+}
+.nearby-filters { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.3rem; }
+.nearby-filters[hidden] { display: none; }
+.map-chip {
+  font-family: "Epilogue", sans-serif; font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.38rem 0.7rem; cursor: pointer;
+  color: #6c5427; background: #fbf5e4f2;
+  border: 3px double #b99a5c; box-shadow: 0 2px 6px #00000033;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.map-chip[aria-pressed="true"] { color: #ecd18e; background: linear-gradient(180deg, var(--plate-1), var(--plate-2)); border-color: #d2ae63; }
+.map-chip--main { font-size: 0.74rem; padding: 0.5rem 0.9rem; }
+.map-chip:focus-visible { outline: 2px solid #8f2a24; outline-offset: 2px; }
+
+/* ---- eat & rest: pins ---- */
+.pin-near span {
+  display: flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #fbf5e4; color: #35301f;
+  border: 2px solid currentColor; box-shadow: 0 1px 3px #00000066;
+  transition: transform 0.12s ease;
+}
+.pin-near:hover span, .pin-near:focus-visible span { transform: scale(1.25); }
+.pin-near--cafe span { color: #7a4b22; }
+.pin-near--food span { color: #8f2a24; }
+.pin-near--pub span { color: #5b3b12; }
+.pin-near--wc span, .pin-near--water span { color: #2f5d7a; }
+.pin-near--park span { color: #3f6b2a; }
+
+/* popups in the same parchment style */
+.near-popup .leaflet-popup-content-wrapper {
+  background: #f4ecd6; color: #35301f; border-radius: 0;
+  border: 3px double #b99a5c; box-shadow: 0 8px 20px #00000055;
+}
+.near-popup .leaflet-popup-tip { background: #f4ecd6; }
+.near-popup .leaflet-popup-content { margin: 0.7rem 0.9rem; font-family: "EB Garamond", Georgia, serif; }
+.near-pop p { margin: 0; }
+.np-kind { font-family: "Epilogue", sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8a6a2e; }
+.np-name { font-size: 1.1rem; font-weight: 600; margin: 0.1rem 0 0.25rem !important; }
+.np-meta { font-size: 0.85rem; }
+.np-near { font-size: 0.8rem; font-style: italic; color: #6c6244; margin-top: 0.3rem !important; }
+
+/* the "Nearby:" line under each stop */
+.stop-nearby { display: block; font-size: 0.74rem; line-height: 1.35; color: #3f6b2a; margin-top: 0.15rem; }
+
+@media (max-width: 860px) {
+  .map-chip { font-size: 0.62rem; padding: 0.3rem 0.55rem; }
+}

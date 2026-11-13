@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../app/css/deco.css" />
     <script src="../app/js/locations-data.js" defer></script>
     <script src="../app/js/tour-data.js" defer></script>
+    <script src="../app/js/nearby-data.js" defer></script>
     <script src="../app/js/tour-store.js" defer></script>
     <script src="../app/js/loc-windows.js" defer></script>
     <script src="../app/js/vendor/leaflet/leaflet.js" defer></script>
@@ -118,6 +119,7 @@
                 </div>
 
                 <div class="planner-actions" id="actions-mine">
+                    <button type="button" class="book-btn" id="best-order">Best order</button>
                     <button type="button" class="book-btn" id="clear-tour">Clear tour</button>
                 </div>
                 <div class="planner-actions" id="actions-suggested" hidden>
@@ -133,6 +135,16 @@
 
             <div class="planner-map">
                 <div id="tour-map" role="region" aria-label="Map of Dublin showing your tour"></div>
+                <div class="map-tools">
+                    <button type="button" class="map-chip map-chip--main" id="toggle-nearby" aria-pressed="false" aria-controls="nearby-filters">Eat &amp; rest nearby</button>
+                    <div class="nearby-filters" id="nearby-filters" role="group" aria-label="Kinds of places to show" hidden>
+                        <button type="button" class="map-chip" data-kind="cafe" aria-pressed="true">Caf&eacute;s</button>
+                        <button type="button" class="map-chip" data-kind="food" aria-pressed="true">Food</button>
+                        <button type="button" class="map-chip" data-kind="pub" aria-pressed="true">Pubs</button>
+                        <button type="button" class="map-chip" data-kind="wc" aria-pressed="true">Toilets &amp; water</button>
+                        <button type="button" class="map-chip" data-kind="park" aria-pressed="true">Parks</button>
+                    </div>
+                </div>
                 <div class="map-legend" aria-hidden="true">
                     <span><i class="lg-stop"></i> In your tour</span>
                     <span><i class="lg-place"></i> Other places from the book</span>
