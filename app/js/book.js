@@ -31,6 +31,7 @@
   var elNext = document.getElementById("book-next");
   var elContents = document.getElementById("book-contents");
   var elMode = document.getElementById("book-mode");
+  var elChapter = document.getElementById("book-chapter");
   var elProgress = document.getElementById("book-progress");
 
   var winLayer = document.getElementById("window-layer");
@@ -234,6 +235,7 @@
     plainEl.innerHTML = "";
     BOOK.chapters.forEach(function (ch) {
       var art = el("article", "plain-story");
+      art.id = "plain-ch-" + ch.number;
       var html =
         '<span class="ch-kicker">Chapter ' + (ROMAN[ch.number] || ch.number) + "</span>" +
         "<h2>" + esc(ch.title) + "</h2>" +
@@ -241,7 +243,7 @@
       var linked = [];
       ch.entries.forEach(function (e, i) {
         (e.placeIds || []).forEach(function (id) { if (linked.indexOf(id) === -1) linked.push(id); });
-        html += '<p class="rec-quote plain"><span class="rec-no">' + (i + 1) + "</span>" + quoted(e.text) + "</p>";
+        html += '<p class="rec-quote plain"><span class="rec-no">' + (i + 1) + '</span><span class="rec-text">' + quoted(e.text) + "</span></p>";
       });
       art.innerHTML = html;
       var strip = alsoStripEl(ch, linked);
@@ -307,6 +309,7 @@
   function updateProgress() {
     if (!pageFlip) return;
     elProgress.textContent = "Leaf " + (current() + 1) + " of " + pageCount();
+    syncChapterSelect();
     updateNav();
   }
   function updateNav() {
@@ -317,6 +320,35 @@
   function goPrev() { if (pageFlip) pageFlip.flipPrev(); }
   function goNext() { if (pageFlip) pageFlip.flipNext(); }
   function flipTo(i) { if (pageFlip) pageFlip.flip(i); }
+
+  // ---- chapter navigator (works in book and plain mode) ----
+  function populateChapters() {
+    if (!elChapter) return;
+    elChapter.innerHTML = BOOK.chapters.map(function (c) {
+      return '<option value="' + c.number + '">' + (ROMAN[c.number] || c.number) + ". " + esc(c.title) + "</option>";
+    }).join("");
+  }
+  function chapterForIndex(i) {
+    var best = null;
+    BOOK.chapters.forEach(function (c) {
+      var idx = chapterStartIndex[c.number];
+      if (idx != null && idx <= i && (best === null || idx > chapterStartIndex[best])) best = c.number;
+    });
+    return best;
+  }
+  function syncChapterSelect() {
+    if (!elChapter || plainMode) return;
+    var num = chapterForIndex(current());
+    if (num != null) elChapter.value = String(num);
+  }
+  function jumpToChapter(num) {
+    if (plainMode) {
+      var a = document.getElementById("plain-ch-" + num);
+      if (a) a.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else if (chapterStartIndex[num] != null) {
+      flipTo(chapterStartIndex[num]);
+    }
+  }
 
   // plain / book toggle
   var plainMode = false;
@@ -473,6 +505,7 @@
   elNext.addEventListener("click", goNext);
   elContents.addEventListener("click", function () { flipTo(contentsIndex); });
   elMode.addEventListener("click", function () { setMode(!plainMode); });
+  if (elChapter) elChapter.addEventListener("change", function () { jumpToChapter(parseInt(this.value, 10)); });
 
   var rt = null;
   window.addEventListener("resize", function () {
@@ -486,6 +519,7 @@
   });
 
   buildPlain();
+  populateChapters();
   function boot() {
     if (typeof St === "undefined" || !St.PageFlip) {
       console.warn("book.js: StPageFlip unavailable, using plain mode.");

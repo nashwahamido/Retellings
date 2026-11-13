@@ -61,6 +61,22 @@
     0 10px 24px -12px #00000099,
     inset 0 0 0 1px #ffffff14,
     inset 0 0 40px #00000055;
+  /* 3D view: the book sits at an angle and straightens when you engage with it */
+  transform-style: preserve-3d;
+  transform: rotateX(7deg) rotateY(-16deg);
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+.book-case:hover,
+.book-case:focus-within {
+  transform: rotateX(0deg) rotateY(0deg);
+}
+@media (max-width: 640px) {
+  /* keep it flat on phones (single page, touch-driven) */
+  .book-case, .book-case:hover, .book-case:focus-within { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .book-case { transform: none; transition: none; }
 }
 /* gold keyline just inside the leather */
 .book-case::before {
@@ -99,6 +115,31 @@ body.dark .book-btn:hover:not(:disabled), body.dark .book-btn:focus-visible:not(
 }
 .book-btn:disabled { opacity: .35; cursor: default; }
 .book-progress { font-variant-numeric: tabular-nums; font-size: var(--fs-small); opacity: .75; min-width: 7rem; text-align: center; }
+
+/* chapter navigator (quick jump) */
+.book-jump { display: inline-flex; align-items: center; gap: 0.45rem; }
+.book-jump-label {
+  font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7;
+}
+.book-select {
+  font-family: inherit; font-size: var(--fs-body);
+  color: inherit; background-color: transparent;
+  border: 2px solid var(--accent-navy); border-radius: 0.4rem;
+  padding: 0.5rem 2rem 0.5rem 0.8rem; cursor: pointer;
+  max-width: 14rem;
+  /* custom chevron */
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 1rem) 1.05em, calc(100% - 0.65rem) 1.05em;
+  background-size: 0.35rem 0.35rem, 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+body.dark .book-select { border-color: var(--accent-gold); }
+.book-select:hover, .book-select:focus-visible { outline: none; border-color: var(--accent-red); }
+body.dark .book-select:hover, body.dark .book-select:focus-visible { border-color: var(--accent-cream); }
+.book-select option { color: var(--light-text-color); background: var(--light-base-color); }
+body.dark .book-select option { color: var(--dark-text-color); background: var(--dark-base-color); }
 
 /* ===================== a leaf ===================== */
 .page {
@@ -203,14 +244,28 @@ body.dark .book-btn:hover:not(:disabled), body.dark .book-btn:focus-visible:not(
   font-size: clamp(0.92rem, 2.4vmin, 1.05rem); line-height: 1.42; hyphens: auto;
 }
 
-/* in-text clickable place mention */
+/* in-text clickable place mention — highlighted like a marker + a small pin */
 .loc-mention {
-  background: none; border: none; padding: 0; margin: 0; font: inherit; color: inherit;
-  cursor: pointer; text-decoration: underline; text-decoration-color: var(--leaf-red);
-  text-decoration-thickness: 1.5px; text-underline-offset: 2px;
-  transition: color .15s, background-color .15s;
+  border: none; font: inherit; font-weight: 600; color: var(--ink); cursor: pointer;
+  padding: 0.02em 0.16em; margin: 0 -0.04em; border-radius: 0.2em;
+  /* highlighter stripe across the lower part of the word */
+  background-image: linear-gradient(transparent 55%, #d9b24d66 55%);
+  text-decoration: underline;
+  text-decoration-color: var(--leaf-red);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  transition: background 0.15s ease, color 0.15s ease;
 }
-.loc-mention:hover, .loc-mention:focus-visible { color: var(--leaf-red); background-color: #8f2a241c; outline: none; }
+.loc-mention::before {
+  content: "\1F4CD"; /* 📍 location pin */
+  font-size: 0.72em; margin-right: 0.12em; opacity: 0.85;
+  -webkit-text-decoration: none; text-decoration: none;
+}
+.loc-mention:hover, .loc-mention:focus-visible {
+  color: var(--leaf-red);
+  background-image: linear-gradient(#d9b24d88, #d9b24d88);
+  outline: none;
+}
 
 /* "also in this story" chips */
 .places-strip { margin-top: 0.8rem; padding-top: 0.55rem; border-top: 1px solid var(--rule); }

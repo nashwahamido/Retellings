@@ -29,18 +29,18 @@
     /* Font */
     --font-primary: "Epilogue", sans-serif;
 
-    /* Font sizes: dafault */
-    --fs-h1: 6rem;
-    --fs-h2: 4.5rem;
-    --fs-h3: 3.4rem;
-    --fs-h4: 2.5rem;
-    --fs-h5: 1.9rem;
-    --fs-h6: 1.5rem;
-    --fs-body: 1rem;
-    --fs-small: 0.8rem;
-    --fs-button: 1.4rem;
-    --fs-nav: 1.3rem;
-    --fs-tag: 1.4rem;
+    /* Font sizes: default */
+    --fs-h1: 3.6rem;
+    --fs-h2: 2.7rem;
+    --fs-h3: 2.1rem;
+    --fs-h4: 1.6rem;
+    --fs-h5: 1.3rem;
+    --fs-h6: 1.1rem;
+    --fs-body: 0.95rem;
+    --fs-small: 0.78rem;
+    --fs-button: 1rem;
+    --fs-nav: 1rem;
+    --fs-tag: 1rem;
 
 
     /* Font weight */
@@ -76,34 +76,34 @@
 @media (max-width: 1240px) {
      :root {
         /* font sizes */
-        --fs-h1: 5rem;
-        --fs-h2: 4rem;
-        --fs-h3: 2.3rem;
+        --fs-h1: 3.2rem;
+        --fs-h2: 2.5rem;
+        --fs-h3: 1.9rem;
         --fs-h4: 1.4rem;
         --fs-h5: 1.2rem;
-        --fs-h6: 1.1rem;
-        --fs-body: 1rem;
-        --fs-small: 0.8rem;
-        --fs-button: 1rem;
-        --fs-nav: 1.2rem;
-        --fs-tag: 1rem;
+        --fs-h6: 1.05rem;
+        --fs-body: 0.95rem;
+        --fs-small: 0.78rem;
+        --fs-button: 0.95rem;
+        --fs-nav: 1rem;
+        --fs-tag: 0.95rem;
     }
 }
 /* Small screen (<= 1024px) */
 @media (max-width: 1024px) {
     :root {
         /* font sizes */
-        --fs-h1: 4.5rem;
-        --fs-h2: 3.5rem;
-        --fs-h3: 2.3rem;
-        --fs-h4: 1.4rem;
-        --fs-h5: 1.2rem;
-        --fs-h6: 1.1rem;
-        --fs-body: 1rem;
-        --fs-small: 0.8rem;
-        --fs-button: 1rem;
-        --fs-nav: 1rem;
-        --fs-tag: 1rem;
+        --fs-h1: 3rem;
+        --fs-h2: 2.3rem;
+        --fs-h3: 1.8rem;
+        --fs-h4: 1.35rem;
+        --fs-h5: 1.15rem;
+        --fs-h6: 1.05rem;
+        --fs-body: 0.95rem;
+        --fs-small: 0.78rem;
+        --fs-button: 0.95rem;
+        --fs-nav: 0.95rem;
+        --fs-tag: 0.95rem;
     
     /* Spacing - subject to change */
     --sp-xs: 0.25rem;
@@ -126,17 +126,17 @@
 /* font sizes */
 @media (max-width: 768px) {
     :root {
-        --fs-h1: 3rem;
-        --fs-h2: 2.2rem;
-        --fs-h3: 2rem;
-        --fs-h4: 1.3rem;
-        --fs-h5: 1.1rem;
-        --fs-h6: 1rem;
+        --fs-h1: 2.3rem;
+        --fs-h2: 1.8rem;
+        --fs-h3: 1.6rem;
+        --fs-h4: 1.2rem;
+        --fs-h5: 1.05rem;
+        --fs-h6: 0.95rem;
         --fs-body: 0.9rem;
-        --fs-small: 0.7rem;
-        --fs-button: 1rem;
-        --fs-nav: 0.8rem;
-        --fs-tag: 0.8rem;
+        --fs-small: 0.72rem;
+        --fs-button: 0.95rem;
+        --fs-nav: 0.85rem;
+        --fs-tag: 0.82rem;
     }
 }
 
