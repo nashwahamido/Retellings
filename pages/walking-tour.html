@@ -3,15 +3,23 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dubliner's Walking Tour</title>
+    <title>My Tour</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../app/css/variable.css">
     <link rel="stylesheet" href="../app/css/walking-tour.css">
     <link rel="stylesheet" href="../app/css/faq.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" href="../app/js/vendor/leaflet/leaflet.css">
+    <link rel="stylesheet" href="../app/css/windows.css">
+    <link rel="stylesheet" href="../app/css/tour.css">
     <link rel="stylesheet" href="../app/css/deco.css" />
+    <script src="../app/js/locations-data.js" defer></script>
+    <script src="../app/js/tour-data.js" defer></script>
+    <script src="../app/js/tour-store.js" defer></script>
+    <script src="../app/js/loc-windows.js" defer></script>
+    <script src="../app/js/vendor/leaflet/leaflet.js" defer></script>
+    <script src="../app/js/tour.js" defer></script>
     <script src="../app/js/script.js" defer></script>
     <script src="../app/js/faq.js" defer></script>
   </head>
@@ -32,7 +40,7 @@
         <ul>
             <li><a href="index.html">Homepage</a></li>
             <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-            <li><a href="walking-tour.html">Dubliner's Walking Tour</a></li>
+            <li><a href="walking-tour.html">My Tour</a></li>
             <li><a href="locations.html">Dubliner's Locations</a></li>
             <li><a href="about.html">About Us</a></li>
             <li>
@@ -50,7 +58,7 @@
         <nav aria-label="Main navigation">
             <ul>
                 <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-                <li><a href="walking-tour.html">Dubliner's Walking Tour</a></li>
+                <li><a href="walking-tour.html">My Tour</a></li>
                 <li><a href="locations.html">Dubliner's Locations</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><div class="toggle"></div></li>
@@ -67,55 +75,57 @@
 
     <main>
 
-        <!-- SECTION 1 - HERO -->
-        <section aria-label="Walking tour hero">
-            <img  loading="lazy" src="assets/Hero_PlaceholderMap.webp" alt="Map showing the walking tour route in Dublin">
-            <div>
-                <hgroup>
-                    <h1>Retelling Dubliners</h1>
-                    <p class="tagline">A Walking Tour through Dublin <a class="btnjump" href="#mapsection">
-    <span class="btn-text">~ 2 hours</span>
-    <span class="btn-icon">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </span>
-</a></p>
-                </hgroup>
-                <p>Walk in the footsteps of James Joyce's Dubliners while learning Dublin's iconic history. Starting at the James Joyce Centre and ending at Kennedy's Pub, visit the famous locations mentioned in the book at your own pace.</p>
-                <br>
-                <!-- Welcome audio: introduction to the tour -->
-                <audio controls>
-                    <source src="audio/welcome_v2.mp3" type="audio/mpeg">
-                    <source src="audio/welcome_v2.m.ogg" type="audio/ogg">
-                    <a href="audio/welcome.mp3" download>Download audio</a>
-                </audio>
-                <details class="audio-transcript">
-                    <summary>Read transcript</summary>
-                    <div class="transcript-body">
-                        <p>Welcome to the Retellings Walking Tour! Together we'll walk in the footsteps of James Joyce's Dubliners while learning about some of Dublin's local haunts, about the life of James Joyce, and revisiting key locations in the book Dubliners at your own pace.</p>
-                        <p>Our tour will start at the James Joyce Centre, which is easily accessible on the Green or Red line of the Luas tram or from various bus routes. To see which one is closest to you, add our Retellings Walking Tour to your Google Maps app with the link provided from our website.</p>
-                    </div>
-                </details>
-            </div>
+        <!-- SECTION 1 - MY TOUR: intro -->
+        <section class="tour-intro" aria-labelledby="tour-title">
+            <span class="tour-kicker">Retellings &middot; Your itinerary</span>
+            <h1 id="tour-title">My Tour</h1>
+            <p class="tour-lead">The places you&rsquo;ve gathered from the book, set out on the map of Dublin. Reorder them to plan your walk, or start from our suggested route. Add places from <a href="locations.html">the book</a>, from the list below, or by selecting a faint pin on the map.</p>
         </section>
 
-        <!-- SECTION 2 - INTERACTIVE MAP -->
-        <section aria-label="Interactive map" id="mapsection">
-            <div class="map-iframe-wrapper"><iframe src="https://www.google.com/maps/d/u/0/embed?mid=1gUuzkJVAerD3f9yYEMclUwhE23V8mVI&ehbc=2E312F&noprof=1" width="640" height="480" title="Retelling Dubliners walking tour map" loading="lazy"></iframe></div>
-            <div class="map-overlay-container">
-                <div class="map-overlay">
-                    <h2>Save Our Tour to Google Maps</h2>
-                    <p>Lost WIFI or took a wrong turn? Save the "Retelling Dubliners" walking tour to your Google Map app for navigating Dublin. Use the "download map route" feature to save the walking tour to your phone without using all your phone's data.</p>
-                    <a class="btn-s1" href="https://maps.app.goo.gl/Uh1yXw4iDZvTAvtYA" target="_blank" rel="noopener noreferrer">
-                        Save Map
-                        <div class="icon">
-                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
-                            </svg>
-                        </div>
-                    </a>
+        <!-- SECTION 2 - PLANNER: list + map -->
+        <section class="planner" aria-label="Tour planner">
+            <div class="planner-panel">
+                <div class="planner-head">
+                    <h2>Your stops</h2>
+                    <span class="planner-count" id="planner-count" aria-live="polite"></span>
+                </div>
+
+                <ol class="stop-list" id="stop-list" aria-label="Stops in visiting order"></ol>
+
+                <div class="planner-empty" id="planner-empty" hidden>
+                    <p class="pe-orn" aria-hidden="true">&#10087;</p>
+                    <p><strong>Your tour is empty.</strong></p>
+                    <p>Open <a href="locations.html">the book</a> and choose <em>Add to my tour</em> on any place, pick one below, or load our suggested walk.</p>
+                </div>
+
+                <div class="planner-totals" id="planner-totals" hidden>
+                    <div><span class="pt-label">Walking distance</span><span class="pt-value" id="pt-distance">&ndash;</span></div>
+                    <div><span class="pt-label">Walking time</span><span class="pt-value" id="pt-time">&ndash;</span></div>
+                    <p class="pt-note">Approximate: straight lines between stops, allowing for streets, at an easy 4.5&nbsp;km/h.</p>
+                </div>
+
+                <div class="planner-add">
+                    <label for="add-place">Add a place</label>
+                    <select id="add-place" class="book-select"></select>
+                </div>
+
+                <div class="planner-actions">
+                    <button type="button" class="book-btn" id="load-suggested">Load suggested walk</button>
+                    <button type="button" class="book-btn" id="clear-tour">Clear tour</button>
+                </div>
+
+                <details class="suggested-card">
+                    <summary>About the suggested walk</summary>
+                    <p id="suggested-summary"></p>
+                    <div id="suggested-audio"></div>
+                </details>
+            </div>
+
+            <div class="planner-map">
+                <div id="tour-map" role="region" aria-label="Map of Dublin showing your tour"></div>
+                <div class="map-legend" aria-hidden="true">
+                    <span><i class="lg-stop"></i> In your tour</span>
+                    <span><i class="lg-place"></i> Other places from the book</span>
                 </div>
             </div>
         </section>
@@ -187,304 +197,6 @@
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- SECTION 4 - TOUR STOPS -->
-        <section aria-label="Tour stops">
-            <h2>Tour Stops</h2>
-            <ol>
-
-                <!-- STOP 1 - JAMES JOYCE CENTER -->
-                <li>
-                    <article>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>1. James Joyce Center</h3>
-                            <p>The James Joyce Center is a restored Georgian townhouse near the childhood home of James Joyce. Full of exhibitions, readings, lectures, and promoting Joyce's other works. It's a great place to get your bearings and expand your knowledge on the Irish famed author. <br><br><strong>Open from 10:30 AM to 4:30 PM Tuesday through Saturday. Tickets are €7 for adults, €5 for seniors and students (with a valid student ID) and free for children 12 and under.</strong></p>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/JJ_Centre_v2.mp3" type="audio/mpeg">
-                                <source src="audio/JJ_Centre_v2.m.ogg" type="audio/ogg">
-                                <a href="audio/JJ_Centre.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>Located on North Great George's Street, the James Joyce Center is a restored Georgian townhouse honoring the legacy of James Joyce.</p>
-                                    <p>Full of exhibitions, readings, lectures, and displaying Joyce's other works. It's a great place to get your bearings and expand your knowledge on the famed Irish author.</p>
-                                    <p>Built in 1784 for Valentine Brown, the First Earl of Kenmare, the townhouse was preserved by a Joycean Scholar Senator David Norris in 1982. With the help of generous donors and lovers of Joyce's works, the townhouse was renovated and opened to the public in 1996 as the James Joyce Centre.</p>
-                                    <p>The James Joyce Centre is one of many museums and tributes to Joyce, but features more community centered events. If you happen to visit in February or June, check out their website to see what special events they have to celebrate James Joyce's birthday or the annual Bloomsday Festival.</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Venture past Nelson's Pillar also known as "The Pillar", a large granite column capped by a statue of Horatio Nelson, and across the O'Connell Bridge towards your next destination. "From Ballsbridge to the Pillar, twenty minutes; from the Pillar to Drumcondra, twenty minutes; and twenty minutes to buy the things. She would be there before eight" (pg. 100) "A very sullen-faced man stood at the corner of O'Connell Bridge waiting for the little Sandymount tram to take him home" (pg. 96).</p>
-                            </details>
-                        </div>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img src="assets/JJCenter_then-now.JPG" alt="James Joyce Center then and now" class="spot-image">
-                        </div>
-                    </article>
-                </li>
-
-                <!-- STOP 2 - TRINITY COLLEGE DUBLIN -->
-                <li>
-                    <article>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img src="assets/tcd_then.jpg" alt="Trinity College in 1909" class="spot-image image-past">
-                            <img src="assets/tcd_now.jpg" alt="Trinity College Dublin now" class="spot-image image-present">
-                            <!-- slider -->
-                            <input type="range" id="slider-1" min="0" max="100" value="50" class="slider" aria-label="Percentage of present photo">
-                            <div class="slider-line" aria-hidden="true"></div>
-                            <div class="slider-btn" aria-hidden="true">
-                                <em class="ph ph-arrows-out-line-horizontal"></em>
-                            </div>
-                        </div>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>2. Trinity College Dublin</h3>
-                            <p>Trinity College Dublin is a historic 400 year old university right in Dublin's city center. Ranked the No. 1 university in Ireland, its hallowed halls have been the home to thought leaders and creative minds, like Oscar Wilde, Bram Stoker, Edmund Burke and more. In Dubliners, Trinity College Dublin appears in three stories, serving both as a central city landmark and as an institution inseparable from Ireland's colonial history.</p>
-                            <blockquote>"As they passed along the railings of Trinity College, Lenehan skipped out into the road and peered up at the clock" <em>(pg. 53)</em>.</blockquote>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/Trinity_v2.mp3" type="audio/mpeg">
-                                <source src="audio/Trinity_v2.ogg" type="audio/ogg">
-                                <a href="audio/Trinity.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>Trinity College Dublin is a historic 400 year old university right in Dublin's city center. Ranked the No. 1 university in Ireland, its hallowed halls have been the home to thought leaders and creative minds, like Oscar Wilde, Bram Stoker, Edmund Burke and more. Trinity College is also home to decades of Joycean Scholars who've spent years studying James Joyce's works.</p>
-                                    <p>In Dubliners, Trinity College Dublin appears in three separate stories, serving both as a central city landmark and as an institution inseparable from Ireland's colonial history.</p>
-                                    <p>"As they passed along the railings of Trinity College, Lenehan skipped out into the road and peered up at the clock" (pg. 53 of Dubliners).</p>
-                                    <p>Founded in 1592, through a royal charter from Queen Elizabeth the First, Trinity is Ireland's oldest university in continuous operation. The university has undergone several changes over the course of its longstanding history but focuses on preservation and honoring the original architecture of the school for its students, staff, and visitors to enjoy.</p>
-                                    <p>Some key reminders while visiting Trinity: as it is an active university campus, please be mindful and courteous to all students and staff while visiting. All buildings with keycard access are restricted to students and staff only. Finally, watch out for the seagulls near the rugby pitch or they'll steal your food.</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Visit the Book of Kells Experience or a guided tour of the famous Old Library. Please note that all tickets must be booked in advance through: <a href="https://www.visittrinity.ie/book-of-kells-experience/" target="_blank" rel="noopener noreferrer">visittrinity.ie</a>. Or visit the Douglas Hyde gallery, a free contemporary art gallery with exciting new exhibitions, artist talks and workshops available 5 days a week. Visit their website and see what's on display: <a href="https://thedouglashyde.ie" target="_blank" rel="noopener noreferrer">thedouglashyde.ie</a>.</p>
-                            </details>
-                        </div>
-                    </article>
-                </li>
-
-                <!-- STOP 3 - THE SECRET BOOK AND RECORD STORE -->
-                <li>
-                    <article>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>3. The Secret Book and Record Store</h3>
-                            <p>Tucked in between several shops and restaurants on Wicklow Street visit this cosy, independent bookstore offering new and secondhand books at an affordable price with CDs and vinyl. Pick up your own James Joyce!</p>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/secretbookstore_v2.m.mp3" type="audio/mpeg">
-                                <source src="audio/secretbookstore_v2.ogg" type="audio/ogg">
-                                <a href="audio/secretbookstore.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>For our next stop, leave Trinity's campus through the Nassau Street gate. Then walk up Nassau Street and turn up Wicklow Street to find this literary treasure trove.</p>
-                                    <p>Tucked in between several shops and restaurants on Wicklow Street lies The Secret Book and Record Store, a small, independent bookstore that offers new and secondhand books, CDs and vinyl. Find rare books, vintage vinyl and all the latest releases. Pick up your own copy of Dubliners or any other book by James Joyce for only €5 in their classics collection!</p>
-                                    <p>While browsing the bookstore's selection, here's some history on James Joyce. Born on February 2nd 1882, James Joyce is considered one of Ireland's most celebrated writers for his books, Dubliners and Ulysses. The eldest of 10 children, Joyce lived in Brighton Square, Rathgar with his parents, John Stanislaus Joyce and Mary Jane "May" (née Murray).</p>
-                                    <p>Joyce has led a long storied life, where he wasn't only a writer but an educator as well. His works have been praised by literary figures like T.S. Eliot, James Baldwin and more. Joyce's work has been described as a "colossus of modernist fiction" by the Yale Press. He sought to "give a picture of Dublin so complete that if the city suddenly disappeared from the earth it could be reconstructed out of my book" — from a conversation with Frank Budgen, 1918. For more information on James Joyce's life, visit our website.</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Walk up to the corner of Wicklow street to the International Bar, a famed pub that James Joyce frequented for a pint and some lunch. For a vegan and vegetarian alternative, walk in the opposite direction to Cornucopia, a family run vegan restaurant with a chic art nouveau style.</p>
-                            </details>
-                        </div>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img src="assets/Bookshop_then-now.jpg" alt="The Secret Book and Record Store then and now" class="spot-image">
-                        </div>
-                    </article>
-                </li>
-
-                <!-- STOP 4 - CITY MARKETS -->
-                <li>
-                    <article>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img src="assets/CityMarket_then.png" alt="City Market, Dublin during likely 1894–1899" class="spot-image image-past">
-                            <img src="assets/CityMarket_now.jpg" alt="St. George's Arcade, Dublin, photographed in 2018" class="spot-image image-present">
-                            <!-- slider -->
-                            <input type="range" min="0" max="100" value="50" class="slider" aria-label="Percentage of present photo shown">
-                            <div class="slider-line" aria-hidden="true"></div>
-                            <div class="slider-btn" aria-hidden="true">
-                                <em class="ph ph-arrows-out-line-horizontal"></em>
-                            </div>
-                        </div>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>4. City Markets</h3>
-                            <p>Want a souvenir or to do some window shopping, wander through the City Markets on Grafton Street, in the heart of Dublin right between Trinity College and St. Stephen's Green. South City Markets opened in 1881 as Dublin's first purpose-built Victorian shopping arcade, funded by affluent property-owning families and designed by English architects. Today, the market is more known under the name of George's Street Arcade, and has been operating under the Layden Family Group's ownership since 1992. </p>
-                            <p>In Dubliners, City Market appears in the story "Two Gallants," serving as a turning point directing Lenehan from George's Street toward Grafton Street. More often referred to as the South City Markets, it is a busy covered market complex on South Great George’s Street, associated with small trade, everyday commerce, and a dense pedestrian flow.</p>
-                            <blockquote>"He left his friends at a quarter to ten and went up George's Street. He turned to the left at the City Markets and walked on into Grafton Street" <em>(pg. 58)</em>.</blockquote>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/citymarkets_v2.mp3" type="audio/mpeg">
-                                <source src="audio/citymarkets_v2.m.ogg" type="audio/ogg">
-                                <a href="audio/citymarkets.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>Want a souvenir or to do some window shopping? Then walk past Wicklow Street onto Exchequer Street to visit the City Markets. Spanning several blocks and located in the heart of Dublin right between Trinity College and St. Stephen's Green.</p>
-                                    <p>For some gorgeous architecture and shopping, visit the South City Markets — opened in 1881 as Dublin's first purpose-built Victorian shopping arcade, funded by affluent property-owning families and designed by English architects. Today, the City Markets are associated with the George's Street Arcade, and have been operating under the Layden Family Group's ownership since 1992.</p>
-                                    <p>In Dubliners, City Market appears in "Two Gallants," serving as a turning point directing Lenehan from George's Street toward Grafton Street.</p>
-                                    <p>"He left his friends at a quarter to ten and went up George's Street. He turned to the left at the City Markets and walked on into Grafton Street" (pg. 58).</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Walk down South Great George's Street to the George's Street Arcade, Ireland's first purpose-built shopping center and one of Europe's oldest city markets. The enclosed Victorian-styled market is home to several independent and vintage boutiques.</p>
-                            </details>
-                        </div>
-                    </article>
-                </li>
-
-                <!-- STOP 5 - ST. STEPHEN'S GREEN -->
-                <li>
-                    <article>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>5. St. Stephen's Green</h3>
-                            <p>A Victorian gem in Dublin's greatest garden square, it's one of Ireland's most famous public parks. This 9-hectare green space has been maintained to its original Victorian layout with over 3.5 km of accessible pathways, a waterfall, ornamental lake and several sculptures; including the James Joyce Memorial Sculpture. St. Stephen's Green appears in "After the Race" and "Two Gallants." Noticeably, it is mentioned three times in "Two Gallants," establishing itself as an important symbolic space in the story. It is described as crowded and noisy, imbued with people, trams, and city lights.</p>
-                            <blockquote>"That night the city wore the mask of a capital. The five young men strolled along Stephen's Green in a faint cloud of aromatic smoke." <em>(p. 46)</em>.</blockquote>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/stephensgreen_v2.m.mp3" type="audio/mpeg">
-                                <source src="audio/stephensgreen_v2.m.ogg" type="audio/ogg">
-                                <a href="audio/stephensgreen.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>After you've done some shopping, start making your way down to St. Stephen's Green, a 9 minute walk from the City Markets. A Victorian gem in Dublin's greatest garden square, it's one of Ireland's most famous public parks. This 9-hectare green space has been maintained to its original Victorian layout with over 3.5 km of accessible pathways, a waterfall, ornamental lake and several sculptures — including the James Joyce Memorial Sculpture.</p>
-                                    <p>A little known fact is that this public park used to be marshland that served as common ground for grazing livestock. In 1663 the City Assembly of Dublin decided the land could generate income for the city. It wasn't until Sir Arthur Guinness, later known as Ardilaun, bought the Green in 1877 that the land was redeveloped and opened as St. Stephen's Green to the public on July 27th, 1880.</p>
-                                    <p>"That night the city wore the mask of a capital. The five young men strolled along Stephen’s Green in a faint cloud of aromatic smoke. They talked loudly and gaily and their cloaks dangled from their shoulders. The people made way for them. At the corner of Grafton Street a short fat man was putting two handsome ladies in a car in charge of another fat man. The car drove off and the short fat man caught sight of the party." (p. 46).</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Get a head! Find the bust of James Joyce located somewhere in the park!</p>
-                            </details>
-                        </div>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img src="assets/StStephens_then.png" alt="Fusiliers Arch, St Stephen's Green, taken around 1900" class="spot-image image-past">
-                            <img src="assets/StStephens_now.jpg" alt="St. Stephen's Green, photographed by Ralf Houven in 2012" class="spot-image image-present">
-                            <!-- slider -->
-                           
-                            <input type="range" min="0" max="100" value="50" class="slider" aria-label="Percentage of present photo shown">
-                            <div class="slider-line" aria-hidden="true"></div>
-                            <div class="slider-btn" aria-hidden="true">
-                                <em class="ph ph-arrows-out-line-horizontal"></em>
-                            </div>
-                        </div>
-                    </article>
-                </li>
-
-                <!-- STOP 6 - MUSEUM OF LITERATURE -->
-                <li>
-                    <article>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img  src="assets/MoLi.JPG" alt="A current image of the Museum of Literature, Dublin" class="spot-image image-present">
-
-                        </div>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>6. Museum of Literature</h3>
-                            <p>If you were able to find the statue of James Joyce, turn around, exit the park and right in front of you, you'll find the entrance to the Museum of Literature Ireland. The Museum of Literature Ireland, celebrates Irish writers featuring not only James Joyce, but Oscar Wilde, Mary Murphy, and more! Visit the permanent exhibit "Dear, Dirty Dublin" a 3D experience of Dublin through Joyce's eyes. Joyce's works are featured throughout the museum, including his early writings and letters to other authors about, "Dubliners". If you need to take a quick break visit the Commons Cafe, which is set in the original student dining hall of UCD Newman House or enjoy the museum's gardens which is home to the protected ash tree that James Joyce had his graduation photo taken.<br><br><strong>Open from 10:30 AM to 5:30 PM. Tickets must be purchased on their website or in-person. First Fridays of the month are free from 6 PM to 9 PM.</strong></p>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/MoLI_v2.mp3" type="audio/mpeg">
-                                <source src="audio/MoLI_v2.m.ogg" type="audio/ogg">
-                                <a href="audio/MoLI.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>If you were able to find the statue of James Joyce, turn around, exit the park and right in front of you, you'll find the entrance to the Museum of Literature Ireland. The Museum of Literature Ireland celebrates Irish writers featuring not only James Joyce, but Oscar Wilde, Mary Murphy, and more!</p>
-                                    <p>Visit the permanent exhibit "Dear, Dirty Dublin" — a 3D experience of Dublin through Joyce's eyes.</p>
-                                    <p>If you need to take a quick break, visit the Commons Cafe, which is set in the original student dining hall of UCD Newman House, or enjoy the museum's gardens which is home to the protected ash tree that James Joyce had his graduation photo taken under.</p>
-                                    <p>The museum is open from 10:30 AM to 5:30 PM. Tickets must be purchased on their website or in-person.</p>
-                                    <p>Side quest: As you’re walking towards our final destination on the tour, stop by the Shelbourne Hotel, a historic hotel on the north-side of St. Stephen’s Green. Featured in Dubliners and Ulysses, the building holds a deep historic significance in Irish history. 
-                                      In the 1916, during the Easter Rising, the hotel was occupied by 40 British troops to counter the Irish Citizen Army who had occupied St. Stephen’s Green. In 1992, the Constitution of the Irish Free State was drafted in room 112, which is now known as the Constitution Room.</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Walk past the Shelbourne Hotel, a historic hotel on the north-side of St. Stephen's Green. For those interested in a luxury afternoon tea, make a reservation on their website to enjoy their tea sandwiches, homemade scones, decadent deserts, and signature tea blends. "Lenehan walked as far as the Shelbourne Hotel where he halted and waited" (pg. 56).</p>
-                            </details>
-                        </div>
-                    </article>
-                </li>
-
-                <!-- STOP 7 - KENNEDY'S BAR -->
-                <li>
-                    <article>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>7. Kennedy's Bar</h3>
-                            <p>A short seven minute walk away from the park, celebrate the end of the "Retelling's" walking tour with a pint at Kennedy's Pub and Restaurant. Kennedy's has been a Dublin staple since 1850 and was frequented by not only James Joyce, but Samuel Beckett and Oscar Wilde as well. Ask to sit at the table where the honorary James Joyce plaque is located.</p>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/Kennedys_v2.mp3" type="audio/mpeg">
-                                <source src="audio/Kennedys_v2.m.ogg" type="audio/ogg">
-                                <a href="audio/Kennedys.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>A short seven-minute walk away from St.Stephen’s Green, celebrate the end of the “Retelling’s” walking tour with a pint at Kennedy’s Pub and Restaurant. Kennedy’s has been a Dublin staple since 1850 and was frequented by not only James Joyce, but Samuel Beckett and Oscar Wilde as well. Ask to sit at the table where the honorary James Joyce plaque is located and take a load off!</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Venture past the Nelson's Pillar bar for a quick bite to eat and across the canal towards your next destination.</p>
-                            </details>
-                        </div>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img src="assets/KennedyBar_then-now.JPG" alt="A modern image of Kennedy's, Dublin" class="spot-image">
-                        </div>
-                    </article>
-                </li>
-
-            </ol>
-        </section>
-
-        <!-- SECTION 5 - TOUR OUTRO -->
-
-        <section aria-label="Tour conclusion">
-            <h2>You've Completed the Tour</h2>
-            <p>Thank you for walking with us through Joyce's Dublin. We hope the stories and places you've encountered today stay with you long after you leave the city.</p>
-            <p>Listen to our closing message below:</p>
-            <audio controls>
-                <source src="audio/end_v2.o.mp3" type="audio/mpeg">
-                <source src="audio/end_v2.ogg" type="audio/ogg">
-                <a href="audio/end.mp3" download>Download audio</a>
-            </audio>
-            <details class="audio-transcript">
-                <summary>Read transcript</summary>
-                <div class="transcript-body">
-                    <p>Thank you for taking the Retelling's walking tour and experiencing James Joyce's Dublin with us. We hope you enjoyed, and if you'd like to see more locations featured in James Joyce's Dubliners, please check out our website</p>
-                </div>
-            </details>
         </section>
 
     </main>

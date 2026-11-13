@@ -80,3 +80,24 @@ closeMenu.addEventListener('click', () => {
         if ((a.getAttribute("href") || "").split("#")[0] === here) a.setAttribute("aria-current", "page");
     });
 })();
+
+// "My Tour" badge: how many places the visitor has saved (shared via localStorage)
+(function () {
+    function count() {
+        try { var v = JSON.parse(localStorage.getItem("retellings.tour.v1") || "[]"); return Array.isArray(v) ? v.length : 0; }
+        catch (e) { return 0; }
+    }
+    function paint() {
+        var n = count();
+        document.querySelectorAll('header nav a[href="walking-tour.html"], .mobile-menu a[href="walking-tour.html"]').forEach(function (a) {
+            var b = a.querySelector(".nav-badge");
+            if (!n) { if (b) b.remove(); a.removeAttribute("aria-label"); return; }
+            if (!b) { b = document.createElement("span"); b.className = "nav-badge"; b.setAttribute("aria-hidden", "true"); a.appendChild(b); }
+            b.textContent = n;
+            a.setAttribute("aria-label", "My Tour, " + n + (n === 1 ? " place" : " places") + " saved");
+        });
+    }
+    paint();
+    document.addEventListener("tour:change", paint);
+    window.addEventListener("storage", function (e) { if (e.key === "retellings.tour.v1") paint(); });
+})();

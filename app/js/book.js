@@ -37,7 +37,6 @@
   var elControls = document.getElementById("book-controls");
   var elProgress = document.getElementById("book-progress");
 
-  var winLayer = document.getElementById("window-layer");
 
   var pageFlip = null, contentsIndex = 0, chapterStartIndex = {}, portrait = false;
 
@@ -240,6 +239,7 @@
       if (strip) art.appendChild(strip);
       plainEl.appendChild(art);
     });
+    if (window.LocWindows) LocWindows.sync();
   }
 
   // ---- assemble & init ----
@@ -288,6 +288,7 @@
       showPageCorners: true, disableFlipByClick: true
     });
     pageFlip.loadFromHTML(flipEl.querySelectorAll(".page"));
+    if (window.LocWindows) LocWindows.sync(); // mark saved places on the new pages
     pageFlip.on("flip", updateProgress);
     pageFlip.on("changeState", updateNav);
     updateProgress();
@@ -366,141 +367,28 @@
     if (!plain) updateNav();
   }
 
-  // ================= draggable location windows (desktop style) =============
-  var openWins = {};     // id -> window element
-  var winOrder = [];     // focus stack (last = topmost)
-  var zTop = 2000;
-  var cascade = 0;
-
-  function windowBody(l) {
-    var storiesHtml = '<span class="label">Appears in:</span>' +
-      l.stories.map(function (s) {
-        return '<button type="button" class="story-chip" data-story="' + esc(s) + '">' + esc(s) + "</button>";
-      }).join("");
-    var mapHtml = l.mapLink
-      ? '<a class="win-maplink" href="' + esc(l.mapLink) + '" target="_blank" rel="noopener noreferrer">Map it out ' +
-        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
-        '<path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"/></svg></a>' : "";
-    return (
-      '<figure class="win-figure">' +
-        '<img class="win-img" src="' + esc(l.image) + '" alt="' + esc(l.alt) + '">' +
-        '<figcaption class="win-caption">' + esc(l.alt) + "</figcaption>" +
-      "</figure>" +
-      '<div class="win-content">' +
-        '<p class="win-tag">' + esc(l.categoryLabel) + "</p>" +
-        '<div class="win-stories">' + storiesHtml + "</div>" +
-        '<p class="win-desc">' + esc(l.description) + "</p>" +
-        (mapHtml ? '<div class="win-actions">' + mapHtml + "</div>" : "") +
-      "</div>"
-    );
+  // place windows live in loc-windows.js; story chips flip the book here
+  if (window.LocWindows) {
+    LocWindows.onStory = function (title) {
+      var num = null;
+      BOOK.chapters.forEach(function (c) { if (c.title === title) num = c.number; });
+      if (num == null) return;
+      if (plainMode) { jumpToChapter(num); return; }
+      if (!isOpen()) openBook();
+      if (chapterStartIndex[num] != null) flipTo(chapterStartIndex[num]);
+    };
   }
-
-  function focusWindow(win) {
-    win.style.zIndex = ++zTop;
-    var i = winOrder.indexOf(win);
-    if (i !== -1) winOrder.splice(i, 1);
-    winOrder.push(win);
-    winOrder.forEach(function (w) { w.classList.toggle("is-active", w === win); });
-  }
-
-  function closeWindow(win) {
-    var id = win.dataset.id;
-    var i = winOrder.indexOf(win);
-    if (i !== -1) winOrder.splice(i, 1);
-    delete openWins[id];
-    var opener = win._opener;
-    win.remove();
-    if (winOrder.length) focusWindow(winOrder[winOrder.length - 1]);
-    else if (opener && opener.focus) opener.focus();
-  }
-
-  function openWindow(id, trigger) {
-    var l = byId[id]; if (!l) return;
-    if (openWins[id]) { focusWindow(openWins[id]); openWins[id].focus(); return; }
-
-    var win = el("div", "loc-window");
-    win.dataset.id = id;
-    win.setAttribute("role", "dialog");
-    win.setAttribute("aria-label", l.name);
-    win.tabIndex = -1;
-    win._opener = trigger || document.activeElement;
-
-    var titleId = "win-title-" + id;
-    win.innerHTML =
-      '<div class="win-bar">' +
-        '<span class="win-orn" aria-hidden="true">&#10087;</span>' +
-        '<h2 class="win-title" id="' + titleId + '">' + esc(l.name) + "</h2>" +
-        '<button type="button" class="win-close" aria-label="Close ' + esc(l.name) + '">&times;</button>' +
-      "</div>" +
-      '<div class="win-body">' + windowBody(l) + "</div>";
-    win.setAttribute("aria-labelledby", titleId);
-
-    // position: centred-ish with a cascade offset; mobile = pinned
-    var mobile = window.innerWidth <= 640;
-    win.classList.toggle("is-mobile", mobile);
-    winLayer.appendChild(win);
-    if (!mobile) {
-      var lw = win.offsetWidth, lh = win.offsetHeight;
-      var baseX = Math.max(12, (winLayer.clientWidth - lw) / 2 - 80);
-      var baseY = Math.max(12, (winLayer.clientHeight - lh) / 2 - 60);
-      var off = (cascade % 6) * 26;
-      cascade++;
-      win.style.left = Math.min(baseX + off, Math.max(12, winLayer.clientWidth - lw - 12)) + "px";
-      win.style.top = Math.min(baseY + off, Math.max(12, winLayer.clientHeight - lh - 12)) + "px";
-    }
-
-    openWins[id] = win;
-    focusWindow(win);
-
-    // wire controls
-    win.querySelector(".win-close").addEventListener("click", function () { closeWindow(win); });
-    win.addEventListener("pointerdown", function () { focusWindow(win); }, true);
-    win.querySelectorAll(".story-chip").forEach(function (chip) {
-      chip.addEventListener("click", function () {
-        var num = null;
-        BOOK.chapters.forEach(function (c) { if (c.title === chip.dataset.story) num = c.number; });
-        if (!plainMode && num != null && chapterStartIndex[num] != null) flipTo(chapterStartIndex[num]);
-      });
-    });
-    makeDraggable(win, win.querySelector(".win-bar"));
-    win.focus();
-  }
-
-  function makeDraggable(win, handle) {
-    handle.addEventListener("pointerdown", function (e) {
-      if (e.target.closest(".win-close")) return;
-      if (win.classList.contains("is-mobile")) return;
-      focusWindow(win);
-      var r = win.getBoundingClientRect(), lr = winLayer.getBoundingClientRect();
-      var offX = e.clientX - r.left, offY = e.clientY - r.top;
-      handle.classList.add("dragging");
-      function move(ev) {
-        var x = ev.clientX - lr.left - offX, y = ev.clientY - lr.top - offY;
-        x = Math.max(0, Math.min(x, winLayer.clientWidth - 56));
-        y = Math.max(0, Math.min(y, winLayer.clientHeight - 30));
-        win.style.left = x + "px"; win.style.top = y + "px";
-      }
-      function up() {
-        handle.classList.remove("dragging");
-        document.removeEventListener("pointermove", move);
-        document.removeEventListener("pointerup", up);
-      }
-      document.addEventListener("pointermove", move);
-      document.addEventListener("pointerup", up);
-      e.preventDefault();
-    });
-  }
+  function windowsOpen() { return window.LocWindows ? LocWindows.count() : 0; }
 
   // delegation
   document.addEventListener("click", function (e) {
     var mention = e.target.closest(".loc-mention, .place-chip");
-    if (mention) { e.preventDefault(); openWindow(mention.dataset.id, mention); return; }
+    if (mention) { e.preventDefault(); if (window.LocWindows) LocWindows.open(mention.dataset.id, mention); return; }
     var tl = e.target.closest(".toc-link");
     if (tl) { e.preventDefault(); flipTo(parseInt(tl.dataset.flip, 10)); }
   });
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && winOrder.length) { closeWindow(winOrder[winOrder.length - 1]); return; }
-    if (winOrder.length || plainMode) return;
+    if (windowsOpen() || plainMode) return;
     if (e.key === "ArrowLeft") goPrev();
     else if (e.key === "ArrowRight") goNext();
   });

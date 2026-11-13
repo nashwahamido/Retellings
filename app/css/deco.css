@@ -292,3 +292,15 @@ body.dark { --deco-window: url("deco/window-ink.svg"); }
 @media (prefers-reduced-motion: reduce) {
   :root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink)::before { transition: none; }
 }
+
+/* "My Tour" count badge in the navigation */
+.nav-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 1.35em; height: 1.35em; padding: 0 0.3em; margin-left: 0.45em;
+  border-radius: 1em; vertical-align: 0.1em;
+  font-size: 0.78em; font-weight: 700; letter-spacing: 0; line-height: 1;
+  color: #1a2340 !important; -webkit-text-fill-color: #1a2340;
+  background: linear-gradient(180deg, #f6e2a8, #c39a48) !important;
+  box-shadow: 0 0 0 1px #8a6a2e;
+  text-shadow: none;
+}
