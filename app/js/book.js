@@ -33,7 +33,8 @@
   var elMode = document.getElementById("book-mode");
   var elChapter = document.getElementById("book-chapter");
   var elHero = document.getElementById("book-hero");
-  var elCover = document.getElementById("book-cover");
+  var elToggle = document.getElementById("book-toggle");
+  var elControls = document.getElementById("book-controls");
   var elProgress = document.getElementById("book-progress");
 
   var winLayer = document.getElementById("window-layer");
@@ -296,8 +297,15 @@
   }
   function updateNav() {
     if (!pageFlip) return;
+    if (!plainMode && !isOpen()) { setReadingControls(false); return; } // 3D view: controls greyed out
     elPrev.disabled = current() <= 0;
     elNext.disabled = current() >= pageCount() - 1;
+  }
+  // page-turning controls only act on the open book; grey them out otherwise
+  function setReadingControls(on) {
+    [elPrev, elNext, elContents].forEach(function (b) { b.disabled = !on; });
+    if (elChapter) elChapter.disabled = !on && !plainMode;
+    if (elControls) elControls.classList.toggle("is-closed", !on && !plainMode);
   }
   function goPrev() { if (pageFlip) pageFlip.flipPrev(); }
   function goNext() { if (pageFlip) pageFlip.flipNext(); }
@@ -341,6 +349,9 @@
     elMode.textContent = plain ? "Read as a flip-book" : "Read as plain text";
     elMode.setAttribute("aria-pressed", String(plain));
     [elPrev, elNext, elContents].forEach(function (b) { b.disabled = plain; });
+    if (elToggle) elToggle.hidden = plain;
+    if (elChapter) elChapter.disabled = false;
+    if (elControls) elControls.classList.remove("is-closed");
     if (!plain) updateNav();
   }
 
@@ -487,20 +498,37 @@
   elNext.addEventListener("click", goNext);
   elContents.addEventListener("click", function () { flipTo(contentsIndex); });
   elMode.addEventListener("click", function () { setMode(!plainMode); });
-  if (elChapter) elChapter.addEventListener("change", function () { jumpToChapter(parseInt(this.value, 10)); });
+  if (elChapter) elChapter.addEventListener("change", function () {
+    var num = parseInt(this.value, 10);
+    if (!plainMode && !isOpen()) {
+      // opening from the 3D view: go straight to the chapter (an animated
+      // turn requested in the same moment as opening gets dropped)
+      openBook();
+      if (pageFlip && chapterStartIndex[num] != null) { try { pageFlip.turnToPage(chapterStartIndex[num]); } catch (e) {} updateProgress(); }
+      return;
+    }
+    jumpToChapter(num);
+  });
 
-  // 3D book object -> flat reading view, and back
+  // 3D book object <-> flat reading view; one toggle button reads Open/Close
+  function isOpen() { return stage.classList.contains("is-open"); }
   function openBook() {
     stage.classList.add("is-open");
+    setReadingControls(true);
+    if (elToggle) { elToggle.textContent = "Close the book"; elToggle.setAttribute("aria-pressed", "true"); }
     // go straight into the stories: open on Chapter I (no closed-cover view)
     if (pageFlip && chapterStartIndex[1] != null && current() < chapterStartIndex[1]) {
       try { pageFlip.turnToPage(chapterStartIndex[1]); } catch (e) {}
     }
     updateProgress();
   }
-  function showCover() { stage.classList.remove("is-open"); }
+  function closeBook() {
+    stage.classList.remove("is-open");
+    setReadingControls(false);
+    if (elToggle) { elToggle.textContent = "View the book"; elToggle.setAttribute("aria-pressed", "false"); }
+  }
   if (elHero) elHero.addEventListener("click", openBook);
-  if (elCover) elCover.addEventListener("click", showCover);
+  if (elToggle) elToggle.addEventListener("click", function () { isOpen() ? closeBook() : openBook(); });
 
   var rt = null;
   window.addEventListener("resize", function () {

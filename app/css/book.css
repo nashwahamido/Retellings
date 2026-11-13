@@ -66,20 +66,10 @@
 .book-stage.is-open .book-hero { opacity: 0; visibility: hidden; pointer-events: none; }
 .book-stage:not(.is-open) .book-viewport { visibility: hidden; }
 
-.book-hero__hint {
-  font-family: "EB Garamond", Georgia, serif;
-  font-size: 1.15rem;
-  letter-spacing: 0.04em;
-  color: #e9d8a7;
-  padding: 0.35rem 1.1rem;
-  border: 1px solid #cfae6b66;
-  border-radius: 100px;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-.book-hero:hover .book-hero__hint,
-.book-hero:focus-visible .book-hero__hint {
-  background: #cfae6b; color: #241a11; outline: none;
-}
+/* while the 3D book is showing, the page-turning controls are greyed out */
+.book-controls.is-closed #book-progress,
+.book-controls.is-closed .book-jump { opacity: 0.4; }
+.book-select:disabled { cursor: default; }
 
 /* live 3D model (three.js) — the SVG inside is the fallback */
 .book3d-mount {

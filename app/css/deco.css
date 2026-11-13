@@ -23,7 +23,7 @@ body.dark {
 /* ------------------------------------------------------------------ *
    Buttons: pointed plate with a diamond at each end
  * ------------------------------------------------------------------ */
-:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .book-hero__hint, .mobile-menu ul a) {
+:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a) {
   position: relative;
   isolation: isolate;
   z-index: 0;
@@ -52,8 +52,10 @@ body.dark {
   text-shadow: 0 1px 0 #00000080, 0 0 1px #f6e2a855;
   transition: filter 0.2s ease, transform 0.1s ease;
 }
+/* the plates set a display value, which would otherwise override [hidden] */
+:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a)[hidden] { display: none !important; }
 /* the plate itself */
-:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .book-hero__hint, .mobile-menu ul a)::before {
+:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a)::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -65,11 +67,11 @@ body.dark {
   filter: drop-shadow(0 2px 3px #00000040);
   transition: filter 0.2s ease;
 }
-:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .book-hero__hint, .mobile-menu ul a):is(:hover, :focus-visible):not(:disabled) {
+:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a):is(:hover, :focus-visible):not(:disabled) {
   color: #fff3cf !important;
   text-shadow: 0 1px 0 #00000080, 0 0 8px #f1d58f99;
 }
-:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .book-hero__hint, .mobile-menu ul a):is(:hover, :focus-visible):not(:disabled)::before {
+:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a):is(:hover, :focus-visible):not(:disabled)::before {
   filter: brightness(1.25) drop-shadow(0 0 6px #d2ae6380) drop-shadow(0 2px 3px #00000040);
 }
 :root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a):active:not(:disabled) { transform: translateY(1px); }
@@ -92,9 +94,6 @@ body.dark {
 :root body .btnjump { font-size: 0.8em; height: 2.4em; vertical-align: middle; margin-left: 0.6em; }
 /* the walking-tour tagline styles every span as a navy tag; not inside the plate */
 :root body .btnjump :is(.btn-text, .btn-icon) { background: none !important; padding: 0 !important; margin: 0 !important; color: inherit !important; font: inherit !important; border: 0 !important; }
-
-/* the "Open the book" prompt sits on the dark stage: give it room */
-:root body .book-hero__hint { font-size: 1rem; padding: 0 2.2em !important; }
 
 /* the window's map link is a plate too */
 :root body .win-maplink { font-size: 0.85rem; }
@@ -291,5 +290,5 @@ body.dark { --deco-window: url("deco/window-ink.svg"); }
   header nav ul::before { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  :root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .book-hero__hint)::before { transition: none; }
+  :root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink)::before { transition: none; }
 }

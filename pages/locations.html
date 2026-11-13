@@ -93,11 +93,10 @@
         <!-- Flip-book (hidden in plain-text mode) -->
         <div class="book-stage" id="book-stage">
           <!-- 3D book object: click to open to the flat reading view -->
-          <button type="button" class="book-hero" id="book-hero" aria-label="Open the book">
+          <button type="button" class="book-hero" id="book-hero" aria-label="View the book">
             <div class="book3d-mount" id="book3d-mount">
               <img class="book3d-img" src="assets/book-3d.svg" alt="" aria-hidden="true" width="640" height="440">
             </div>
-            <span class="book-hero__hint">Open the book &rsaquo;</span>
           </button>
 
           <div class="book-viewport">
@@ -111,12 +110,12 @@
         <article class="book-plain" id="book-plain" aria-label="Dubliners retellings, plain text" hidden></article>
 
         <!-- Controls (always visible, so you can switch back from plain mode) -->
-        <div class="book-controls">
+        <div class="book-controls is-closed" id="book-controls">
           <button type="button" class="book-btn" id="book-prev" aria-label="Previous page">&lsaquo; Previous</button>
           <button type="button" class="book-btn" id="book-contents">Contents</button>
           <span class="book-progress" id="book-progress" aria-live="polite" role="status"></span>
           <button type="button" class="book-btn" id="book-next" aria-label="Next page">Next &rsaquo;</button>
-          <button type="button" class="book-btn" id="book-cover">3D view</button>
+          <button type="button" class="book-btn book-toggle" id="book-toggle" aria-pressed="false">View the book</button>
           <div class="book-jump">
             <label for="book-chapter" class="book-jump-label">Chapter</label>
             <select id="book-chapter" class="book-select" aria-label="Jump to chapter"></select>
