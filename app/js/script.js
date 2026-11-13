@@ -1,4 +1,3 @@
-console.log("HELLO");
 
 /* past-present image slider script. reference code: https://codepen.io/Coding-in-Public/pen/NWyjZwO */
 document.querySelectorAll('.slider').forEach(slider => {
@@ -10,7 +9,7 @@ document.querySelectorAll('.slider').forEach(slider => {
 /* jump-to-top btn */
 let toTopBtn = document.querySelector('.back-to-top');
 
-window.addEventListener('scroll', e => {
+if (toTopBtn) window.addEventListener('scroll', e => {
     if (window.scrollY > 300) {
         toTopBtn.classList.add('show');
     } else {
@@ -18,7 +17,7 @@ window.addEventListener('scroll', e => {
     }
 });
 
-toTopBtn.addEventListener('click', e => {
+if (toTopBtn) toTopBtn.addEventListener('click', e => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
@@ -29,7 +28,6 @@ toggle = document.querySelectorAll(".toggle");
 
 //setting what color mode it's in
 let getMode = localStorage.getItem("mode");
-console.log(getMode);
 if (getMode && getMode === "dark"){
     body.classList.toggle("dark");
     toggle.forEach(t=>t.classList.toggle("active"));
@@ -56,18 +54,16 @@ const menu = document.querySelector('.mobile-menu');
 const closeMenu = document.querySelector('.close-menu'); 
 
 
-hamburger.addEventListener('click', () => {
+if (hamburger) hamburger.addEventListener('click', () => {
     if(!menu.classList.contains('shown')){ 
     menu.classList.add('shown');
-    console.log('mobile menu shown');
     } 
 });
 
-closeMenu.addEventListener('click', () => {
+if (closeMenu) closeMenu.addEventListener('click', () => {
     if(menu.classList.contains('shown')){
          menu.classList.remove('shown');
          
-        console.log('mobile menu hidden');
     }
 });
 

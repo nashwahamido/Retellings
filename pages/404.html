@@ -3,17 +3,22 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found</title>
+    <title>Page not found — Retellings</title>
+    <meta name="description" content="This page could not be found.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../app/css/variable.css">
     <link rel="stylesheet" href="../app/css/global.css">
-    <link rel="stylesheet" href="../app/css/404.css">
-    <link rel="stylesheet" href="../app/css/deco.css" />
+    <link rel="stylesheet" href="../app/css/deco.css">
+    <link rel="stylesheet" href="../app/css/folio.css">
     <script src="../app/js/script.js" defer></script>
+    <script src="../app/js/folio.js" defer></script>
   </head>
   <body>
+    <!-- Back to top button -->
+    <a class="back-to-top" aria-label="back-to-top Button"><img loading="lazy" src="assets/toTopBtn.svg" Alt="Back to top button"></img></a>
+
     <!-- hamburger menu: shown when width <= 768px -->
     <div class="mobile-menu">
         <div class="close-menu">
@@ -23,12 +28,12 @@
                 </path>
             </svg>
         </div>
-        <ul>
-            <li><a href="index.html">Homepage</a></li>
-            <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-            <li><a href="walking-tour.html">My Tour</a></li>
-            <li><a href="locations.html">Dubliner's Locations</a></li>
-            <li><a href="about.html">About Us</a></li>
+        <ul aria-label="Contents">
+            <li><a href="index.html"><span class="toc-no">&#8212;</span> The Cover</a></li>
+            <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+            <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
+            <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+            <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
             <li>
                 <div class="toggle"></div>
             </li>
@@ -37,53 +42,48 @@
 
     <!-- HEADER / NAVIGATION -->
     <header>
-        <a href="index.html" aria-label="Retellings - Home" class="logo-container">
-            <img src="assets/logo_navy.png" alt="Retellings Logo" class="logo">
-            <img src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo">
+        <a href="index.html" aria-label="Retellings – The Cover" class="logo-container">
+            <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo, merging a map pin shaped with a fountain pen.s" class="logo">
+            <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo, merging a map pin shaped with a fountain pen." class="logo">
         </a>
-        <nav aria-label="Main navigation">
+        <nav aria-label="Contents">
             <ul>
-                <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-                <li><a href="walking-tour.html">My Tour</a></li>
-                <li><a href="locations.html">Dubliner's Locations</a></li>
-                <li><a href="about.html">About Us</a></li>
+                <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
+                <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
                 <li><div class="toggle"></div></li>
             </ul>
         </nav>
         <button class="nav-hamburger">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#37465e" viewBox="0 0 256 256">
+            <svg xmlns="https://www.w3.org/2000/svg" fill="#37465e" viewBox="0 0 256 256">
                 <path
                     d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z">
                 </path>
             </svg>
         </button>
     </header>
-
-    <main>
-
-        <!-- SECTION 1 - 404 ERROR MESSAGE -->
-        <section aria-label="Page not found">
-            <h1>404</h1>
-            <p>The page you're looking for either doesn't exist or another error occurred.</p>
-
-            <!-- JAMES JOYCE QUOTE -->
-            <blockquote>
-                <img loading="lazy" src="assets/QuotesIcon.png" alt="Open Quote">
-                <p>Mistakes are the portals of discovery.</p>
-                <cite>- James Joyce</cite>
-                <img loading="lazy" src="assets/QuotesIcon.png" alt="End Quote">
-            </blockquote>
-
-            <!-- RETURN HOME LINK -->
-            <a href="index.html" class="btn btn-s3">Go Back</a>
-        </section>
-
+    <main class="folio">
+      <section class="folio-head erratum" aria-labelledby="nf-title">
+        <span class="folio-kicker">Erratum &middot; page 404</span>
+        <h1 id="nf-title">This page is missing from the book</h1>
+        <div class="folio-rule" aria-hidden="true"><span></span></div>
+        <blockquote class="erratum-quote">
+          <p>&ldquo;Mistakes are the portals of discovery.&rdquo;</p>
+          <cite>James Joyce</cite>
+        </blockquote>
+        <p class="folio-lead">The page you were looking for doesn&rsquo;t exist, or has been moved. Try one of these instead:</p>
+        <div class="folio-actions">
+          <a class="btn" href="index.html">Back to the cover</a>
+          <a class="btn" href="locations.html">Open the book</a>
+        </div>
+      </section>
     </main>
-    <!-- FOOTER -->
+
    <footer>
         <div class="footer-col-left">
             <div class="footer-brand">
-                <a href="index.html" aria-label="Retellings – Home">
+                <a href="index.html" aria-label="Retellings – The Cover">
                     <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo logo-footer">
                     <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo logo-footer">
                 </a>
@@ -104,6 +104,5 @@
                 <p>Without whom, this website wouldn’t have been possible to plan this tour.</p>
         </div>
     </footer>
-
   </body>
 </html>

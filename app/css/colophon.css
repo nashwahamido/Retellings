@@ -1,0 +1,31 @@
+/* =====================================================================
+   colophon.css — Colophon (about, team, thanks and sources)
+   ===================================================================== */
+.team {
+  list-style: none; padding: 0; margin: 1.6rem auto 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+  gap: 2rem 1.6rem; max-width: 62rem; text-align: center;
+}
+.member-photo {
+  display: block; width: 8.5rem; aspect-ratio: 1; margin: 0 auto 0.8rem;
+  border-radius: 50%; padding: 5px; background: var(--folio-paper);
+  border: 3px double var(--deco-gold, #d2ae63); box-shadow: 0 6px 16px #00000026;
+}
+.member-photo img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; filter: sepia(0.15); }
+.member h3 { font-family: var(--folio-serif); font-size: 1.3rem; font-weight: 600; margin: 0 0 0.25rem; }
+.member p { margin: 0; font-size: 0.86rem; color: var(--folio-soft); line-height: 1.45; }
+
+.thanks { text-align: center; font-family: var(--folio-serif); font-size: var(--fs-h5); margin: 0.6rem 0 0.2rem; }
+
+.sources { columns: 2 22rem; column-gap: 3rem; margin: 1.6rem auto 0; max-width: 64rem; }
+.sources-group { break-inside: avoid-column; margin-bottom: 1.8rem; }
+.sources-group h3 {
+  font-family: var(--folio-serif); font-size: 1.25rem; font-weight: 600; margin: 0 0 0.6rem;
+  padding-bottom: 0.35rem; border-bottom: 1px solid var(--folio-rule);
+}
+.sources-group h3 .num { font-size: 0.9rem; letter-spacing: 0.2em; color: var(--folio-soft); margin-right: 0.6rem; }
+.sources-list { margin: 0; padding-left: 2.2rem; font-size: 0.9rem; line-height: 1.5; }
+.sources-list li { margin-bottom: 0.55rem; padding-left: 0.2rem; scroll-margin-top: 6rem; overflow-wrap: anywhere; }
+.sources-list li::marker { font-family: var(--folio-serif); color: var(--folio-soft); }
+.sources-list a { color: inherit; text-decoration-color: var(--folio-accent); text-underline-offset: 2px; }
+.sources-list li:target { background: color-mix(in srgb, var(--deco-gold, #d2ae63) 25%, transparent); outline: 1px solid var(--deco-gold, #d2ae63); outline-offset: 3px; }

@@ -9,14 +9,15 @@ Retellings is an accessible website that brings James Joyce's *Dubliners* to lif
 
 ## Pages
 
-| Page | Content |
-| --- | --- |
-| Home | Introduction to Joyce and his Dublin, with an image gallery |
-| Life of James Joyce | Joyce's life and work |
-| Dubliner's Walking Tour | A walking route through the stories' locations, with audio |
-| Dubliner's Locations | Filterable location cards, past and present |
-| About Us | The team and the project's accessibility plan |
-| Credits & Sources | Every reference and image credit, linked from the text |
+The site reads like a book, and the navigation is its table of contents.
+
+| Page | File | Content |
+| --- | --- | --- |
+| The Cover | `pages/index.html` | Title, the 3D book as the way in, the contents, and plates of Joyce's Dublin |
+| I. The Preface | `pages/life-of-joyce.html` | Joyce's life, *Dubliners*, and further reading |
+| II. The Book | `pages/locations.html` | An interactive book: each story's lines naming Dublin places, with windows for every place |
+| III. My Tour | `pages/walking-tour.html` | Saved places on a map: reorder, best order, distances, eat & rest stops, a suggested walk |
+| IV. Colophon | `pages/about.html` | The edition, the original team, thanks, and every source (`credits.html` redirects here) |
 
 ## Accessibility
 

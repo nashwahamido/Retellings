@@ -311,3 +311,7 @@ body.dark { --deco-window: url("deco/window-ink.svg"); }
   box-shadow: 0 0 0 1px #8a6a2e;
   text-shadow: none;
 }
+
+/* table-of-contents numerals in the navigation */
+header nav ul a .toc-no { font-family: "EB Garamond", Georgia, serif; font-size: 1.05em; letter-spacing: 0.04em; margin-right: 0.15em; }
+.mobile-menu ul a .toc-no { font-family: "EB Garamond", Georgia, serif; margin-right: 0.35em; opacity: 0.85; }

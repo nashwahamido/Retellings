@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dubliner's Locations</title>
+    <title>The Book — Retellings</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../app/css/book.css" />
     <link rel="stylesheet" href="../app/css/windows.css" />
     <link rel="stylesheet" href="../app/css/deco.css" />
+    <link rel="stylesheet" href="../app/css/folio.css" />
     <script type="importmap">
       { "imports": { "three": "../app/js/vendor/three/three.module.min.js" } }
     </script>
@@ -44,32 +45,32 @@
           </path>
         </svg>
       </div>
-      <ul>
-        <li><a href="index.html">Homepage</a></li>
-        <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-        <li><a href="walking-tour.html">My Tour</a></li>
-        <li><a href="locations.html">Dubliner's Locations</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li>
-          <div class="toggle"></div>
-        </li>
-      </ul>
+      <ul aria-label="Contents">
+            <li><a href="index.html"><span class="toc-no">&#8212;</span> The Cover</a></li>
+            <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+            <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
+            <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+            <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+            <li>
+                <div class="toggle"></div>
+            </li>
+        </ul>
     </div>
 
     <!-- HEADER / NAVIGATION -->
     <header>
-      <a href="index.html" aria-label="Retellings - Home" class="logo-container">
+      <a href="index.html" aria-label="Retellings – The Cover" class="logo-container">
         <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo" />
         <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo" />
       </a>
-      <nav aria-label="Main navigation">
-        <ul>
-          <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-          <li><a href="walking-tour.html">My Tour</a></li>
-          <li><a href="locations.html">Dubliner's Locations</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><div class="toggle"></div></li>
-        </ul>
+      <nav aria-label="Contents">
+            <ul>
+                <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
+                <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+                <li><div class="toggle"></div></li>
+            </ul>
       </nav>
       <button class="nav-hamburger">
         <svg xmlns="https://www.w3.org/2000/svg" fill="#37465e" viewBox="0 0 256 256">
@@ -84,6 +85,7 @@
       <!-- SECTION 1 - THE INTERACTIVE BOOK -->
       <section aria-label="Dubliners — the interactive book">
         <div class="book-intro">
+          <span class="book-kicker">II &middot; The Book</span>
           <h1>A Book of Records</h1>
           <p class="page-lead">
             Dublin in Joyce&rsquo;s own words. Turn to any story to read the very

@@ -492,6 +492,12 @@
       elMode.hidden = true; setMode(true); stage.hidden = true; return;
     }
     build(); setMode(false);
+    // arriving from the Cover ("Open the book"): open straight into the stories
+    if (location.hash === "#read") {
+      openBook();
+      var top = stage.getBoundingClientRect().top + window.scrollY - 16;
+      window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
+    }
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot).catch(boot);
   else boot();

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Tour</title>
+    <title>My Tour — Retellings</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../app/css/windows.css">
     <link rel="stylesheet" href="../app/css/tour.css">
     <link rel="stylesheet" href="../app/css/deco.css" />
+    <link rel="stylesheet" href="../app/css/folio.css" />
     <script src="../app/js/locations-data.js" defer></script>
     <script src="../app/js/tour-data.js" defer></script>
     <script src="../app/js/nearby-data.js" defer></script>
@@ -38,12 +39,12 @@
                 </path>
             </svg>
         </div>
-        <ul>
-            <li><a href="index.html">Homepage</a></li>
-            <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-            <li><a href="walking-tour.html">My Tour</a></li>
-            <li><a href="locations.html">Dubliner's Locations</a></li>
-            <li><a href="about.html">About Us</a></li>
+        <ul aria-label="Contents">
+            <li><a href="index.html"><span class="toc-no">&#8212;</span> The Cover</a></li>
+            <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+            <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
+            <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+            <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
             <li>
                 <div class="toggle"></div>
             </li>
@@ -52,16 +53,16 @@
 
     <!-- HEADER / NAVIGATION -->
     <header>
-        <a href="index.html" aria-label="Retellings - Home" class="logo-container">
+        <a href="index.html" aria-label="Retellings – The Cover" class="logo-container">
             <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo">
             <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo">
         </a>
-        <nav aria-label="Main navigation">
+        <nav aria-label="Contents">
             <ul>
-                <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-                <li><a href="walking-tour.html">My Tour</a></li>
-                <li><a href="locations.html">Dubliner's Locations</a></li>
-                <li><a href="about.html">About Us</a></li>
+                <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
+                <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
                 <li><div class="toggle"></div></li>
             </ul>
         </nav>
@@ -78,7 +79,7 @@
 
         <!-- SECTION 1 - MY TOUR: intro -->
         <section class="tour-intro" aria-labelledby="tour-title">
-            <span class="tour-kicker">Retellings &middot; Your itinerary</span>
+            <span class="tour-kicker">III &middot; Your itinerary</span>
             <h1 id="tour-title">My Tour</h1>
             <p class="tour-lead">The places you&rsquo;ve gathered from the book, set out on the map of Dublin. Reorder them to plan your walk, or start from our suggested route. Add places from <a href="locations.html">the book</a>, from the list below, or by selecting a faint pin on the map.</p>
         </section>

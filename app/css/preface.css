@@ -1,0 +1,21 @@
+/* =====================================================================
+   preface.css — The Preface (life of James Joyce)
+   ===================================================================== */
+.folio-h2--left { text-align: left !important; margin-bottom: 1rem !important; }
+.plate--narrow { max-width: 20rem; justify-self: center; }
+
+.shelf {
+  list-style: none; padding: 0; margin: 1.6rem auto 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+  gap: 2rem 2.6rem; max-width: 60rem;
+}
+.shelf-book { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1.2rem; align-items: start; }
+.shelf-book .plate-frame { padding: 6px; }
+.shelf-book img { display: block; width: 100%; height: auto; }
+.shelf-book h3 { font-family: var(--folio-serif); font-size: 1.35rem; font-weight: 600; margin: 0 0 0.3rem; line-height: 1.15; }
+.shelf-book p { margin: 0 0 0.6rem; font-size: 0.95rem; }
+.shelf-book .link-quiet { font-size: 0.95rem; }
+@media (max-width: 560px) {
+  .shelf { grid-template-columns: 1fr; }
+  .shelf-book { grid-template-columns: 5.5rem 1fr; }
+}

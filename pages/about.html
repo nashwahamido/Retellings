@@ -3,20 +3,23 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
+    <title>Colophon — Retellings</title>
+    <meta name="description" content="Who made Retellings, and every source and image it uses.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../app/css/variable.css">
     <link rel="stylesheet" href="../app/css/global.css">
-    <link rel="stylesheet" href="../app/css/about.css">
-    <link rel="stylesheet" href="../app/css/deco.css" />
+    <link rel="stylesheet" href="../app/css/colophon.css">
+    <link rel="stylesheet" href="../app/css/deco.css">
+    <link rel="stylesheet" href="../app/css/folio.css">
     <script src="../app/js/script.js" defer></script>
+    <script src="../app/js/folio.js" defer></script>
   </head>
   <body>
-     <!-- Back to top button -->
+    <!-- Back to top button -->
     <a class="back-to-top" aria-label="back-to-top Button"><img loading="lazy" src="assets/toTopBtn.svg" Alt="Back to top button"></img></a>
-    
+
     <!-- hamburger menu: shown when width <= 768px -->
     <div class="mobile-menu">
         <div class="close-menu">
@@ -26,12 +29,12 @@
                 </path>
             </svg>
         </div>
-        <ul>
-            <li><a href="index.html">Homepage</a></li>
-            <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-            <li><a href="walking-tour.html">My Tour</a></li>
-            <li><a href="locations.html">Dubliner's Locations</a></li>
-            <li><a href="about.html">About Us</a></li>
+        <ul aria-label="Contents">
+            <li><a href="index.html"><span class="toc-no">&#8212;</span> The Cover</a></li>
+            <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+            <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
+            <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+            <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
             <li>
                 <div class="toggle"></div>
             </li>
@@ -40,16 +43,16 @@
 
     <!-- HEADER / NAVIGATION -->
     <header>
-        <a href="index.html" aria-label="Retellings - Home" class="logo-container">
-            <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo">
-            <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo">
+        <a href="index.html" aria-label="Retellings – The Cover" class="logo-container">
+            <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo, merging a map pin shaped with a fountain pen.s" class="logo">
+            <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo, merging a map pin shaped with a fountain pen." class="logo">
         </a>
-        <nav aria-label="Main navigation">
+        <nav aria-label="Contents">
             <ul>
-                <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-                <li><a href="walking-tour.html">My Tour</a></li>
-                <li><a href="locations.html">Dubliner's Locations</a></li>
-                <li><a href="about.html">About Us</a></li>
+                <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
+                <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
                 <li><div class="toggle"></div></li>
             </ul>
         </nav>
@@ -61,87 +64,147 @@
             </svg>
         </button>
     </header>
-    <main>
-        <!-- SECTION 1 - HERO -->
-        <section aria-label="About Us hero">
-            <h1>About Us</h1>
-            <img loading="lazy" src="assets/Hero_about.png" alt="College Green, Dublin 1800, applied with oil-paint effect.">
-        </section>
+    <main class="folio">
+      <div class="folio-head">
+        <span class="folio-kicker">IV &middot; Colophon</span>
+        <h1>How this book was made</h1>
+        <p class="folio-sub">The people, the purpose and the sources</p>
+        <div class="folio-rule" aria-hidden="true"><span></span></div>
+      </div>
 
-        <!-- SECTION 2 - TEAM -->
-        <section aria-label="Meet the team">
-            <h2>Team</h2>
-            <p class="section-lead">We are a group of students from Trinity College Dublin, specializing in Interactive Digital Media. We all have a strong curiosity to discover Dublin, and wanted to dig deeper into the sceneries behind the stories.</p>
-            <ul>
-                <!-- TEAM MEMBER 1 -->
-                <li>
-                    <img loading="lazy" src="assets/Emma_Sun.png" alt="Photo of Emma Sun">
-                    <h3>Emma Sun</h3>
-                    <p>Wireframer, Copywriter, Illustrator, Front-end Developer</p>
-                </li>
-                <!-- TEAM MEMBER 2 -->
-                <li>
-                    <img loading="lazy" src="assets/Ge_You.png" alt="Photo of Ge You">
-                    <h3>Ge You</h3>
-                    <p>Interface Designer, Image Editor, Front-end Developer</p>
-                </li>
-                <!-- TEAM MEMBER 3 -->
-                <li>
-                    <img loading="lazy" src="assets/Logan_Dulski.png" alt="Photo of Logan Dulski">
-                    <h3>Logan Dulski</h3>
-                    <p>Project Manager, Logo Designer, Audio Editor, Front-end Developer</p>
-                </li>
-                <!-- TEAM MEMBER 4 -->
-                <li>
-                    <img loading="lazy" src="assets/Nashwa_Hamido.png" alt="Photo of Nashwa Hamido">
-                    <h3>Nashwa Hamido</h3>
-                    <p>Accessibility Reviewer, Logo Designer, Front-end Developer</p>
-                </li>
-                <!-- TEAM MEMBER 5 -->
-                <li>
-                    <img loading="lazy" src="assets/Yayi_Liu.png" alt="Photo of Yayi Liu">
-                    <h3>Yayi Liu</h3>
-                    <p>Photographer, Copywriter, Front-end Developer</p>
-                </li>
-            </ul>
-        </section>
+      <section class="folio-section" aria-labelledby="edition-title">
+        <h2 class="folio-h2" id="edition-title"><span class="num">&#10022;</span>About this edition</h2>
+        <div class="measure">
+          <p class="dropcap">Inspired by James Joyce&rsquo;s <em>Dubliners</em>, Retellings is a space for the bookworms, history buffs and travellers who want to look beyond the surface of the city. It began as a team project for the MSc in Interactive Digital Media at Trinity College Dublin, in the spring of 2026.</p>
+          <p>This edition, with its book of records, place windows and walking-tour planner, was redesigned by Nashwa Hamido.</p>
+        </div>
+        <div class="folio-actions">
+          <a class="btn" href="https://drive.google.com/file/d/1syxEjJ444AyrSEM038DZxU13RfFEmghK/view?usp=sharing" target="_blank" rel="noopener">Accessibility plan</a>
+        </div>
+      </section>
 
-        <!-- SECTION 3 - BACKGROUND & LINKS -->
-        <section aria-label="Project background" class="about-bg-section">
+      <section class="folio-section" aria-labelledby="team-title">
+        <h2 class="folio-h2" id="team-title"><span class="num">&#10022;</span>The original team</h2>
+        <p class="folio-sub">Students of Interactive Digital Media at Trinity College Dublin, curious to dig deeper into the scenery behind the stories.</p>
+        <ul class="team">
+          <li class="member">
+            <span class="member-photo"><img loading="lazy" src="assets/Emma_Sun.png" alt="Photo of Emma Sun"></span>
+            <h3>Emma Sun</h3>
+            <p>Wireframer, Copywriter, Illustrator, Front-end Developer</p>
+          </li>
+          <li class="member">
+            <span class="member-photo"><img loading="lazy" src="assets/Ge_You.png" alt="Photo of Ge You"></span>
+            <h3>Ge You</h3>
+            <p>Interface Designer, Image Editor, Front-end Developer</p>
+          </li>
+          <li class="member">
+            <span class="member-photo"><img loading="lazy" src="assets/Logan_Dulski.png" alt="Photo of Logan Dulski"></span>
+            <h3>Logan Dulski</h3>
+            <p>Project Manager, Logo Designer, Audio Editor, Front-end Developer</p>
+          </li>
+          <li class="member">
+            <span class="member-photo"><img loading="lazy" src="assets/Nashwa_Hamido.png" alt="Photo of Nashwa Hamido"></span>
+            <h3>Nashwa Hamido</h3>
+            <p>Accessibility Reviewer, Logo Designer, Front-end Developer</p>
+          </li>
+          <li class="member">
+            <span class="member-photo"><img loading="lazy" src="assets/Yayi_Liu.png" alt="Photo of Yayi Liu"></span>
+            <h3>Yayi Liu</h3>
+            <p>Photographer, Copywriter, Front-end Developer</p>
+          </li>
+        </ul>
+      </section>
 
-            <div class="about-bg-text">
-                <h2>Background</h2>
-                <p>Inspired by Dubliners, James Joyce, we developed Retellings as a space for the bookworms, history buffs and travellers who want to look beyond the surface of the city.</p>
-            </div>
+      <section class="folio-section" aria-labelledby="thanks-title">
+        <h2 class="folio-h2" id="thanks-title"><span class="num">&#10022;</span>With thanks to</h2>
+        <p class="thanks">Cathal O&rsquo;Connor &middot; Ren Paul &middot; Maiyse Abuleil</p>
+        <p class="folio-sub">without whom this tour could not have been planned.</p>
+      </section>
 
-            <div class="about-link-cards">
-                <a href="https://drive.google.com/file/d/1syxEjJ444AyrSEM038DZxU13RfFEmghK/view?usp=sharing"
-                   class="about-link-card"  aria-label="Open Accessibility Plan document">
-                    <div class="about-link-card__label">Document</div>
-                    <h3 class="about-link-card__title">Accessibility Plan</h3>
-                    <p class="about-link-card__desc">Read our detailed accessibility review and design decisions.</p>
-                    <span class="about-link-card__arrow" aria-hidden="true">&rarr;</span>
-                </a>
-
-                <a href="credits.html"
-                   class="about-link-card"
-                   aria-label="View Credits and Sources page">
-                    <div class="about-link-card__label">Page</div>
-                    <h3 class="about-link-card__title">Credits &amp; Sources</h3>
-                    <p class="about-link-card__desc">View all references, image credits, and acknowledgements.</p>
-                    <span class="about-link-card__arrow" aria-hidden="true">&rarr;</span>
-                </a>
-            </div>
-
-        </section>
-
+      <section class="folio-section" id="sources" aria-labelledby="sources-title">
+        <h2 class="folio-h2" id="sources-title"><span class="num">&#10022;</span>Sources</h2>
+        <p class="folio-sub">Every reference used in researching Retellings, grouped by part of the site. Numbers in the text link here.</p>
+        <div class="sources">
+          <section class="sources-group" aria-labelledby="sources-past-present">
+            <h3 id="sources-past-present"><span class="num">A</span>Past &amp; Present</h3>
+            <ol class="sources-list">
+              <li id="ref-1" value="1">Logan, J. (2023). Review of <cite>The Early Residential Buildings of Trinity College Dublin: Architecture, Financing, People</cite>, by R. A. Somerville. <cite>Irish Architectural and Decorative Studies</cite>, 26, 136–139.</li>
+              <li id="ref-2" value="2"><cite>History — About Trinity — Trinity College Dublin.</cite> (n.d.). <a href="https://www.tcd.ie/about/history/" rel="external noopener" target="_blank">tcd.ie/about/history</a></li>
+              <li id="ref-3" value="3">George's Street Arcade. (2022, August 22). <cite>George's Street Arcade.</cite> <a href="https://georgesstreetarcade.ie/about-us" rel="external noopener" target="_blank">georgesstreetarcade.ie/about-us</a></li>
+              <li id="ref-4" value="4">Bidwell, B., &amp; Heffer, L. (1982). <cite>The Joycean Way: A Topographic Guide to "Dubliners" &amp; "A Portrait of the Artist as a Young Man."</cite></li>
+              <li id="ref-5" value="5">Stephensgreen Shopping Centre. (2022, July 6). <cite>History — Stephensgreen Shopping Centre.</cite> <a href="https://stephensgreen.com/history/" rel="external noopener" target="_blank">stephensgreen.com/history</a></li>
+              <li id="ref-6" value="6">Mulliken, Jasmine. Shelbourne Hotel. <cite>Mapping Dubliners Project.</cite> <a href="https://mappingdubliners.org" rel="external noopener" target="_blank">mappingdubliners.org</a>, 2012.</li>
+              <li id="ref-7" value="7">O'Sullivan, M., &amp; O'Neill, B. (1999). <cite>The Shelbourne and Its People.</cite></li>
+              <li id="ref-8" value="8">The Shelbourne Dublin. (2025, November 24). <cite>The Shelbourne Dublin | Luxury 5 Star Dublin Hotel.</cite> <a href="https://theshelbourne.com/" rel="external noopener" target="_blank">theshelbourne.com</a></li>
+              <li id="ref-9" value="9">Gifford, D. (1982). <cite>Joyce Annotated: Notes for Dubliners and A Portrait of the Artist as a Young Man.</cite> University of California Press.</li>
+              <li id="ref-10" value="10">Mulliken, Jasmine. Dorset Street. <cite>Mapping Dubliners Project.</cite> <a href="https://mappingdubliners.org" rel="external noopener" target="_blank">mappingdubliners.org</a>, 2012.</li>
+              <li id="ref-11" value="11">Mulliken, Jasmine. Merrion Street. <cite>Mapping Dubliners Project.</cite> <a href="https://mappingdubliners.org" rel="external noopener" target="_blank">mappingdubliners.org</a>, 2012.</li>
+              <li id="ref-12" value="12">Mulliken, Jasmine. Donnybrook Tram(line). <cite>Mapping Dubliners Project.</cite> <a href="https://mappingdubliners.org" rel="external noopener" target="_blank">mappingdubliners.org</a>, 2012.</li>
+            </ol>
+          </section>
+          <section class="sources-group" aria-labelledby="sources-joyce">
+            <h3 id="sources-joyce"><span class="num">B</span>Life of James Joyce</h3>
+            <ol class="sources-list">
+              <li id="ref-13" value="13">James Joyce Centre. <cite>James Joyce — Biography.</cite> <a href="https://jamesjoyce.ie/james-joyce/" rel="external noopener" target="_blank">jamesjoyce.ie/james-joyce</a></li>
+              <li id="ref-14" value="14">Wikipedia contributors. <cite>Serial (literature).</cite> <a href="https://en.wikipedia.org/wiki/Serial_(literature)" rel="external noopener" target="_blank">en.wikipedia.org/wiki/Serial_(literature)</a></li>
+              <li id="ref-15" value="15">The Metropolitan Museum of Art. <cite>School of Paris.</cite> <a href="https://www.metmuseum.org/essays/school-of-paris" rel="external noopener" target="_blank">metmuseum.org/essays/school-of-paris</a></li>
+              <li id="ref-16" value="16">James Joyce Centre. <cite>James Joyce — Works.</cite> <a href="https://jamesjoyce.ie/work/" rel="external noopener" target="_blank">jamesjoyce.ie/work</a></li>
+              <li id="ref-17" value="17">Oxford Academic. <cite>Chapter abstract.</cite> <a href="https://academic.oup.com/book/11759/chapter-abstract/160785309?redirectedFrom=fulltext" rel="external noopener" target="_blank">academic.oup.com</a></li>
+              <li id="ref-18" value="18"><abbr title="JSTOR">JSTOR</abbr>. <a href="https://www.jstor.org/stable/25485124" rel="external noopener" target="_blank">jstor.org/stable/25485124</a></li>
+              <li id="ref-19" value="19">Wikipedia contributors. <cite>Charles Stewart Parnell.</cite> <a href="https://en.wikipedia.org/wiki/Charles_Stewart_Parnell" rel="external noopener" target="_blank">en.wikipedia.org/wiki/Charles_Stewart_Parnell</a></li>
+              <li id="ref-20" value="20">James Joyce Centre. <cite>James Joyce — Timeline.</cite> <a href="https://jamesjoyce.ie/timeline/" rel="external noopener" target="_blank">jamesjoyce.ie/timeline</a></li>
+            </ol>
+          </section>
+          <section class="sources-group" aria-labelledby="sources-locations">
+            <h3 id="sources-locations"><span class="num">C</span>All Locations</h3>
+            <ol class="sources-list">
+              <li id="ref-21" value="21">Rasmussen, I. D. (2021). <cite>James Joyce's Dubliners: Geography Taking Substance under our Eyes.</cite></li>
+              <li id="ref-22" value="22">Nuimgeography. (2019, October 2). <cite>Thinking Geographically about Joyce's "An Encounter."</cite> Eye on the World. <a href="https://maynoothgeography.wordpress.com/2019/10/02/thinking-geographically-about-joyces-an-encounter/" rel="external noopener" target="_blank">maynoothgeography.wordpress.com</a></li>
+              <li id="ref-23" value="23">O'Connor, A. V. (1990). <cite>The Dublin Sense of Place: Landscape vs. Literature.</cite> <abbr title="California State University, Northridge">CSUN</abbr> ScholarWorks. <a href="https://hdl.handle.net/10211.2/2607" rel="external noopener" target="_blank">hdl.handle.net/10211.2/2607</a></li>
+              <li id="ref-24" value="24">McMahon, M. (2011). <cite>Dublin Historic Industry Database</cite> (Report for Geological Survey of Ireland). Geological Survey of Ireland. <a href="https://gsi.geodata.gov.ie/downloads/Geochemistry/Reports/IE_GSI_Dublin_Historic_Industry_Database_Report.pdf" rel="external noopener" target="_blank">gsi.geodata.gov.ie</a></li>
+              <li id="ref-25" value="25">Bowker, G. (2011). <cite>James Joyce: A New Biography.</cite> In <cite>Choice Reviews Online</cite> (Vol. 50, Issue 09, pp. 50–4858). Farrar, Straus and Giroux.</li>
+              <li id="ref-26" value="26">Joyce, J., Jackson, J. W., &amp; McGinley, B. (1993). <cite>James Joyce's Dubliners: An Annotated Edition.</cite> Sinclair-Stevenson.</li>
+              <li id="ref-27" value="27">Wikipedia contributors. <cite>Dún Laoghaire.</cite> <a href="https://en.wikipedia.org/wiki/D%C3%BAn_Laoghaire" rel="external noopener" target="_blank">en.wikipedia.org/wiki/Dún_Laoghaire</a></li>
+            </ol>
+          </section>
+          <section class="sources-group" aria-labelledby="sources-dubliners">
+            <h3 id="sources-dubliners"><span class="num">D</span>Dubliners: Synopsis &amp; Facts</h3>
+            <ol class="sources-list">
+              <li id="ref-28" value="28">SparkNotes. <cite>Dubliners: Full Collection Summary.</cite> <a href="https://www.sparknotes.com/lit/dubliners/summary" rel="external noopener" target="_blank">sparknotes.com/lit/dubliners/summary</a></li>
+              <li id="ref-29" value="29">The American Reader. "20 May (1906): James Joyce to Grant Richards." <cite>The American Reader.</cite> <a href="https://theamericanreader.com/20-may-1906-james-joyce-to-grant-richards/" rel="external noopener" target="_blank">theamericanreader.com</a></li>
+              <li id="ref-30" value="30">StoryWeb. "166: James Joyce: 'The Dead'." <cite>StoryWeb.</cite> <a href="https://storyweb.libsyn.com/166-james-joyce-the-dead" rel="external noopener" target="_blank">storyweb.libsyn.com</a></li>
+              <li id="ref-31" value="31">SparkNotes. <cite>Dubliners: Full Collection Analysis.</cite> <a href="https://www.sparknotes.com/lit/dubliners/plot-analysis/" rel="external noopener" target="_blank">sparknotes.com/lit/dubliners/plot-analysis</a></li>
+              <li id="ref-32" value="32">SparkNotes. <cite>Dubliners: Themes.</cite> <a href="https://www.sparknotes.com/lit/dubliners/themes" rel="external noopener" target="_blank">sparknotes.com/lit/dubliners/themes</a></li>
+            </ol>
+          </section>
+          <section class="sources-group" aria-labelledby="sources-transport">
+            <h3 id="sources-transport"><span class="num">E</span>Transportation Maps &amp; Historic Facts</h3>
+            <ol class="sources-list">
+              <li id="ref-33" value="33">The National Archives of Ireland. <cite>Dublin Historic Maps 1900–1939.</cite> <a href="https://www.dublinhistoricmaps.ie/maps/1900-1939/index.html" rel="external noopener" target="_blank">dublinhistoricmaps.ie</a></li>
+              <li id="ref-34" value="34">Census of Ireland. <cite>Dublin — Transport.</cite> <a href="https://www.census.nationalarchives.ie/exhibition/dublin/transport.html" rel="external noopener" target="_blank">census.nationalarchives.ie</a></li>
+              <li id="ref-35" value="35">Gillham, J. C. (1981). <cite>Dublin United Tramways Track Layout in 1908.</cite> <a href="https://www.antiquemapsandprints.com/products/dublin-united-tramways-track-layout-in-1908-railways-roads-gillham-1981-map-p-6-014106" rel="external noopener" target="_blank">antiquemapsandprints.com</a></li>
+              <li id="ref-36" value="36">Wikimedia Commons. <cite><abbr title="Dublin United Tramways Company">DUTC</abbr> Tram Routes Early C20.</cite> <a href="https://commons.wikimedia.org/wiki/File:DUTC_tram_routes_early_C20.jpg" rel="external noopener" target="_blank">commons.wikimedia.org</a></li>
+              <li id="ref-37" value="37">Latitude Cartagene. <cite>Dublin Rail Map.</cite> <a href="https://latitude-cartagene.com/wp-content/uploads/2022/06/dublin-rail-map.pdf" rel="external noopener" target="_blank">latitude-cartagene.com</a></li>
+              <li id="ref-38" value="38">Transport for Ireland. <cite>Dublin Area Train &amp; Tram Services Network Map.</cite> <a href="https://www.transportforireland.ie/plan-a-journey/network-maps/dublin-area-train-tram-services/" rel="external noopener" target="_blank">transportforireland.ie</a></li>
+              <li id="ref-39" value="39">Wikipedia contributors. <cite>Dublinbikes.</cite> <a href="https://en.wikipedia.org/wiki/Dublinbikes" rel="external noopener" target="_blank">en.wikipedia.org/wiki/Dublinbikes</a></li>
+              <li id="ref-40" value="40"><abbr title="Public domain image repository">PICRYL</abbr>. <cite>Westmoreland Street Looking to O'Connell Bridge Including a Tram, Dublin City.</cite> <a href="https://picryl.com/media/westmoreland-street-looking-to-oconnell-bridge-including-a-tram-dublin-city-62a09e" rel="external noopener" target="_blank">picryl.com</a></li>
+              <li id="ref-41" value="41"><abbr title="Public domain image repository">PICRYL</abbr>. <cite>Dublin Luas.</cite> <a href="https://picryl.com/media/dublin-luas-acfb31" rel="external noopener" target="_blank">picryl.com</a></li>
+            </ol>
+          </section>
+          <section class="sources-group" aria-labelledby="sources-images">
+            <h3 id="sources-images"><span class="num">F</span>Free Images</h3>
+            <ol class="sources-list">
+              <li id="ref-42" value="42"><abbr title="Public domain image repository">PICRYL</abbr>. <cite>Dublin Image Search.</cite> <a href="https://picryl.com/search?q=dublin" rel="external noopener" target="_blank">picryl.com/search?q=dublin</a></li>
+            </ol>
+          </section>
+        </div>
+      </section>
     </main>
-   
-     <!-- FOOTER -->
+
    <footer>
         <div class="footer-col-left">
             <div class="footer-brand">
-                <a href="index.html" aria-label="Retellings – Home">
+                <a href="index.html" aria-label="Retellings – The Cover">
                     <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo logo-footer">
                     <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo logo-footer">
                 </a>
@@ -162,6 +225,5 @@
                 <p>Without whom, this website wouldn’t have been possible to plan this tour.</p>
         </div>
     </footer>
-
   </body>
 </html>

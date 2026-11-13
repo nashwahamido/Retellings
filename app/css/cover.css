@@ -1,0 +1,64 @@
+/* =====================================================================
+   cover.css — The Cover (home page): title, 3D book entrance, plates
+   ===================================================================== */
+.cover-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  margin-top: clamp(0.5rem, 3vw, 2rem);
+}
+.cover-title h1 {
+  font-family: var(--folio-serif);
+  font-weight: 600;
+  font-size: clamp(3.2rem, 7vw, 5.6rem);
+  line-height: 0.95;
+  margin: 0.4rem 0 0.3rem;
+}
+.cover-title .folio-sub { font-size: var(--fs-h5); }
+.cover-title .folio-rule { margin: 1.1rem 0; width: 12rem; }
+.cover-lead { font-size: var(--fs-h6); line-height: 1.6; max-width: 32rem; margin: 0; }
+.cover-title .folio-actions { align-items: center; }
+
+/* the 3D book, reusing the Book page's stage */
+.cover-stage {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  background: radial-gradient(130% 100% at 50% 10%, #2a241d 0%, #171310 55%, #0d0b09 100%);
+  box-shadow: inset 0 2px 30px #00000066, 0 18px 40px #00000030;
+  outline: 3px double #d2ae6399;
+  outline-offset: 6px;
+}
+.cover-stage .book-hero { text-decoration: none; }
+.cover-stage .book3d-mount { height: 82%; }
+.cover-stage-hint {
+  position: absolute; left: 50%; bottom: 1.1rem; translate: -50% 0;
+  font-family: "Epilogue", sans-serif; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; color: #ecd18e;
+  opacity: 0.75; transition: opacity 0.2s ease;
+}
+.cover-stage .book-hero:is(:hover, :focus-visible) .cover-stage-hint { opacity: 1; }
+.cover-stage .book-hero:focus-visible { outline: 2px solid #ecd18e; outline-offset: -8px; }
+
+@media (max-width: 900px) {
+  .cover-hero { grid-template-columns: 1fr; }
+  .cover-stage { aspect-ratio: 4 / 3; }
+}
+
+/* the plates (gallery) */
+.plates {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.4rem);
+  margin-top: 1.4rem;
+}
+.plates .plate-frame { aspect-ratio: 4 / 3; overflow: hidden; }
+.plates .plate img { height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.plates .plate:hover img { transform: scale(1.04); }
+.plates .plate figcaption { font-size: 0.86rem; }
+.plates:not(.show-all) .plate.is-extra { display: none; }
+.plates.show-all .plate.is-extra { animation: plate-in 0.4s ease both; }
+@keyframes plate-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .plates .plate img, .plates.show-all .plate.is-extra { transition: none; animation: none; } }

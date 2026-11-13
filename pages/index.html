@@ -3,16 +3,21 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Retellings — Dubliners, retold</title>
+    <meta name="description" content="Retellings brings James Joyce's Dubliners to life: the lines that name Dublin's places, their history, and a walk of your own.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../app/css/variable.css">
     <link rel="stylesheet" href="../app/css/global.css">
-    <link rel="stylesheet" href="../app/css/index.css">
-    <link rel="stylesheet" href="../app/css/deco.css" />
+    <link rel="stylesheet" href="../app/css/book.css">
+    <link rel="stylesheet" href="../app/css/cover.css">
+    <link rel="stylesheet" href="../app/css/deco.css">
+    <link rel="stylesheet" href="../app/css/folio.css">
+    <script type="importmap">{ "imports": { "three": "../app/js/vendor/three/three.module.min.js" } }</script>
+    <script type="module" src="../app/js/book3d.js"></script>
     <script src="../app/js/script.js" defer></script>
-    <script src="../app/js/loadmore-index.js" defer></script>
+    <script src="../app/js/folio.js" defer></script>
   </head>
   <body>
     <!-- Back to top button -->
@@ -27,12 +32,12 @@
                 </path>
             </svg>
         </div>
-        <ul>
-            <li><a href="index.html">Homepage</a></li>
-            <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-            <li><a href="walking-tour.html">My Tour</a></li>
-            <li><a href="locations.html">Dubliner's Locations</a></li>
-            <li><a href="about.html">About Us</a></li>
+        <ul aria-label="Contents">
+            <li><a href="index.html"><span class="toc-no">&#8212;</span> The Cover</a></li>
+            <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+            <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
+            <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+            <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
             <li>
                 <div class="toggle"></div>
             </li>
@@ -41,16 +46,16 @@
 
     <!-- HEADER / NAVIGATION -->
     <header>
-        <a href="index.html" aria-label="Retellings - Home" class="logo-container">
+        <a href="index.html" aria-label="Retellings – The Cover" class="logo-container">
             <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo, merging a map pin shaped with a fountain pen.s" class="logo">
             <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo, merging a map pin shaped with a fountain pen." class="logo">
         </a>
-        <nav aria-label="Main navigation">
+        <nav aria-label="Contents">
             <ul>
-                <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-                <li><a href="walking-tour.html">My Tour</a></li>
-                <li><a href="locations.html">Dubliner's Locations</a></li>
-                <li><a href="about.html">About Us</a></li>
+                <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
+                <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
                 <li><div class="toggle"></div></li>
             </ul>
         </nav>
@@ -62,153 +67,116 @@
             </svg>
         </button>
     </header>
-    <main>
-        <!-- SECTION 1 - HERO -->
-        <section aria-label="Hero">
-            <figure class="hero-container">
-                <img src="assets/Hero_home.png" alt="Painting of the Four Courts and the river Liffey, Dublin in 1837">
-                
-                <div class="hero-overlay"></div>
+    <main class="folio">
+      <!-- THE COVER: title, the 3D book as the way in, and the contents -->
+      <section class="cover-hero" aria-labelledby="cover-title">
+        <div class="cover-title">
+          <span class="folio-kicker">James Joyce&rsquo;s <em>Dubliners</em>, retold</span>
+          <h1 id="cover-title">Retellings</h1>
+          <p class="folio-sub">Where history and literature meet</p>
+          <div class="folio-rule" aria-hidden="true"><span></span></div>
+          <p class="cover-lead">Fifteen stories and sixty Dublin places. Read the lines of <em>Dubliners</em> that name the city&rsquo;s streets, bridges and houses, open each place to learn its past and present, and gather the ones you love into a walk of your own.</p>
+          <div class="folio-actions folio-actions--left">
+            <a class="btn" href="locations.html#read">Open the book</a>
+            <a class="link-quiet" href="walking-tour.html">or plan a walk &rarr;</a>
+          </div>
+        </div>
+        <div class="book-stage cover-stage" id="book-stage">
+          <a class="book-hero" id="book-hero" href="locations.html#read" aria-label="Open the book">
+            <span class="book3d-mount" id="book3d-mount">
+              <img class="book3d-img" src="assets/book-3d.svg" alt="" aria-hidden="true" width="640" height="440">
+            </span>
+            <span class="cover-stage-hint" aria-hidden="true">Open the book</span>
+          </a>
+        </div>
+      </section>
 
-                <figcaption>
-                    <div class="text-wrapper">
-                        <p>Where History and Literature Meet</p>
-                        <h1>Retellings</h1>
-                        <div class="hero-description">
-                            <p>Welcome to Retellings, where the historical heart of James Joyce's works comes alive. We trace the steps of 'Dubliners', map the locations, and retell the stories behind the literature.</p>
-                        </div>
-                    </div>
-                </figcaption>
-            </figure>
-        </section>
-        
-        <!-- SECTION 2 - WHO WAS JAMES JOYCE? -->
-        <section aria-label="Who was James Joyce?">
-            <a href="life-of-joyce.html" class="joyce-link">
-                <figure>
-                    <img loading="lazy"src="assets/Home_Section_jj.png" alt="Portrait Painting of James Joyce by Jacques-Émile Blanche in 1935">
-                    <figcaption>
-                        <h2>Who was<br>James Joyce?</h2>
-                        <p>James Augustine Aloysius Joyce (1882-1941) is considered one of Ireland’s most famous writers. Celebrated for his works “Dubliners”, “Ulysses” and more. </p>
-                    </figcaption>
-                </figure>
-            </a>
-        </section>
+      <section class="folio-section" aria-labelledby="contents-title">
+        <h2 class="folio-h2" id="contents-title"><span class="num">&#10022;</span>Contents</h2>
+        <div class="folio-rule" aria-hidden="true"><span></span></div>
+        <ol class="toc">
+            <li><a href="life-of-joyce.html">
+              <span class="toc-no">I</span><span class="toc-title">The Preface</span><span class="toc-dots" aria-hidden="true"></span><span class="toc-go" aria-hidden="true">Read &rarr;</span>
+              <span class="toc-desc">James Joyce, his life and the making of <em>Dubliners</em>.</span>
+            </a></li>
+            <li><a href="locations.html">
+              <span class="toc-no">II</span><span class="toc-title">The Book</span><span class="toc-dots" aria-hidden="true"></span><span class="toc-go" aria-hidden="true">Open &rarr;</span>
+              <span class="toc-desc">The fifteen stories, with every Dublin place Joyce names underlined.</span>
+            </a></li>
+            <li><a href="walking-tour.html">
+              <span class="toc-no">III</span><span class="toc-title">My Tour</span><span class="toc-dots" aria-hidden="true"></span><span class="toc-go" aria-hidden="true">Plan &rarr;</span>
+              <span class="toc-desc">The places you save, on a map of the city, with the walk between them.</span>
+            </a></li>
+            <li><a href="about.html">
+              <span class="toc-no">IV</span><span class="toc-title">Colophon</span><span class="toc-dots" aria-hidden="true"></span><span class="toc-go" aria-hidden="true">See &rarr;</span>
+              <span class="toc-desc">Who made Retellings, and every source and image we used.</span>
+            </a></li>
+        </ol>
+      </section>
 
-        <!-- SECTION 3 - TWO-COLUMN TEXT + LEARN MORE BUTTON -->
-        <section aria-label="About James Joyce">
-            <div>
-                <p>Born on February 2nd 1882, James Joyce is considered one of Ireland’s most celebrated writers for his books, Dubliners and Ulysses. The eldest of 10 children, Joyce lived in Brighton Square, Rathgar with his parents, John Stanislaus Joyce and Mary Jane “May” (née Murray). Joyce attended Clongowes Wood College, Belvedere College and University College, formally located on St. Stephen’s Green, before moving to Paris to study medicine. Joyce returned to Ireland in April 1903 to attend to his family after the death of his mother and stayed until 1904. During this time, he met his future wife Nora Barnacle, from county Galway. </p>
-            </div>
-            <div>
-                <p> During this time Joyce also wrote his first short story for the magazine Irish Homestead. In October 1904, Joyce and Nora left Ireland to live in Pola, now known as Pula Croatia, where Joyce became an english teacher. After 1904, Joyce only visited Ireland three other times with his last visit being in 1912. </p>
-                <a href="life-of-joyce.html" class="btn-s1">
-                    Learn More
-                    <div class="icon">
-                        <svg height="24" width="24" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                            <path d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor">
-                            </path>
-                        </svg>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <!-- SECTION 4 - JOYCE'S DUBLIN PHOTO GALLERY -->
-        <section aria-label="Joyce's Dublin photo gallery">
-            <h2>Joyce's Dublin</h2>
-            <div class="gallery-container">
-                    <figure class="card">
-                        <img loading="lazy" src="assets/GalleryImage1.png" alt="Sackville Street & O'Connell Bridge, Dublin in 1899">
-                        <figcaption class="gallery-description">
-                            <p>Sackville Street &amp; O'Connell Bridge, Dublin, ca. 1899. Photoglob Zürich, via <a href="https://commons.wikimedia.org/wiki/File:Flickr_-_%E2%80%A6trialsanderrors_-_Sackville_Street_%5E_O%27Connell_Bridge,_Dublin,_Ireland,_ca._1899.jpg" target="_blank">Wikimedia Commons</a>. Licensed under <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank">CC BY 2.0</a>.</p>
-                        </figcaption>
-                    </figure>
-                    <figure class="card">
-                        <img  loading="lazy" src="assets/GalleryImage2.jpg" alt="Trinity College in 1909">
-                        <figcaption class="gallery-description">
-                            <p>From <em>Ireland Yesterday and Today</em> by Hugh Sutherland (Philadelphia: 
-                            The North American, 1909). Public domain, via 
-                            <a href="https://commons.wikimedia.org/wiki/File:Ireland_yesterday_and_today_(1909)_(14770574771).jpg" target="_blank">Wikimedia Commons</a>.</p>
-                        </figcaption>
-                    </figure>
-                    <figure class="card">
-                        <img  loading="lazy" src="assets/GalleryImage3.png" alt="Bank of Ireland, Dublin between 1890 and 1900">
-                        <figcaption class="gallery-description">
-                            <p>Bank of Ireland, Dublin, ca. 1890–1900. Photoglob Zürich, photochrom print. 
-                            Public domain, via 
-                            <a href="https://commons.wikimedia.org/wiki/File:Bank_of_Ireland,_Dublin._County_Dublin,_Ireland-LCCN2002717395.jpg" target="_blank">Wikimedia Commons</a>.</p>
-                        </figcaption>
-                    </figure>
-                    <figure class="card">
-                        <img  loading="lazy" src="assets/GalleryImage4.png" alt="College Green, Dublin 1800">
-                        <figcaption class="gallery-description">
-                            <p>College Green, Dublin, 1800. Thomas Sautelle Roberts, via 
-                            <a href="https://commons.wikimedia.org/wiki/File:College_Green,_Dublin_1800.jpg" target="_blank">Wikimedia Commons</a>. Public domain.</p>
-                        </figcaption>
-                    </figure>
-                    <figure class="card">
-                        <img  loading="lazy" src="assets/StStephensGreenLake.png" alt="Swans on the lake at St Stephen's Green">
-                        <figcaption class="gallery-description">
-                            <p>St Stephen's Green, Dublin (2026). Photograph by Yayi Liu.</p>
-                        </figcaption>
-                    </figure>
-                    <figure class="card">
-                        <img  loading="lazy" src="assets/StStephensGreenStatues.png" alt="Statues in St Stephen's Green park">
-                        <figcaption class="gallery-description">
-                            <p>St Stephen's Green, Dublin (2026). Photograph by Yayi Liu.</p>
-                        </figcaption>
-                    </figure>
-                    <figure class="card">
-                        <img  loading="lazy" src="assets/JJDeathMask.png" alt="Death mask of James Joyce">
-                        <figcaption class="gallery-description">
-                            <p>The James Joyce Centre, Dublin (2026). Photograph by Yayi Liu.</p>
-                        </figcaption>
-                    </figure>
-                    <figure class="card">
-                        <img loading="lazy" src="assets/JJCenterPatio.png" alt="Patio of the James Joyce Centre">
-                        <figcaption class="gallery-description">
-                            <p>The James Joyce Centre, Dublin (2026). Photograph by Yayi Liu.</p>
-                        </figcaption>
-                    </figure>
-                    <figure class="card">
-                        <img loading="lazy" src="assets/James_Joyce_statue,_Dublin_1998.jpg" alt="James Joyce statue">
-                        <figcaption class="gallery-description">
-                            <p>James Joyce statue, Dublin, 1998. Photograph by Rodhullandemu, via <a
-                                    href="https://commons.wikimedia.org/wiki/File:James_Joyce_statue,_Dublin_1998.jpg"
-                                    target="_blank">Wikimedia Commons</a>. Licensed under <a
-                                    href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.</p>
-                        </figcaption>
-                    </figure>
-                    <figure class="card">
-                        <img loading="lazy" src="assets/Bloomsday2.JPG" alt="people gathered in front of Davy Byrne's pub in Bloomsday, photographed in 2013">
-                        <figcaption class="gallery-description">
-                            <p>People gathered in front of Davy Byrne's pub, Dublin, in Bloomsday (2013). Photograph by Cathal O’Connor.</p>
-                        </figcaption>
-                    </figure>
-                    <figure class="card">
-                        <img loading="lazy" src="assets/Bloomsday1.JPG" alt="people gathered in front of the bookstore Sweny's Pharmacy in Bloomsday, photographed in 2013">
-                        <figcaption class="gallery-description">
-                            <p>People gathered in front of the bookstore Sweny's Pharmacy, Dublin, in Bloomsday (2013). Photograph by Cathal O’Connor.</p>
-                        </figcaption>
-                    </figure>
-                    <figure class="card">
-                        <img loading="lazy" src="assets/Bloomsday3.JPG" alt="people gathered in front of the bookstore Sweny's Pharmacy in Bloomsday, photographed in 2013">
-                        <figcaption class="gallery-description">
-                            <p>People gathered in front of the bookstore Sweny's Pharmacy, Dublin, in Bloomsday (2013). Photograph by Cathal O’Connor.</p>
-                        </figcaption>
-                    </figure>
-            </div>
-        <button id="load-more"class="btn loadmore">Load More</button>
-        </section>
+      <section class="folio-section" aria-labelledby="plates-title">
+        <h2 class="folio-h2" id="plates-title"><span class="num">Plates</span>Joyce&rsquo;s Dublin</h2>
+        <p class="folio-sub">The city of the stories, then and now.</p>
+        <div class="plates" id="plates">
+          <figure class="plate">
+            <span class="plate-frame"><img loading="lazy" src="assets/GalleryImage1.png" alt="Sackville Street & O'Connell Bridge, Dublin in 1899"></span>
+            <figcaption><span class="plate-no">Plate I</span>Sackville Street &amp; O'Connell Bridge, Dublin, ca. 1899. Photoglob Zürich, via <a href="https://commons.wikimedia.org/wiki/File:Flickr_-_%E2%80%A6trialsanderrors_-_Sackville_Street_%5E_O%27Connell_Bridge,_Dublin,_Ireland,_ca._1899.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>. Licensed under <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>.</figcaption>
+          </figure>
+          <figure class="plate">
+            <span class="plate-frame"><img loading="lazy" src="assets/GalleryImage2.jpg" alt="Trinity College in 1909"></span>
+            <figcaption><span class="plate-no">Plate II</span>From <em>Ireland Yesterday and Today</em> by Hugh Sutherland (Philadelphia: The North American, 1909). Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Ireland_yesterday_and_today_(1909)_(14770574771).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>.</figcaption>
+          </figure>
+          <figure class="plate">
+            <span class="plate-frame"><img loading="lazy" src="assets/GalleryImage3.png" alt="Bank of Ireland, Dublin between 1890 and 1900"></span>
+            <figcaption><span class="plate-no">Plate III</span>Bank of Ireland, Dublin, ca. 1890–1900. Photoglob Zürich, photochrom print. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Bank_of_Ireland,_Dublin._County_Dublin,_Ireland-LCCN2002717395.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>.</figcaption>
+          </figure>
+          <figure class="plate">
+            <span class="plate-frame"><img loading="lazy" src="assets/GalleryImage4.png" alt="College Green, Dublin 1800"></span>
+            <figcaption><span class="plate-no">Plate IV</span>College Green, Dublin, 1800. Thomas Sautelle Roberts, via <a href="https://commons.wikimedia.org/wiki/File:College_Green,_Dublin_1800.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>. Public domain.</figcaption>
+          </figure>
+          <figure class="plate">
+            <span class="plate-frame"><img loading="lazy" src="assets/StStephensGreenLake.png" alt="Swans on the lake at St Stephen's Green"></span>
+            <figcaption><span class="plate-no">Plate V</span>St Stephen's Green, Dublin (2026). Photograph by Yayi Liu.</figcaption>
+          </figure>
+          <figure class="plate">
+            <span class="plate-frame"><img loading="lazy" src="assets/StStephensGreenStatues.png" alt="Statues in St Stephen's Green park"></span>
+            <figcaption><span class="plate-no">Plate VI</span>St Stephen's Green, Dublin (2026). Photograph by Yayi Liu.</figcaption>
+          </figure>
+          <figure class="plate is-extra">
+            <span class="plate-frame"><img loading="lazy" src="assets/JJDeathMask.png" alt="Death mask of James Joyce"></span>
+            <figcaption><span class="plate-no">Plate VII</span>The James Joyce Centre, Dublin (2026). Photograph by Yayi Liu.</figcaption>
+          </figure>
+          <figure class="plate is-extra">
+            <span class="plate-frame"><img loading="lazy" src="assets/JJCenterPatio.png" alt="Patio of the James Joyce Centre"></span>
+            <figcaption><span class="plate-no">Plate VIII</span>The James Joyce Centre, Dublin (2026). Photograph by Yayi Liu.</figcaption>
+          </figure>
+          <figure class="plate is-extra">
+            <span class="plate-frame"><img loading="lazy" src="assets/James_Joyce_statue,_Dublin_1998.jpg" alt="James Joyce statue"></span>
+            <figcaption><span class="plate-no">Plate IX</span>James Joyce statue, Dublin, 1998. Photograph by Rodhullandemu, via <a href="https://commons.wikimedia.org/wiki/File:James_Joyce_statue,_Dublin_1998.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>. Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</figcaption>
+          </figure>
+          <figure class="plate is-extra">
+            <span class="plate-frame"><img loading="lazy" src="assets/Bloomsday2.JPG" alt="people gathered in front of Davy Byrne's pub in Bloomsday, photographed in 2013"></span>
+            <figcaption><span class="plate-no">Plate X</span>People gathered in front of Davy Byrne's pub, Dublin, in Bloomsday (2013). Photograph by Cathal O’Connor.</figcaption>
+          </figure>
+          <figure class="plate is-extra">
+            <span class="plate-frame"><img loading="lazy" src="assets/Bloomsday1.JPG" alt="people gathered in front of the bookstore Sweny's Pharmacy in Bloomsday, photographed in 2013"></span>
+            <figcaption><span class="plate-no">Plate XI</span>People gathered in front of the bookstore Sweny's Pharmacy, Dublin, in Bloomsday (2013). Photograph by Cathal O’Connor.</figcaption>
+          </figure>
+          <figure class="plate is-extra">
+            <span class="plate-frame"><img loading="lazy" src="assets/Bloomsday3.JPG" alt="people gathered in front of the bookstore Sweny's Pharmacy in Bloomsday, photographed in 2013"></span>
+            <figcaption><span class="plate-no">Plate XII</span>People gathered in front of the bookstore Sweny's Pharmacy, Dublin, in Bloomsday (2013). Photograph by Cathal O’Connor.</figcaption>
+          </figure>
+        </div>
+        <div class="folio-actions">
+          <button type="button" class="btn" id="more-plates" aria-controls="plates">More plates</button>
+        </div>
+      </section>
     </main>
-    
-     <!-- FOOTER -->
+
    <footer>
         <div class="footer-col-left">
             <div class="footer-brand">
-                <a href="index.html" aria-label="Retellings – Home">
+                <a href="index.html" aria-label="Retellings – The Cover">
                     <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo logo-footer">
                     <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo logo-footer">
                 </a>
@@ -229,9 +197,5 @@
                 <p>Without whom, this website wouldn’t have been possible to plan this tour.</p>
         </div>
     </footer>
-
-<script>
-
-</script>
   </body>
- </html>
+</html>
