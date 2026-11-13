@@ -81,65 +81,27 @@
   background: #cfae6b; color: #241a11; outline: none;
 }
 
-/* the model */
-.book3d {
-  position: relative;
-  width: clamp(230px, 40vmin, 400px);
-  height: clamp(160px, 27vmin, 275px);
-  transform-style: preserve-3d;
-  transform: rotateX(54deg) rotateZ(-26deg);
-  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
-  filter: drop-shadow(0 34px 28px #00000080);
+/* the illustrated 3D book */
+.book3d-img {
+  width: clamp(260px, 52vmin, 560px);
+  height: auto;
+  display: block;
+  animation: book-float 5s ease-in-out infinite;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.3s ease;
+  filter: drop-shadow(0 18px 24px #00000066);
 }
-.book-hero:hover .book3d { transform: rotateX(48deg) rotateZ(-22deg) scale(1.04); }
-
-/* leather cover base (the V underneath) */
-.book3d__cover {
-  position: absolute;
-  inset: -7% -5%;
-  background: linear-gradient(135deg, #4c3b29 0%, #30241a 55%, #20160d 100%);
-  border-radius: 7px;
-  box-shadow: inset 0 0 0 1px #ffffff12, inset 0 0 24px #00000066;
-  transform: translateZ(-16px);
+@keyframes book-float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -8px; }
 }
-/* page blocks (left + right), with stacked-page thickness toward the viewer */
-.book3d__block {
-  position: absolute;
-  top: 3%;
-  width: 48.5%;
-  height: 94%;
-  background: #f4ecd6;
-  box-shadow:
-    0 5px 0 -1px #eadcb9,
-    0 9px 0 -2px #e0d2ad,
-    0 13px 0 -3px #d6c89d,
-    0 17px 0 -4px #cbbc8c;
-}
-.book3d__block--left  { left: 1.5%;  border-radius: 5px 2px 2px 5px; }
-.book3d__block--right { right: 1.5%; border-radius: 2px 5px 5px 2px; }
-.book3d__block--left::after,
-.book3d__block--right::after {
-  content: ""; position: absolute; inset: 0;
-  background: repeating-linear-gradient(180deg, #00000008 0 14px, #0000 14px 28px);
-}
-/* central spine valley */
-.book3d__spine {
-  position: absolute; left: 50%; top: 2%; width: 6%; height: 96%;
-  transform: translateX(-50%) translateZ(1px);
-  background: linear-gradient(90deg, #00000026, #00000040 50%, #00000026);
-}
-/* a few leaves fanning up from the spine */
-.book3d__leaf {
-  position: absolute; top: 5%; height: 90%; width: 46%;
-  background: linear-gradient(#fbf4e1, #f1e7cd);
-  box-shadow: 0 4px 10px #00000026;
-}
-.book3d__leaf--l1 { left: 3%; border-radius: 5px 3px 3px 5px; transform-origin: right center; transform: rotateX(-26deg) translateZ(3px); }
-.book3d__leaf--l2 { left: 3%; border-radius: 5px 3px 3px 5px; transform-origin: right center; transform: rotateX(-13deg) translateZ(2px); }
-.book3d__leaf--r1 { right: 3%; border-radius: 3px 5px 5px 3px; transform-origin: left center;  transform: rotateX(-15deg) translateZ(3px); }
+.book-hero:hover .book3d-img,
+.book-hero:focus-visible .book3d-img { transform: scale(1.04); filter: drop-shadow(0 24px 30px #00000080) brightness(1.04); }
+/* opening: the book zooms toward you as it fades into the reading spread */
+.book-stage.is-open .book3d-img { transform: scale(1.35); }
 
 @media (prefers-reduced-motion: reduce) {
-  .book3d, .book-hero { transition: none; }
+  .book3d-img { animation: none; transition: none; }
+  .book-hero { transition: none; }
 }
 
 /* ===================== the hardcover case ===================== */
