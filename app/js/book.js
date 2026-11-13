@@ -179,19 +179,6 @@
     p.appendChild(inner);
     return { page: p, inner: inner };
   }
-  function coverPage() {
-    var s = pageShell("cover");
-    s.inner.innerHTML =
-      '<div class="cover-wrap">' +
-        '<span class="cover-kicker">Retellings</span>' +
-        "<h2>" + esc(BOOK.title) + "</h2>" +
-        '<div class="cover-rule"></div>' +
-        '<span class="cover-author">' + esc(BOOK.author) + "</span>" +
-        '<div class="cover-rule"></div>' +
-        '<p class="cover-sub">' + esc(BOOK.subtitle) + "</p>" +
-      "</div>";
-    return s.page;
-  }
   function blurbPage() {
     var s = pageShell("text");
     s.inner.innerHTML =
@@ -212,12 +199,6 @@
         '<span class="tl-folio">' + e.folio + "</span></button></li>";
     }).join("");
     s.inner.innerHTML = '<h2 class="toc-title">Contents</h2><ul class="toc-entries">' + rows + "</ul>";
-    return s.page;
-  }
-  function colophonPage() {
-    var s = pageShell("back");
-    s.inner.innerHTML =
-      '<div class="leaf-centered"><p class="ornament">&#10059;</p><p>' + esc(BOOK.colophon) + "</p></div>";
     return s.page;
   }
   function textLeafPage(leaf, folioNum) {
@@ -270,7 +251,7 @@
     buildMeasurer();
     var leaves = buildChapterLeaves();
 
-    var FRONT = 3; // cover, blurb, contents
+    var FRONT = 2; // blurb, contents (no closed cover — the 3D book is the cover)
     var entries = [], folio = 0;
     chapterStartIndex = {};
     leaves.forEach(function (leaf, i) {
@@ -283,10 +264,9 @@
     });
 
     flipEl.innerHTML = "";
-    var pages = [coverPage(), blurbPage(), contentsPage(entries)];
-    contentsIndex = 2;
+    var pages = [blurbPage(), contentsPage(entries)];
+    contentsIndex = 1;
     leaves.forEach(function (leaf) { pages.push(textLeafPage(leaf, leaf.folio)); });
-    pages.push(colophonPage());
     pages.forEach(function (p) { flipEl.appendChild(p); });
 
     measurer.remove(); measurer = null;
@@ -295,7 +275,7 @@
     if (pageFlip) { try { pageFlip.destroy(); } catch (e) {} pageFlip = null; }
     pageFlip = new St.PageFlip(flipEl, {
       width: pageW, height: pageH, size: "fixed",
-      showCover: true, usePortrait: true, mobileScrollSupport: false,
+      showCover: false, usePortrait: true, mobileScrollSupport: false,
       maxShadowOpacity: 0.5, drawShadow: true, flippingTime: 650,
       clickEventForward: true, useMouseEvents: true, swipeDistance: 30,
       showPageCorners: true, disableFlipByClick: true
@@ -512,7 +492,10 @@
   // 3D book object -> flat reading view, and back
   function openBook() {
     stage.classList.add("is-open");
-    if (pageFlip) { try { pageFlip.update(); } catch (e) {} }
+    // go straight into the stories: open on Chapter I (no closed-cover view)
+    if (pageFlip && chapterStartIndex[1] != null && current() < chapterStartIndex[1]) {
+      try { pageFlip.turnToPage(chapterStartIndex[1]); } catch (e) {}
+    }
     updateProgress();
   }
   function showCover() { stage.classList.remove("is-open"); }

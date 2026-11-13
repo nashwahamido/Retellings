@@ -81,6 +81,24 @@
   background: #cfae6b; color: #241a11; outline: none;
 }
 
+/* live 3D model (three.js) — the SVG inside is the fallback */
+.book3d-mount {
+  width: min(100%, 900px);
+  height: min(72%, 540px);
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.book3d-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.book-hero.has-3d .book3d-img { display: none; }
+.book-stage.is-open .book3d-canvas { transform: scale(1.3); }
+
 /* the illustrated 3D book */
 .book3d-img {
   width: clamp(260px, 52vmin, 560px);
