@@ -32,6 +32,8 @@
   var elContents = document.getElementById("book-contents");
   var elMode = document.getElementById("book-mode");
   var elChapter = document.getElementById("book-chapter");
+  var elHero = document.getElementById("book-hero");
+  var elCover = document.getElementById("book-cover");
   var elProgress = document.getElementById("book-progress");
 
   var winLayer = document.getElementById("window-layer");
@@ -506,6 +508,16 @@
   elContents.addEventListener("click", function () { flipTo(contentsIndex); });
   elMode.addEventListener("click", function () { setMode(!plainMode); });
   if (elChapter) elChapter.addEventListener("change", function () { jumpToChapter(parseInt(this.value, 10)); });
+
+  // 3D book object -> flat reading view, and back
+  function openBook() {
+    stage.classList.add("is-open");
+    if (pageFlip) { try { pageFlip.update(); } catch (e) {} }
+    updateProgress();
+  }
+  function showCover() { stage.classList.remove("is-open"); }
+  if (elHero) elHero.addEventListener("click", openBook);
+  if (elCover) elCover.addEventListener("click", showCover);
 
   var rt = null;
   window.addEventListener("resize", function () {

@@ -87,6 +87,20 @@
 
         <!-- Flip-book (hidden in plain-text mode) -->
         <div class="book-stage" id="book-stage">
+          <!-- 3D book object: click to open to the flat reading view -->
+          <button type="button" class="book-hero" id="book-hero" aria-label="Open the book">
+            <div class="book3d" aria-hidden="true">
+              <div class="book3d__cover"></div>
+              <div class="book3d__block book3d__block--left"></div>
+              <div class="book3d__block book3d__block--right"></div>
+              <div class="book3d__leaf book3d__leaf--l1"></div>
+              <div class="book3d__leaf book3d__leaf--l2"></div>
+              <div class="book3d__leaf book3d__leaf--r1"></div>
+              <div class="book3d__spine"></div>
+            </div>
+            <span class="book-hero__hint">Open the book &rsaquo;</span>
+          </button>
+
           <div class="book-viewport">
             <div class="book-case" id="book-case">
               <div id="flipbook"></div>
@@ -103,6 +117,7 @@
           <button type="button" class="book-btn" id="book-contents">Contents</button>
           <span class="book-progress" id="book-progress" aria-live="polite" role="status"></span>
           <button type="button" class="book-btn" id="book-next" aria-label="Next page">Next &rsaquo;</button>
+          <button type="button" class="book-btn" id="book-cover">3D view</button>
           <div class="book-jump">
             <label for="book-chapter" class="book-jump-label">Chapter</label>
             <select id="book-chapter" class="book-select" aria-label="Jump to chapter"></select>

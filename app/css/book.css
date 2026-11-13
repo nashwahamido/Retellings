@@ -29,7 +29,7 @@
 }
 
 /* ===================== the stage (dark "desk") ===================== */
-.book-stage { margin: var(--sp-xl) 0; }
+.book-stage { margin: var(--sp-xl) 0; position: relative; }
 .book-viewport {
   width: 100%;
   padding: clamp(1.5rem, 4vw, 3.5rem) 1rem;
@@ -41,6 +41,105 @@
   background:
     radial-gradient(120% 90% at 50% 0%, #2a241d 0%, #1a1613 45%, #110e0b 100%);
   box-shadow: inset 0 2px 30px #00000066;
+}
+
+/* ===================== 3D book object (resting state) ===================== */
+/* Shown over the flat book; click it to flatten to the front reading view. */
+.book-hero {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.8rem;
+  perspective: 1500px;
+  background:
+    radial-gradient(130% 100% at 50% 10%, #2a241d 0%, #171310 55%, #0d0b09 100%);
+  transition: opacity 0.55s ease, visibility 0.55s;
+}
+.book-stage.is-open .book-hero { opacity: 0; visibility: hidden; pointer-events: none; }
+.book-stage:not(.is-open) .book-viewport { visibility: hidden; }
+
+.book-hero__hint {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  color: #e9d8a7;
+  padding: 0.35rem 1.1rem;
+  border: 1px solid #cfae6b66;
+  border-radius: 100px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.book-hero:hover .book-hero__hint,
+.book-hero:focus-visible .book-hero__hint {
+  background: #cfae6b; color: #241a11; outline: none;
+}
+
+/* the model */
+.book3d {
+  position: relative;
+  width: clamp(230px, 40vmin, 400px);
+  height: clamp(160px, 27vmin, 275px);
+  transform-style: preserve-3d;
+  transform: rotateX(54deg) rotateZ(-26deg);
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  filter: drop-shadow(0 34px 28px #00000080);
+}
+.book-hero:hover .book3d { transform: rotateX(48deg) rotateZ(-22deg) scale(1.04); }
+
+/* leather cover base (the V underneath) */
+.book3d__cover {
+  position: absolute;
+  inset: -7% -5%;
+  background: linear-gradient(135deg, #4c3b29 0%, #30241a 55%, #20160d 100%);
+  border-radius: 7px;
+  box-shadow: inset 0 0 0 1px #ffffff12, inset 0 0 24px #00000066;
+  transform: translateZ(-16px);
+}
+/* page blocks (left + right), with stacked-page thickness toward the viewer */
+.book3d__block {
+  position: absolute;
+  top: 3%;
+  width: 48.5%;
+  height: 94%;
+  background: #f4ecd6;
+  box-shadow:
+    0 5px 0 -1px #eadcb9,
+    0 9px 0 -2px #e0d2ad,
+    0 13px 0 -3px #d6c89d,
+    0 17px 0 -4px #cbbc8c;
+}
+.book3d__block--left  { left: 1.5%;  border-radius: 5px 2px 2px 5px; }
+.book3d__block--right { right: 1.5%; border-radius: 2px 5px 5px 2px; }
+.book3d__block--left::after,
+.book3d__block--right::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(180deg, #00000008 0 14px, #0000 14px 28px);
+}
+/* central spine valley */
+.book3d__spine {
+  position: absolute; left: 50%; top: 2%; width: 6%; height: 96%;
+  transform: translateX(-50%) translateZ(1px);
+  background: linear-gradient(90deg, #00000026, #00000040 50%, #00000026);
+}
+/* a few leaves fanning up from the spine */
+.book3d__leaf {
+  position: absolute; top: 5%; height: 90%; width: 46%;
+  background: linear-gradient(#fbf4e1, #f1e7cd);
+  box-shadow: 0 4px 10px #00000026;
+}
+.book3d__leaf--l1 { left: 3%; border-radius: 5px 3px 3px 5px; transform-origin: right center; transform: rotateX(-26deg) translateZ(3px); }
+.book3d__leaf--l2 { left: 3%; border-radius: 5px 3px 3px 5px; transform-origin: right center; transform: rotateX(-13deg) translateZ(2px); }
+.book3d__leaf--r1 { right: 3%; border-radius: 3px 5px 5px 3px; transform-origin: left center;  transform: rotateX(-15deg) translateZ(3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .book3d, .book-hero { transition: none; }
 }
 
 /* ===================== the hardcover case ===================== */
@@ -61,22 +160,6 @@
     0 10px 24px -12px #00000099,
     inset 0 0 0 1px #ffffff14,
     inset 0 0 40px #00000055;
-  /* 3D view: the book sits at an angle and straightens when you engage with it */
-  transform-style: preserve-3d;
-  transform: rotateX(7deg) rotateY(-16deg);
-  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
-  will-change: transform;
-}
-.book-case:hover,
-.book-case:focus-within {
-  transform: rotateX(0deg) rotateY(0deg);
-}
-@media (max-width: 640px) {
-  /* keep it flat on phones (single page, touch-driven) */
-  .book-case, .book-case:hover, .book-case:focus-within { transform: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .book-case { transform: none; transition: none; }
 }
 /* gold keyline just inside the leather */
 .book-case::before {
