@@ -107,7 +107,43 @@ body.dark .tour-lead a { text-decoration-color: var(--accent-gold); }
 /* ---- add + actions ---- */
 .planner-add { display: flex; flex-direction: column; gap: 0.3rem; }
 .planner-add label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tp-soft); }
-.planner-add .book-select { max-width: none; width: 100%; }
+/* the field: parchment well in a gold double frame, serif text, gold chevron */
+.tour-field { position: relative; }
+.tour-field::after {
+  content: ""; position: absolute; right: 1rem; top: 50%; width: 0.5rem; height: 0.5rem;
+  border-right: 2px solid #8a6a2e; border-bottom: 2px solid #8a6a2e;
+  transform: translateY(-70%) rotate(45deg); pointer-events: none;
+}
+.tour-select {
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+  width: 100%; min-height: 3rem; padding: 0.55rem 2.6rem 0.55rem 0.9rem;
+  font-family: "EB Garamond", Georgia, serif; font-size: 1.08rem; color: var(--tp-ink);
+  background: linear-gradient(180deg, #fffaf0, #f3e8cc);
+  border: 3px double #b99a5c; border-radius: 2px;
+  box-shadow: inset 0 1px 3px #0000001a;
+  cursor: pointer; transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.tour-select:hover { border-color: #8a6a2e; }
+.tour-select:focus-visible { outline: none; border-color: #8f2a24; box-shadow: inset 0 1px 3px #0000001a, 0 0 0 3px #cfae6b66; }
+.tour-select option { font-family: "EB Garamond", Georgia, serif; color: #35301f; background: #fbf5e4; }
+
+/* ---- tabs: my tour / suggested walk ---- */
+.tour-tabs { display: grid; grid-template-columns: 1fr 1fr; border: 3px double #b99a5c; }
+.tour-tab {
+  padding: 0.55rem 0.4rem; border: none; cursor: pointer;
+  font-family: "Epilogue", sans-serif; font-size: 0.74rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #6c5427; background: #fbf5e4;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.tour-tab + .tour-tab { border-left: 1px solid #b99a5c; }
+.tour-tab[aria-selected="true"] { color: #ecd18e; background: linear-gradient(180deg, #2c3a5e, #1a2340); }
+.tour-tab:hover:not([aria-selected="true"]) { background: #efe2c1; }
+.tour-tab:focus-visible { outline: 2px solid #8f2a24; outline-offset: -4px; }
+.planner-note { font-size: 0.86rem; font-style: italic; color: var(--tp-soft); margin: -0.4rem 0 0; }
+.link-btn { all: unset; cursor: pointer; color: var(--tp-red); text-decoration: underline; text-underline-offset: 2px; }
+.link-btn:focus-visible { outline: 2px solid var(--tp-red); outline-offset: 2px; }
+.planner-actions[hidden], .planner-add[hidden], .suggested-card[hidden] { display: none; }
 .planner-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .planner-actions .book-btn { font-size: 0.78rem !important; }
 .suggested-card { border-top: 1px solid var(--tp-rule); padding-top: 0.6rem; font-size: 0.95rem; }
@@ -175,4 +211,59 @@ body.dark .tour-route { stroke: #d2ae63; }
   .map-legend { font-size: 0.72rem; gap: 0.6rem; padding: 0.25rem 0.5rem; }
   .stop-tools { gap: 0.15rem; }
   .stop-tool { width: 1.4rem; height: 1.4rem; }
+}
+
+/* ---- on-page dialog (Clear tour) ---- */
+.deco-dialog-backdrop {
+  position: fixed; inset: 0; z-index: 3000;
+  display: flex; align-items: center; justify-content: center; padding: 1rem;
+  background: #0d0b09b3; backdrop-filter: blur(2px);
+  animation: dd-fade 0.18s ease;
+}
+.deco-dialog {
+  width: min(28rem, 100%);
+  padding: 1.6rem 1.6rem 1.4rem;
+  text-align: center;
+  color: #35301f;
+  background: #f4ecd6;
+  border-style: solid; border-width: 14px;
+  border-image: url("deco/window-navy.svg") 14 / 14px stretch;
+  box-shadow: 0 24px 60px -12px #000000cc;
+  font-family: "EB Garamond", Georgia, serif;
+  animation: dd-rise 0.2s ease;
+}
+body.dark .deco-dialog { border-image-source: url("deco/window-ink.svg"); }
+.dd-title { font-size: 1.5rem; font-weight: 600; margin: 0 0 0.4rem; }
+.dd-title::after {
+  content: ""; display: block; width: 0.45rem; height: 0.45rem; margin: 0.55rem auto 0;
+  background: #8f2a24; transform: rotate(45deg);
+}
+.dd-msg { font-size: 1.05rem; line-height: 1.45; margin: 0 0 1.3rem; }
+.dd-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; }
+.dd-actions .book-btn { font-size: 0.8rem !important; }
+@keyframes dd-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dd-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ---- brief notice with Undo ---- */
+.deco-toast {
+  position: fixed; left: 50%; bottom: 1.5rem; z-index: 2900;
+  display: flex; align-items: center; gap: 1rem;
+  max-width: calc(100vw - 2rem); padding: 0.75rem 1.1rem;
+  font-family: "EB Garamond", Georgia, serif; font-size: 1.02rem; color: #f1e3b6;
+  background: linear-gradient(180deg, #2c3a5e, #1a2340);
+  border: 3px double #d2ae63; box-shadow: 0 12px 30px -8px #000000aa;
+  transform: translate(-50%, 160%); opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.deco-toast.is-shown { transform: translate(-50%, 0); opacity: 1; }
+.dt-action {
+  border: 1px solid #d2ae63; background: none; color: #ecd18e; cursor: pointer;
+  font-family: "Epilogue", sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.35rem 0.75rem;
+}
+.dt-action:hover, .dt-action:focus-visible { background: #d2ae63; color: #1a2340; outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .deco-dialog-backdrop, .deco-dialog { animation: none; }
+  .deco-toast { transition: none; }
 }

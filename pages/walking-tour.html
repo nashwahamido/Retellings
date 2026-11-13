@@ -85,17 +85,23 @@
         <!-- SECTION 2 - PLANNER: list + map -->
         <section class="planner" aria-label="Tour planner">
             <div class="planner-panel">
-                <div class="planner-head">
-                    <h2>Your stops</h2>
-                    <span class="planner-count" id="planner-count" aria-live="polite"></span>
+                <div class="tour-tabs" role="tablist" aria-label="Which tour to show">
+                    <button type="button" class="tour-tab" role="tab" id="tab-mine" aria-selected="true" aria-controls="stop-list">My tour</button>
+                    <button type="button" class="tour-tab" role="tab" id="tab-suggested" aria-selected="false" aria-controls="stop-list">Suggested walk</button>
                 </div>
 
-                <ol class="stop-list" id="stop-list" aria-label="Stops in visiting order"></ol>
+                <div class="planner-head">
+                    <h2 id="planner-heading">Your stops</h2>
+                    <span class="planner-count" id="planner-count" aria-live="polite"></span>
+                </div>
+                <p class="planner-note" id="planner-note"></p>
+
+                <ol class="stop-list" id="stop-list" aria-labelledby="planner-heading"></ol>
 
                 <div class="planner-empty" id="planner-empty" hidden>
                     <p class="pe-orn" aria-hidden="true">&#10087;</p>
                     <p><strong>Your tour is empty.</strong></p>
-                    <p>Open <a href="locations.html">the book</a> and choose <em>Add to my tour</em> on any place, pick one below, or load our suggested walk.</p>
+                    <p>Open <a href="locations.html">the book</a> and choose <em>Add to my tour</em> on any place, pick one below, or start from the <button type="button" class="link-btn" data-goto="suggested">suggested walk</button>.</p>
                 </div>
 
                 <div class="planner-totals" id="planner-totals" hidden>
@@ -104,17 +110,21 @@
                     <p class="pt-note">Approximate: straight lines between stops, allowing for streets, at an easy 4.5&nbsp;km/h.</p>
                 </div>
 
-                <div class="planner-add">
-                    <label for="add-place">Add a place</label>
-                    <select id="add-place" class="book-select"></select>
+                <div class="planner-add" id="planner-add">
+                    <label for="add-place">Add a place to my tour</label>
+                    <div class="tour-field">
+                        <select id="add-place" class="tour-select"></select>
+                    </div>
                 </div>
 
-                <div class="planner-actions">
-                    <button type="button" class="book-btn" id="load-suggested">Load suggested walk</button>
+                <div class="planner-actions" id="actions-mine">
                     <button type="button" class="book-btn" id="clear-tour">Clear tour</button>
                 </div>
+                <div class="planner-actions" id="actions-suggested" hidden>
+                    <button type="button" class="book-btn" id="copy-suggested">Add these stops to my tour</button>
+                </div>
 
-                <details class="suggested-card">
+                <details class="suggested-card" id="suggested-card" hidden>
                     <summary>About the suggested walk</summary>
                     <p id="suggested-summary"></p>
                     <div id="suggested-audio"></div>

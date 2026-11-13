@@ -22,6 +22,75 @@
   var distEl = document.getElementById("pt-distance");
   var timeEl = document.getElementById("pt-time");
   var addEl = document.getElementById("add-place");
+  var tabMine = document.getElementById("tab-mine");
+  var tabSuggested = document.getElementById("tab-suggested");
+
+  // which tour is on screen: the visitor's own ("mine") or our suggested walk.
+  // Viewing the suggested walk never changes the visitor's saved tour.
+  var VIEW_KEY = "retellings.tour.view";
+  var view = "mine";
+  try { if (localStorage.getItem(VIEW_KEY) === "suggested") view = "suggested"; } catch (e) {}
+  function suggestedIds() { return (window.SUGGESTED_TOUR && SUGGESTED_TOUR.stops) || []; }
+  function editable() { return view === "mine"; }
+
+  // ---- on-page dialog (replaces the browser's confirm) ----
+  function confirmDialog(opts) {
+    return new Promise(function (resolve) {
+      var opener = document.activeElement;
+      var back = document.createElement("div");
+      back.className = "deco-dialog-backdrop";
+      back.innerHTML =
+        '<div class="deco-dialog" role="alertdialog" aria-modal="true" aria-labelledby="dd-title" aria-describedby="dd-msg">' +
+          '<h2 class="dd-title" id="dd-title">' + esc(opts.title) + "</h2>" +
+          '<p class="dd-msg" id="dd-msg">' + esc(opts.message) + "</p>" +
+          '<div class="dd-actions">' +
+            '<button type="button" class="book-btn" data-dd="cancel">' + esc(opts.cancel || "Cancel") + "</button>" +
+            '<button type="button" class="book-btn dd-danger" data-dd="ok">' + esc(opts.confirm || "OK") + "</button>" +
+          "</div>" +
+        "</div>";
+      document.body.appendChild(back);
+      var btns = back.querySelectorAll("[data-dd]");
+      function done(v) {
+        document.removeEventListener("keydown", onKey, true);
+        back.remove();
+        if (opener && opener.focus && document.contains(opener)) opener.focus();
+        resolve(v);
+      }
+      function onKey(e) {
+        if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); done(false); }
+        else if (e.key === "Tab") { // keep focus inside the dialog
+          e.preventDefault();
+          (document.activeElement === btns[0] ? btns[1] : btns[0]).focus();
+        }
+      }
+      document.addEventListener("keydown", onKey, true);
+      back.addEventListener("click", function (e) {
+        var b = e.target.closest("[data-dd]");
+        if (b) done(b.dataset.dd === "ok");
+        else if (e.target === back) done(false);
+      });
+      btns[0].focus(); // the safe choice has focus
+    });
+  }
+
+  // ---- brief notice, optionally with an action (e.g. Undo) ----
+  var toastTimer = null;
+  function toast(message, actionLabel, action) {
+    var t = document.getElementById("deco-toast");
+    if (!t) {
+      t = document.createElement("div");
+      t.id = "deco-toast"; t.className = "deco-toast";
+      t.setAttribute("role", "status"); t.setAttribute("aria-live", "polite");
+      document.body.appendChild(t);
+    }
+    t.innerHTML = '<span>' + esc(message) + "</span>" +
+      (actionLabel ? '<button type="button" class="dt-action">' + esc(actionLabel) + "</button>" : "");
+    if (actionLabel) t.querySelector(".dt-action").addEventListener("click", function () { hide(); action(); });
+    t.classList.add("is-shown");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(hide, actionLabel ? 7000 : 3500);
+    function hide() { t.classList.remove("is-shown"); }
+  }
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
@@ -89,7 +158,7 @@
   // ---- render ----
   var lastIds = null;
   function render(fit) {
-    var ids = TourStore.list().filter(function (id) { return Places.get(id); });
+    var ids = (editable() ? TourStore.list() : suggestedIds()).filter(function (id) { return Places.get(id); });
     var stops = ids.map(function (id) { return Places.get(id); });
 
     // list
@@ -108,21 +177,22 @@
       li.className = "stop";
       li.dataset.id = p.id;
       li.dataset.index = i;
-      li.draggable = true;
+      li.draggable = editable();
       li.innerHTML =
         '<span class="stop-num" aria-hidden="true">' + (i + 1) + "</span>" +
         '<span class="stop-main">' +
           '<button type="button" class="stop-name">' + esc(p.name) + "</button>" +
           '<span class="stop-sub">' + esc(p.categoryLabel) + (p.stories && p.stories.length ? " · " + esc(p.stories[0]) : "") + "</span>" +
         "</span>" +
-        '<span class="stop-tools">' +
+        (editable() ? '<span class="stop-tools">' +
           '<button type="button" class="stop-tool" data-act="up" aria-label="Move ' + esc(p.name) + ' earlier"' + (i === 0 ? " disabled" : "") + ">&#9650;</button>" +
           '<button type="button" class="stop-tool" data-act="down" aria-label="Move ' + esc(p.name) + ' later"' + (i === stops.length - 1 ? " disabled" : "") + ">&#9660;</button>" +
           '<button type="button" class="stop-tool stop-remove" data-act="remove" aria-label="Remove ' + esc(p.name) + ' from your tour">&times;</button>' +
-        "</span>";
+        "</span>" : "");
       listEl.appendChild(li);
     });
-    emptyEl.hidden = stops.length > 0;
+    emptyEl.hidden = stops.length > 0 || !editable();
+    syncViewChrome(ids);
     totalsEl.hidden = stops.length < 2;
     countEl.textContent = stops.length ? stops.length + (stops.length === 1 ? " stop" : " stops") : "";
     distEl.textContent = fmtDist(total);
@@ -157,7 +227,7 @@
       else map.setView(DUBLIN, 14);
     }
     lastIds = key;
-    fillAddSelect(ids);
+    fillAddSelect(TourStore.list());
   }
 
   // ---- "add a place" list (every place not yet saved) ----
@@ -237,16 +307,74 @@
     });
   });
 
-  // ---- buttons ----
-  document.getElementById("load-suggested").addEventListener("click", function () {
-    var tour = window.SUGGESTED_TOUR; if (!tour) return;
-    if (TourStore.count() && !window.confirm("Replace the stops in your tour with our suggested walk?")) return;
-    TourStore.set(tour.stops);
+  // ---- tabs: my tour / suggested walk ----
+  var noteEl = document.getElementById("planner-note");
+  var headingEl = document.getElementById("planner-heading");
+  function syncViewChrome(ids) {
+    var mine = editable();
+    tabMine.setAttribute("aria-selected", String(mine));
+    tabSuggested.setAttribute("aria-selected", String(!mine));
+    tabMine.tabIndex = mine ? 0 : -1; tabSuggested.tabIndex = mine ? -1 : 0;
+    var n = TourStore.count();
+    tabMine.textContent = "My tour" + (n ? " (" + n + ")" : "");
+    headingEl.textContent = mine ? "Your stops" : "The suggested walk";
+    noteEl.textContent = mine
+      ? "Saved automatically in this browser — come back any time."
+      : "Our route from the James Joyce Centre to Kennedy’s. Looking at it doesn’t change your own tour.";
+    document.getElementById("planner-add").hidden = !mine;
+    document.getElementById("actions-mine").hidden = !mine;
+    document.getElementById("clear-tour").disabled = !n;
+    document.getElementById("actions-suggested").hidden = mine;
+    document.getElementById("suggested-card").hidden = mine;
+    var missing = suggestedIds().filter(function (id) { return !TourStore.has(id); }).length;
+    var copy = document.getElementById("copy-suggested");
+    copy.disabled = !missing;
+    copy.textContent = missing ? "Add " + (missing === suggestedIds().length ? "these stops" : "the " + missing + " missing stops") + " to my tour" : "All in your tour";
+  }
+  function setView(v) {
+    view = v;
+    try { localStorage.setItem(VIEW_KEY, v); } catch (e) {}
     render(true);
+  }
+  tabMine.addEventListener("click", function () { setView("mine"); });
+  tabSuggested.addEventListener("click", function () { setView("suggested"); });
+  [tabMine, tabSuggested].forEach(function (t) {
+    t.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      var other = t === tabMine ? tabSuggested : tabMine;
+      other.focus(); other.click();
+    });
+  });
+  document.addEventListener("click", function (e) {
+    var g = e.target.closest("[data-goto]");
+    if (g) { e.preventDefault(); setView(g.dataset.goto); tabSuggested.focus(); }
+  });
+
+  // ---- buttons ----
+  document.getElementById("copy-suggested").addEventListener("click", function () {
+    var before = TourStore.list();
+    var added = suggestedIds().filter(function (id) { return before.indexOf(id) === -1; });
+    if (!added.length) return;
+    TourStore.set(before.concat(added)); // appended after the visitor's own stops
+    setView("mine");
+    toast("Added " + added.length + (added.length === 1 ? " stop" : " stops") + " from the suggested walk to your tour.", "Undo", function () {
+      TourStore.set(before);
+    });
   });
   document.getElementById("clear-tour").addEventListener("click", function () {
-    if (!TourStore.count()) return;
-    if (window.confirm("Remove every stop from your tour?")) TourStore.clear();
+    var before = TourStore.list();
+    if (!before.length) return;
+    confirmDialog({
+      title: "Clear your tour?",
+      message: "This removes all " + before.length + (before.length === 1 ? " stop" : " stops") + " from your tour.",
+      confirm: "Clear tour",
+      cancel: "Keep my tour"
+    }).then(function (ok) {
+      if (!ok) return;
+      TourStore.clear();
+      toast("Your tour was cleared.", "Undo", function () { TourStore.set(before); });
+    });
   });
 
   // ---- the suggested walk's intro text + welcome audio ----
