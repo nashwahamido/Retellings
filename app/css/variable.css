@@ -7,12 +7,12 @@
     --light-audio-bar: #D3D3C7;
     
     /* Dark Mode Colors */
-    --dark-base-color:#37465E;
-    --dark-text-color: #fdfff5;
+    --dark-base-color: #1d1914;
+    --dark-text-color: #ece3cb;
     --dark-audio-bar: #D3D3C7;
 
     /* translucent colors */
-    --footer-faded-dark: #37465Ecc;
+    --footer-faded-dark: #1d1914cc;
     --footer-faded-light:#F2B769cc;
     --faded-navy: #5a687fcc;
 

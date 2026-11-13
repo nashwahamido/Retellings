@@ -952,7 +952,7 @@ details[open] > *:not(summary) {
 }
 /* ===================== themed scrollbars ===================== */
 html { scrollbar-width: thin; scrollbar-color: var(--faded-navy) transparent; }
-body.dark { scrollbar-color: var(--faded-navy) transparent; }
+body.dark { scrollbar-color: #b3934f transparent; }
 *::-webkit-scrollbar { width: 12px; height: 12px; }
 *::-webkit-scrollbar-track { background: transparent; }
 *::-webkit-scrollbar-thumb {

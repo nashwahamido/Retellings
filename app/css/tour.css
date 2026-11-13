@@ -61,8 +61,8 @@ body.dark .tour-lead a { text-decoration-color: var(--accent-gold); }
   width: 2rem; height: 2rem; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: "Epilogue", sans-serif; font-weight: 700; font-size: 0.85rem; color: #ecd18e;
-  background: radial-gradient(circle at 35% 30%, #34436d, #1a2340);
-  box-shadow: 0 0 0 1.5px #d2ae63, 0 0 0 3px #1a2340, 0 0 0 4px #d2ae6366;
+  background: radial-gradient(circle at 35% 30%, var(--plate-hi), var(--plate-2));
+  box-shadow: 0 0 0 1.5px #d2ae63, 0 0 0 3px var(--plate-2), 0 0 0 4px #d2ae6366;
 }
 .stop-main { display: flex; flex-direction: column; min-width: 0; }
 .stop-name {
@@ -79,7 +79,7 @@ body.dark .tour-lead a { text-decoration-color: var(--accent-gold); }
   color: #6c5427; background: #fbf5e4; border: 1px solid #c6a96a;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
-.stop-tool:hover:not(:disabled), .stop-tool:focus-visible { background: #1a2340; color: #ecd18e; border-color: #d2ae63; outline: none; }
+.stop-tool:hover:not(:disabled), .stop-tool:focus-visible { background: var(--plate-2); color: #ecd18e; border-color: #d2ae63; outline: none; }
 .stop-tool:disabled { opacity: 0.3; cursor: default; }
 .stop-remove { font-size: 0.95rem; }
 .stop-remove:hover, .stop-remove:focus-visible { background: var(--tp-red) !important; color: #fff3cf !important; }
@@ -137,7 +137,7 @@ body.dark .tour-lead a { text-decoration-color: var(--accent-gold); }
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 .tour-tab + .tour-tab { border-left: 1px solid #b99a5c; }
-.tour-tab[aria-selected="true"] { color: #ecd18e; background: linear-gradient(180deg, #2c3a5e, #1a2340); }
+.tour-tab[aria-selected="true"] { color: #ecd18e; background: linear-gradient(180deg, var(--plate-1), var(--plate-2)); }
 .tour-tab:hover:not([aria-selected="true"]) { background: #efe2c1; }
 .tour-tab:focus-visible { outline: 2px solid #8f2a24; outline-offset: -4px; }
 .planner-note { font-size: 0.86rem; font-style: italic; color: var(--tp-soft); margin: -0.4rem 0 0; }
@@ -166,8 +166,8 @@ body.dark .planner-map { border-image-source: url("deco/window-ink.svg"); }
 #tour-map .leaflet-tile-pane { filter: sepia(0.42) saturate(0.85) brightness(1.02) contrast(0.95); }
 body.dark #tour-map .leaflet-tile-pane { filter: sepia(0.5) saturate(0.7) brightness(0.62) contrast(1.05); }
 #tour-map .leaflet-control-attribution { font-size: 0.62rem; background: #f4ecd6cc; }
-#tour-map .leaflet-bar a { background: #1a2340; color: #ecd18e; border-color: #d2ae6366; }
-#tour-map .leaflet-bar a:hover { background: #2c3a5e; }
+#tour-map .leaflet-bar a { background: var(--plate-2); color: #ecd18e; border-color: #d2ae6366; }
+#tour-map .leaflet-bar a:hover { background: var(--plate-1); }
 
 /* pins */
 .pin-place span {
@@ -180,8 +180,8 @@ body.dark #tour-map .leaflet-tile-pane { filter: sepia(0.5) saturate(0.7) bright
   display: flex; align-items: center; justify-content: center;
   width: 34px; height: 34px; border-radius: 50%;
   font-family: "Epilogue", sans-serif; font-weight: 700; font-size: 14px; color: #ecd18e;
-  background: radial-gradient(circle at 35% 30%, #34436d, #1a2340);
-  box-shadow: 0 0 0 2px #d2ae63, 0 0 0 4px #1a2340, 0 0 0 5px #d2ae6399, 0 4px 8px #00000066;
+  background: radial-gradient(circle at 35% 30%, var(--plate-hi), var(--plate-2));
+  box-shadow: 0 0 0 2px #d2ae63, 0 0 0 4px var(--plate-2), 0 0 0 5px #d2ae6399, 0 4px 8px #00000066;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .pin-stop.is-hot span, .pin-stop:hover span, .pin-stop:focus-visible span {
@@ -200,7 +200,7 @@ body.dark .tour-route { stroke: #d2ae63; }
 }
 .map-legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
 .lg-stop, .lg-place { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
-.lg-stop { background: #1a2340; box-shadow: 0 0 0 1.5px #d2ae63; }
+.lg-stop { background: var(--plate-2); box-shadow: 0 0 0 1.5px #d2ae63; }
 .lg-place { background: #fbf5e4; border: 2px solid #8f2a24; }
 
 /* ---- phones: map first, then the list ---- */
@@ -250,7 +250,7 @@ body.dark .deco-dialog { border-image-source: url("deco/window-ink.svg"); }
   display: flex; align-items: center; gap: 1rem;
   max-width: calc(100vw - 2rem); padding: 0.75rem 1.1rem;
   font-family: "EB Garamond", Georgia, serif; font-size: 1.02rem; color: #f1e3b6;
-  background: linear-gradient(180deg, #2c3a5e, #1a2340);
+  background: linear-gradient(180deg, var(--plate-1), var(--plate-2));
   border: 3px double #d2ae63; box-shadow: 0 12px 30px -8px #000000aa;
   transform: translate(-50%, 160%); opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -261,7 +261,7 @@ body.dark .deco-dialog { border-image-source: url("deco/window-ink.svg"); }
   font-family: "Epilogue", sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
   padding: 0.35rem 0.75rem;
 }
-.dt-action:hover, .dt-action:focus-visible { background: #d2ae63; color: #1a2340; outline: none; }
+.dt-action:hover, .dt-action:focus-visible { background: #d2ae63; color: var(--plate-2); outline: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .deco-dialog-backdrop, .deco-dialog { animation: none; }

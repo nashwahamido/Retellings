@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
 <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e2a8"/><stop offset=".45" stop-color="#c9a24f"/><stop offset=".55" stop-color="#b38a3c"/><stop offset="1" stop-color="#ecd290"/></linearGradient></defs>
-<rect x="0" y="0" width="60" height="60" fill="#15110d"/>
+<rect x="0" y="0" width="60" height="60" fill="#1e1812"/>
 <rect x="2.5" y="2.5" width="55" height="55" fill="none" stroke="url(#g)" stroke-width="1.4"/>
 <rect x="7.5" y="7.5" width="45" height="45" fill="none" stroke="url(#g)" stroke-width=".9"/>
 <rect x="13.5" y="13.5" width="33" height="33" fill="none" stroke="url(#g)" stroke-width="1"/>
