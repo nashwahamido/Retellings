@@ -196,10 +196,16 @@
     var rows = entries.map(function (e) {
       return '<li><button type="button" class="toc-link" data-flip="' + e.index + '">' +
         '<span class="tl-num">' + (ROMAN[e.number] || e.number) + "</span>" +
-        '<span class="tl-title">' + esc(e.title) + "</span>" +
+        '<span class="tl-main"><span class="tl-title">' + esc(e.title) + '</span><span class="tl-leader" aria-hidden="true"></span></span>' +
         '<span class="tl-folio">' + e.folio + "</span></button></li>";
     }).join("");
-    s.inner.innerHTML = '<h2 class="toc-title">Contents</h2><ul class="toc-entries">' + rows + "</ul>";
+    s.inner.innerHTML =
+      '<div class="toc-head">' +
+        '<span class="toc-kicker">' + esc(BOOK.title) + "</span>" +
+        '<h2 class="toc-title">Contents</h2>' +
+        '<div class="toc-orn" aria-hidden="true"><span></span><i></i><span></span></div>' +
+      "</div>" +
+      '<ol class="toc-entries">' + rows + "</ol>";
     return s.page;
   }
   function textLeafPage(leaf, folioNum) {
@@ -309,7 +315,12 @@
   }
   function goPrev() { if (pageFlip) pageFlip.flipPrev(); }
   function goNext() { if (pageFlip) pageFlip.flipNext(); }
-  function flipTo(i) { if (pageFlip) pageFlip.flip(i); }
+  function flipTo(i) {
+    if (!pageFlip) return;
+    // single-page (phone) mode ignores animated jumps to distant pages: go directly
+    if (portrait) { try { pageFlip.turnToPage(i); } catch (e) {} updateProgress(); }
+    else pageFlip.flip(i);
+  }
 
   // ---- chapter navigator (works in book and plain mode) ----
   function populateChapters() {

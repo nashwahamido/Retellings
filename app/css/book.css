@@ -252,21 +252,64 @@ body.dark .book-select option { color: var(--dark-text-color); background: var(-
 .leaf-centered .ornament { font-size: 1.5rem; color: var(--ink-soft); }
 
 /* ---- contents ---- */
+.toc-head { text-align: center; margin-bottom: clamp(0.5rem, 1.8vmin, 1.1rem); }
+.toc-kicker {
+  display: block; font-family: "EB Garamond", Georgia, serif;
+  font-size: 0.72rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink-soft);
+}
 .toc-title {
-  text-align: center; font-size: clamp(1.4rem, 5vmin, 2rem);
-  letter-spacing: 0.12em; text-transform: uppercase;
-  margin-bottom: var(--sp-md); padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule);
+  font-family: "EB Garamond", Georgia, serif; font-weight: 600;
+  font-size: clamp(1.45rem, 4.6vmin, 2rem); letter-spacing: 0.2em; text-transform: uppercase;
+  line-height: 1.1; margin: 0.2rem 0 0.45rem; padding-left: 0.2em; /* balance the tracking */
 }
-.toc-entries { list-style: none; display: flex; flex-direction: column; gap: 0.1rem; overflow-y: auto; }
+/* ornamental rule: hairline · diamond · hairline */
+.toc-orn { display: flex; align-items: center; justify-content: center; gap: 0.55rem; }
+.toc-orn span { width: 28%; height: 1px; background: linear-gradient(90deg, transparent, var(--rule)); }
+.toc-orn span:last-child { background: linear-gradient(90deg, var(--rule), transparent); }
+.toc-orn i { width: 0.42rem; height: 0.42rem; background: var(--leaf-red); transform: rotate(45deg); }
+
+.toc-entries {
+  list-style: none; margin: 0; padding: 0 0.35rem 0 0;
+  flex: 1; min-height: 0; overflow-y: auto;
+  display: flex; flex-direction: column; justify-content: space-evenly;
+  /* if a small page ever needs to scroll, the bar matches the book */
+  scrollbar-width: thin; scrollbar-color: #c2ab78 transparent;
+}
+.page .toc-entries::-webkit-scrollbar { width: 6px; }
+.page .toc-entries::-webkit-scrollbar-track { background: transparent; }
+.page .toc-entries::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d8c08a, #b3934f); border-radius: 6px; border: 0;
+}
 .toc-link {
-  display: grid; grid-template-columns: 2.2rem 1fr auto; align-items: baseline; gap: 0.5rem;
-  width: 100%; text-align: left; background: none; border: none; color: inherit;
-  font-family: inherit; cursor: pointer; padding: 0.3rem; border-radius: 0.25rem;
+  display: grid; grid-template-columns: 2.1rem 1fr auto; align-items: end; column-gap: 0.55rem;
+  width: 100%; text-align: left; background: none; border: none; color: inherit; cursor: pointer;
+  font-family: "EB Garamond", Georgia, serif;
+  padding: 0.1rem 0.25rem; border-radius: 0.2rem;
+  transition: color 0.15s ease, background-color 0.15s ease;
 }
-.toc-link .tl-num { font-style: italic; opacity: .7; }
-.toc-link .tl-title { font-size: 1.04rem; }
-.toc-link .tl-folio { font-variant-numeric: tabular-nums; opacity: .6; font-size: 0.85rem; }
-.toc-link:hover, .toc-link:focus-visible { background-color: #00000010; outline: none; color: var(--leaf-red); }
+.toc-link .tl-num {
+  font-family: "EB Garamond", Georgia, serif; font-variant-caps: small-caps;
+  font-size: 0.86rem; letter-spacing: 0.06em; color: var(--leaf-red); text-align: right; line-height: 1.3;
+  align-self: start; padding-top: 0.12em;
+}
+.toc-link .tl-main { display: flex; align-items: flex-end; gap: 0.35rem; min-width: 0; }
+.toc-link .tl-title { font-family: "EB Garamond", Georgia, serif; font-size: clamp(0.88rem, 2.4vmin, 1.06rem); line-height: 1.2; }
+.toc-link .tl-leader {
+  flex: 1; min-width: 0.9rem; margin-bottom: 0.32em;
+  border-bottom: 2px dotted #bfa978;
+}
+.toc-link .tl-folio {
+  font-family: "EB Garamond", Georgia, serif; font-variant-numeric: oldstyle-nums tabular-nums;
+  font-size: 0.95rem; color: var(--ink-soft); line-height: 1.25; min-width: 1.4rem; text-align: right;
+}
+.toc-link:hover, .toc-link:focus-visible { background-color: #8f2a2410; outline: none; }
+.toc-link:hover .tl-title, .toc-link:focus-visible .tl-title { color: var(--leaf-red); }
+.toc-link:hover .tl-leader, .toc-link:focus-visible .tl-leader { border-bottom-color: var(--leaf-red); }
+
+@media (max-width: 640px) {
+  .toc-link { padding-top: 0.04rem; padding-bottom: 0.04rem; }
+  .toc-kicker { display: none; }
+}
 
 /* ---- chapter header ---- */
 .chapter-open { margin-bottom: 0.7rem; }
