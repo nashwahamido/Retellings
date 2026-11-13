@@ -45,10 +45,12 @@
       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
   // [[display|Name]] -> clickable mention (escapes everything else)
+  // escape running text; Gutenberg marks italics as _word_
+  function prose(t) { return esc(t).replace(/_([^_]+)_/g, "<em>$1</em>"); }
   function renderProse(text) {
     var out = "", last = 0, re = /\[\[([^\]]+)\]\]/g, m;
     while ((m = re.exec(text))) {
-      out += esc(text.slice(last, m.index));
+      out += prose(text.slice(last, m.index));
       var parts = m[1].split("|");
       var display = parts[0], key = parts.length > 1 ? parts[1] : parts[0];
       var loc = byName[norm(key)];
@@ -57,7 +59,7 @@
         : esc(display);
       last = m.index + m[0].length;
     }
-    out += esc(text.slice(last));
+    out += prose(text.slice(last));
     return out;
   }
 
@@ -222,6 +224,18 @@
   // ---- plain (accessible) mode ----
   function buildPlain() {
     plainEl.innerHTML = "";
+    var toc = el("article", "plain-story plain-toc");
+    toc.id = "plain-ch-0";
+    toc.innerHTML =
+      '<span class="ch-kicker">' + esc(BOOK.title) + "</span><h2>Contents</h2>" +
+      '<span class="ch-sub">Choose a story to read the places it names</span>' +
+      '<ol class="plain-toc-list">' + BOOK.chapters.map(function (c) {
+        return '<li><button type="button" class="plain-toc-link" data-ch="' + c.number + '">' +
+          '<span class="tl-num">' + (ROMAN[c.number] || c.number) + "</span>" +
+          '<span class="tl-title">' + esc(c.title) + "</span>" +
+          '<span class="tl-count">' + c.entries.length + (c.entries.length === 1 ? " passage" : " passages") + "</span></button></li>";
+      }).join("") + "</ol>";
+    plainEl.appendChild(toc);
     BOOK.chapters.forEach(function (ch) {
       var art = el("article", "plain-story");
       art.id = "plain-ch-" + ch.number;
@@ -239,7 +253,30 @@
       if (strip) art.appendChild(strip);
       plainEl.appendChild(art);
     });
+    plainEl.addEventListener("click", function (e) {
+      var b = e.target.closest(".plain-toc-link");
+      if (b) showPlain(parseInt(b.dataset.ch, 10));
+    });
     if (window.LocWindows) LocWindows.sync();
+  }
+
+  // plain mode shows one chapter (or the contents, 0) at a time, like the book
+  var plainCurrent = 1;
+  var LAST = BOOK.chapters.length;
+  function showPlain(n) {
+    plainCurrent = Math.max(0, Math.min(LAST, n));
+    plainEl.querySelectorAll(".plain-story").forEach(function (a) {
+      a.hidden = a.id !== "plain-ch-" + plainCurrent;
+    });
+    elPrev.disabled = plainCurrent <= 0;
+    elNext.disabled = plainCurrent >= LAST;
+    elContents.disabled = plainCurrent === 0;
+    elProgress.textContent = plainCurrent === 0 ? "Contents" : "Chapter " + ROMAN[plainCurrent] + " of " + ROMAN[LAST];
+    if (elChapter && plainCurrent > 0) elChapter.value = String(plainCurrent);
+    var top = plainEl.getBoundingClientRect().top + window.scrollY - 24;
+    if (window.scrollY > top) window.scrollTo({ top: top, behavior: "smooth" });
+    var h = plainEl.querySelector("#plain-ch-" + plainCurrent + " h2");
+    if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
   }
 
   // ---- assemble & init ----
@@ -297,13 +334,13 @@
   function pageCount() { return pageFlip ? pageFlip.getPageCount() : 0; }
   function current() { return pageFlip ? pageFlip.getCurrentPageIndex() : 0; }
   function updateProgress() {
-    if (!pageFlip) return;
+    if (!pageFlip || plainMode) return;
     elProgress.textContent = "Leaf " + (current() + 1) + " of " + pageCount();
     syncChapterSelect();
     updateNav();
   }
   function updateNav() {
-    if (!pageFlip) return;
+    if (!pageFlip || plainMode) return;
     if (!plainMode && !isOpen()) { setReadingControls(false); return; } // 3D view: controls greyed out
     elPrev.disabled = current() <= 0;
     elNext.disabled = current() >= pageCount() - 1;
@@ -314,8 +351,8 @@
     if (elChapter) elChapter.disabled = !on && !plainMode;
     if (elControls) elControls.classList.toggle("is-closed", !on && !plainMode);
   }
-  function goPrev() { if (pageFlip) pageFlip.flipPrev(); }
-  function goNext() { if (pageFlip) pageFlip.flipNext(); }
+  function goPrev() { if (plainMode) showPlain(plainCurrent - 1); else if (pageFlip) pageFlip.flipPrev(); }
+  function goNext() { if (plainMode) showPlain(plainCurrent + 1); else if (pageFlip) pageFlip.flipNext(); }
   function flipTo(i) {
     if (!pageFlip) return;
     // single-page (phone) mode ignores animated jumps to distant pages: go directly
@@ -345,8 +382,7 @@
   }
   function jumpToChapter(num) {
     if (plainMode) {
-      var a = document.getElementById("plain-ch-" + num);
-      if (a) a.scrollIntoView({ behavior: "smooth", block: "start" });
+      showPlain(num);
     } else if (chapterStartIndex[num] != null) {
       flipTo(chapterStartIndex[num]);
     }
@@ -360,11 +396,18 @@
     plainEl.hidden = !plain;
     elMode.textContent = plain ? "Read as a flip-book" : "Read as plain text";
     elMode.setAttribute("aria-pressed", String(plain));
-    [elPrev, elNext, elContents].forEach(function (b) { b.disabled = plain; });
     if (elToggle) elToggle.hidden = plain;
     if (elChapter) elChapter.disabled = false;
     if (elControls) elControls.classList.remove("is-closed");
-    if (!plain) updateNav();
+    if (plain) {
+      var from = (pageFlip && isOpen()) ? chapterForIndex(current()) : null;
+      showPlain(from || plainCurrent || 1);
+    } else {
+      [elPrev, elNext, elContents].forEach(function (b) { b.disabled = false; });
+      if (elChapter && plainCurrent > 0 && chapterStartIndex[plainCurrent] != null && isOpen()) flipTo(chapterStartIndex[plainCurrent]);
+      updateProgress();
+      updateNav();
+    }
   }
 
   // place windows live in loc-windows.js; story chips flip the book here
@@ -388,14 +431,15 @@
     if (tl) { e.preventDefault(); flipTo(parseInt(tl.dataset.flip, 10)); }
   });
   document.addEventListener("keydown", function (e) {
-    if (windowsOpen() || plainMode) return;
+    if (windowsOpen()) return;
+    if (plainMode && /^(INPUT|SELECT|TEXTAREA|BUTTON|SUMMARY|AUDIO)$/.test((e.target.tagName || ""))) return;
     if (e.key === "ArrowLeft") goPrev();
     else if (e.key === "ArrowRight") goNext();
   });
 
   elPrev.addEventListener("click", goPrev);
   elNext.addEventListener("click", goNext);
-  elContents.addEventListener("click", function () { flipTo(contentsIndex); });
+  elContents.addEventListener("click", function () { if (plainMode) showPlain(0); else flipTo(contentsIndex); });
   elMode.addEventListener("click", function () { setMode(!plainMode); });
   if (elChapter) elChapter.addEventListener("change", function () {
     var num = parseInt(this.value, 10);

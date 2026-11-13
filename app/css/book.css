@@ -410,7 +410,24 @@ body.dark .book-select option { color: var(--dark-text-color); background: var(-
 /* ===================== plain (accessible) mode ===================== */
 .book-plain[hidden] { display: none; }
 .book-plain { max-width: 44rem; margin: var(--sp-xl) auto; font-family: "EB Garamond", Georgia, serif; }
-.book-plain .plain-story { margin-bottom: var(--sp-2xl); }
+.book-plain .plain-story { margin-bottom: var(--sp-xl); min-height: 40vh; }
+.book-plain .plain-story[hidden] { display: none; }
+.book-plain h2:focus { outline: none; }
+/* plain-text contents: same leaders-and-numerals look as the book's */
+.plain-toc-list { list-style: none; margin: 0.4rem 0 0; padding: 0; }
+.plain-toc-link {
+  display: grid; grid-template-columns: 2.6rem 1fr auto; align-items: baseline; gap: 0.7rem;
+  width: 100%; padding: 0.55rem 0.4rem; border: none; border-bottom: 1px dotted currentColor;
+  background: none; color: inherit; cursor: pointer; text-align: left;
+  font-family: "EB Garamond", Georgia, serif;
+}
+.plain-toc-link .tl-num { font-variant-caps: small-caps; color: var(--accent-red); text-align: right; letter-spacing: 0.05em; }
+body.dark .plain-toc-link .tl-num { color: var(--accent-gold); }
+.plain-toc-link .tl-title { font-size: 1.15rem; }
+.plain-toc-link .tl-count { font-size: 0.85rem; font-style: italic; opacity: 0.65; }
+.plain-toc-link:hover .tl-title, .plain-toc-link:focus-visible .tl-title { color: var(--accent-red); text-decoration: underline; text-underline-offset: 3px; }
+body.dark .plain-toc-link:hover .tl-title, body.dark .plain-toc-link:focus-visible .tl-title { color: var(--accent-gold); }
+.plain-toc-link:focus-visible { outline: 2px solid var(--accent-red); outline-offset: 2px; }
 .book-plain .ch-kicker { font-style: normal; letter-spacing: 0.1em; text-transform: uppercase; opacity: .7; font-size: 0.85rem; }
 .book-plain h2 { font-size: var(--fs-h3); font-weight: var(--fw-bold); line-height: 1.1; margin: 0.1rem 0 0.1rem; }
 .book-plain .ch-sub { display: block; font-style: italic; opacity: .75; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid currentColor; }
