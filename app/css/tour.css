@@ -332,23 +332,34 @@ body.dark .deco-dialog { border-image-source: url("deco/window-ink.svg"); }
   font-family: "EB Garamond", Georgia, serif; font-size: 1.3rem; font-weight: 600;
   margin: 0 0 0.7rem; color: var(--tp-ink);
 }
-.ta-buttons, .ta-gmaps, .ta-files { display: grid; gap: 0.5rem; }
-.ta-gmaps.is-split, .ta-files { grid-template-columns: 1fr 1fr; }
+.ta-buttons, .ta-gmaps { display: grid; gap: 0.45rem; }
 :root body .ta-btn {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 0.12rem;
+  display: grid; grid-template-columns: 2.3rem minmax(0, 1fr) auto; align-items: center; gap: 0.75rem;
   width: 100%; box-sizing: border-box; text-align: left; cursor: pointer; text-decoration: none;
-  padding: 0.6rem 0.8rem; color: var(--tp-ink); background: #fbf5e4;
-  border: 3px double #b99a5c; box-shadow: 0 2px 6px #00000014;
-  transition: background-color 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
+  padding: 0.55rem 0.8rem 0.55rem 0.6rem; color: var(--tp-ink); background: #fbf5e4;
+  border: 3px double #b99a5c; font: inherit;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
-:root body .ta-btn:is(:hover, :focus-visible) { background: #fffaf0; transform: translateY(-1px); box-shadow: 0 5px 12px #00000022; outline: none; }
-:root body .ta-btn:focus-visible { border-color: var(--tp-red); }
-.ta-btn:disabled { opacity: 0.55; cursor: progress; transform: none; }
+.ta-icon {
+  display: grid; place-items: center; width: 2.3rem; height: 2.3rem;
+  background: linear-gradient(180deg, var(--plate-1), var(--plate-2));
+  box-shadow: inset 0 0 0 1px #d2ae63, inset 0 0 0 3px var(--plate-2), inset 0 0 0 4px #d2ae6380;
+}
+.ta-icon svg { width: 1.15rem; height: 1.15rem; fill: none; stroke: #ecd18e; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.ta-text { display: flex; flex-direction: column; gap: 0.12rem; min-width: 0; }
 .ta-btn-main {
-  font-family: "Epilogue", sans-serif; font-size: 0.72rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase; color: #6c5427;
+  font-family: "Epilogue", sans-serif; font-size: 0.74rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: #5a4520;
 }
-.ta-btn-sub { font-family: "EB Garamond", Georgia, serif; font-size: 0.92rem; font-style: italic; color: var(--tp-soft); line-height: 1.25; }
+.ta-btn-sub {
+  font-family: "Epilogue", sans-serif; font-size: 0.84rem; font-weight: 400; color: #4f4834;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ta-arrow { font-size: 1.5rem; line-height: 1; color: #b99a5c; transition: transform 0.15s ease, color 0.15s ease; }
+:root body .ta-btn:is(:hover, :focus-visible) { background: #fffaf0; border-color: #8f6f2e; outline: none; }
+:root body .ta-btn:is(:hover, :focus-visible) .ta-arrow { transform: translateX(3px); color: var(--tp-red); }
+:root body .ta-btn:focus-visible { box-shadow: 0 0 0 2px var(--tp-red); }
+.ta-btn:disabled { opacity: 0.55; cursor: progress; }
 .ta-help { margin-top: 0.8rem; font-size: 0.88rem; color: var(--tp-ink); }
 .ta-help summary { cursor: pointer; font-family: "EB Garamond", Georgia, serif; font-size: 1rem; font-style: italic; color: var(--tp-red); }
 .ta-help ol { margin: 0.6rem 0 0; padding-left: 1.2rem; line-height: 1.5; display: grid; gap: 0.45rem; }
@@ -407,4 +418,11 @@ body.print-prep #tour-map { height: 100% !important; }
 @media print {
   .pin-stop span { transform: none !important; box-shadow: 0 0 0 2px #f6e2a8, 0 2px 4px #00000066 !important; }
   .stop.is-hot { background: none !important; box-shadow: none !important; }
+}
+/* narrow screens: drop the arrow so each description stays on one line */
+@media (max-width: 520px) {
+  :root body .ta-btn { grid-template-columns: 2.1rem minmax(0, 1fr); gap: 0.65rem; padding-right: 0.6rem; }
+  .ta-icon { width: 2.1rem; height: 2.1rem; }
+  .ta-arrow { display: none; }
+  .ta-btn-sub { font-size: 0.8rem; }
 }

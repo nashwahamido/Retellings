@@ -142,20 +142,21 @@
                     <h3 class="ta-title" id="take-away-title">Take it with you</h3>
                     <div class="ta-buttons">
                         <button type="button" class="ta-btn" id="ta-print">
-                            <span class="ta-btn-main">Print or save as PDF</span>
-                            <span class="ta-btn-sub">A one-page map and itinerary, for paper or offline</span>
+                            <span class="ta-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9V3h10v6M7 17H4v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6h-3"/><path d="M7 14h10v7H7z"/></svg></span>
+                            <span class="ta-text"><span class="ta-btn-main">Print or save as PDF</span><span class="ta-btn-sub">One-page map and itinerary</span></span>
+                            <span class="ta-arrow" aria-hidden="true">&rsaquo;</span>
                         </button>
                         <div class="ta-gmaps" id="ta-gmaps"></div>
-                        <div class="ta-files">
-                            <button type="button" class="ta-btn ta-btn--half" id="ta-kml">
-                                <span class="ta-btn-main">Download KML</span>
-                                <span class="ta-btn-sub">For Google My Maps</span>
-                            </button>
-                            <button type="button" class="ta-btn ta-btn--half" id="ta-gpx">
-                                <span class="ta-btn-main">Download GPX</span>
-                                <span class="ta-btn-sub">For Organic Maps &amp; others</span>
-                            </button>
-                        </div>
+                        <button type="button" class="ta-btn" id="ta-kml">
+                            <span class="ta-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9.5 14.5 12 17l2.5-2.5"/></svg></span>
+                            <span class="ta-text"><span class="ta-btn-main">Download KML</span><span class="ta-btn-sub">To save it in Google My Maps</span></span>
+                            <span class="ta-arrow" aria-hidden="true">&rsaquo;</span>
+                        </button>
+                        <button type="button" class="ta-btn" id="ta-gpx">
+                            <span class="ta-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9.5 14.5 12 17l2.5-2.5"/></svg></span>
+                            <span class="ta-text"><span class="ta-btn-main">Download GPX</span><span class="ta-btn-sub">For offline map apps</span></span>
+                            <span class="ta-arrow" aria-hidden="true">&rsaquo;</span>
+                        </button>
                     </div>
                     <details class="ta-help">
                         <summary>How do I keep it on my phone?</summary>

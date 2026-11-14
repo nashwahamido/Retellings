@@ -570,20 +570,24 @@
     var stops = mapped();
     takeEl.hidden = !stops.length;
     if (!stops.length) return;
+    var PIN = '<span class="ta-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.3"/></svg></span>';
+    var row = function (href, main, sub) {
+      return '<a class="ta-btn" target="_blank" rel="noopener" href="' + esc(href) + '">' + PIN +
+        '<span class="ta-text"><span class="ta-btn-main">' + main + '</span><span class="ta-btn-sub">' + sub + "</span></span>" +
+        '<span class="ta-arrow" aria-hidden="true">&rsaquo;</span></a>';
+    };
     var html;
     if (stops.length === 1) {
-      html = '<a class="ta-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=' + ll(stops[0]) + '">' +
-        '<span class="ta-btn-main">Open in Google Maps</span><span class="ta-btn-sub">' + esc(stops[0].name) + "</span></a>";
+      html = row("https://www.google.com/maps/search/?api=1&query=" + ll(stops[0]), "Open in Google Maps", esc(stops[0].name));
     } else {
       var parts = gmapsLinks(stops);
       html = parts.map(function (pt, k) {
-        return '<a class="ta-btn' + (parts.length > 1 ? " ta-btn--half" : "") + '" target="_blank" rel="noopener" href="' + esc(pt.url) + '">' +
-          '<span class="ta-btn-main">' + (parts.length > 1 ? "Google Maps · part " + (k + 1) : "Open in Google Maps") + "</span>" +
-          '<span class="ta-btn-sub">' + (parts.length > 1 ? "Stops " + pt.from + "–" + pt.to : "Walking directions through all " + stops.length + " stops") + "</span></a>";
+        return parts.length > 1
+          ? row(pt.url, "Google Maps, part " + (k + 1), "Walking directions, stops " + pt.from + "–" + pt.to)
+          : row(pt.url, "Open in Google Maps", "Walking directions, all " + stops.length + " stops");
       }).join("");
     }
     gmapsEl.innerHTML = html;
-    gmapsEl.classList.toggle("is-split", stops.length > PER_LINK);
   }
 
   // ---- files ----
