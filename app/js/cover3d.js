@@ -17,6 +17,7 @@ const DEST = "locations.html#read";
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 let playOpen = null; // set once the model is ready
+let resetOpen = null; // puts the book back on the table
 
 // the page-darkening veil used by the transition
 const veil = document.createElement("div");
@@ -29,7 +30,11 @@ function go() {
   window.location.href = DEST;
 }
 // coming back with the browser's Back button: undo the dark veil
-window.addEventListener("pageshow", () => { veil.classList.remove("is-on"); document.body.classList.remove("is-opening"); });
+window.addEventListener("pageshow", () => {
+  veil.classList.remove("is-on");
+  document.body.classList.remove("is-opening");
+  if (resetOpen) resetOpen();
+});
 
 // both the 3D book and the "Open the book" button play the transition
 document.addEventListener("click", (e) => {
@@ -167,6 +172,17 @@ function init() {
       hero.classList.add("has-3d");
       resize();
       start();
+      resetOpen = () => {
+        opening = null;
+        hero.classList.remove("is-opening");
+        pivot.rotation.set(0, -0.35, 0);
+        pivot.position.y = 0;
+        shadow.material.opacity = 0.85;
+        placeCamera(baseDist, 0);
+        camera.updateProjectionMatrix();
+        running = false;
+        start();
+      };
       playOpen = () => {
         opening = { t0: performance.now(), ms: 1350, from: { rx: pivot.rotation.x, ry: pivot.rotation.y, py: pivot.position.y } };
         hero.classList.add("is-opening");
