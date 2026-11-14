@@ -1,0 +1,440 @@
+/* =====================================================================
+   book.css — the interactive hardcover flip-book ("A Book of Records")
+   Rendered by app/js/book.js from book-text.js (quotes) + locations-data.js.
+   A realistic leather book on a dark stage; cream ledger pages hold the
+   quotation records. Reuses the site palette for the intro, controls and
+   the location modal.
+   ===================================================================== */
+
+/* ---- page intro above the book ---- */
+.book-intro { max-width: 60rem; }
+.book-intro h1 {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  margin-bottom: var(--sp-md);
+}
+.book-intro .page-lead { font-size: var(--fs-h6); font-weight: var(--fw-regular); max-width: 48rem; }
+
+/* ---- fixed parchment tones for the book (same in light & dark site themes) ---- */
+.book-stage {
+  --paper: #f3ead3;
+  --paper-2: #efe4c8;
+  --ink: #342c1a;
+  --ink-soft: #6e6446;
+  --rule: #c7b587;
+  --rule-soft: #d8caa3;
+  --leaf-red: #8f2a24;
+}
+
+/* ===================== the stage (dark "desk") ===================== */
+.book-stage { margin: var(--sp-xl) 0; position: relative; }
+.book-viewport {
+  width: 100%;
+  padding: clamp(1.5rem, 4vw, 3.5rem) 1rem;
+  border-radius: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 2400px;
+  background:
+    radial-gradient(120% 90% at 50% 0%, #2a241d 0%, #1a1613 45%, #110e0b 100%);
+  box-shadow: inset 0 2px 30px #00000066;
+}
+
+/* ===================== 3D book object (resting state) ===================== */
+/* Shown over the flat book; click it to flatten to the front reading view. */
+.book-hero {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  border-radius: 0;
+  perspective: 1500px;
+  background:
+    radial-gradient(130% 100% at 50% 10%, #2a241d 0%, #171310 55%, #0d0b09 100%);
+  transition: opacity 0.55s ease, visibility 0.55s;
+}
+.book-stage.is-open .book-hero { opacity: 0; visibility: hidden; pointer-events: none; }
+.book-stage:not(.is-open) .book-viewport { visibility: hidden; }
+
+/* while the 3D book is showing, the page-turning controls are greyed out */
+.book-controls.is-closed #book-progress,
+.book-controls.is-closed .book-jump { opacity: 0.4; }
+.book-select:disabled { cursor: default; }
+
+/* live 3D model (three.js) — the SVG inside is the fallback */
+.book3d-mount {
+  width: min(100%, 900px);
+  height: min(72%, 540px);
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.book3d-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.book-hero.has-3d .book3d-img { display: none; }
+.book-stage.is-open .book3d-canvas { transform: scale(1.3); }
+
+/* the illustrated 3D book */
+.book3d-img {
+  width: clamp(260px, 52vmin, 560px);
+  height: auto;
+  display: block;
+  animation: book-float 5s ease-in-out infinite;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.3s ease;
+  filter: drop-shadow(0 18px 24px #00000066);
+}
+@keyframes book-float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -8px; }
+}
+.book-hero:hover .book3d-img,
+.book-hero:focus-visible .book3d-img { transform: scale(1.04); filter: drop-shadow(0 24px 30px #00000080) brightness(1.04); }
+/* opening: the book zooms toward you as it fades into the reading spread */
+.book-stage.is-open .book3d-img { transform: scale(1.35); }
+
+@media (prefers-reduced-motion: reduce) {
+  .book3d-img { animation: none; transition: none; }
+  .book-hero { transition: none; }
+}
+
+/* ===================== the hardcover case ===================== */
+/* sized in JS (width/height + --edge). The padding is the visible cover edge. */
+.book-case {
+  position: relative;
+  box-sizing: border-box;
+  padding: var(--edge, 30px);
+  border-radius: 0.5rem 0.7rem 0.7rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(145deg, #4a3a2a 0%, #33271c 48%, #241a12 100%);
+  box-shadow:
+    0 1px 0 1px #0000004d,
+    0 36px 70px -18px #000000b0,
+    0 10px 24px -12px #00000099,
+    inset 0 0 0 1px #ffffff14,
+    inset 0 0 40px #00000055;
+}
+/* gold keyline just inside the leather */
+.book-case::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--edge, 30px) * 0.42);
+  border: 1px solid #caa96688;
+  border-radius: 0.3rem;
+  pointer-events: none;
+  z-index: 0;
+}
+#flipbook { position: relative; z-index: 1; margin: 0 auto; touch-action: pan-y; }
+/* page block beneath the spread + fore-edge hint */
+.book-case .stf__parent {
+  box-shadow: 0 0 0 1px #00000026, 0 14px 30px -10px #0000007a;
+}
+
+/* ===================== controls ===================== */
+.book-controls {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: var(--sp-md); margin-top: var(--sp-lg);
+}
+.book-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 1.2rem; border: 2px solid var(--accent-navy);
+  border-radius: 0.4rem; background: none; color: inherit;
+  font-family: inherit; font-size: var(--fs-body); font-weight: var(--fw-medium);
+  cursor: pointer; transition: background-color .2s, color .2s, opacity .2s;
+}
+body.dark .book-btn { border-color: var(--accent-gold); }
+.book-btn:hover:not(:disabled), .book-btn:focus-visible:not(:disabled) {
+  background-color: var(--accent-navy); color: var(--accent-cream); outline: none;
+}
+body.dark .book-btn:hover:not(:disabled), body.dark .book-btn:focus-visible:not(:disabled) {
+  background-color: var(--accent-gold); color: var(--accent-navy);
+}
+.book-btn:disabled { opacity: .35; cursor: default; }
+.book-progress { font-variant-numeric: tabular-nums; font-size: var(--fs-small); opacity: .75; min-width: 7rem; text-align: center; }
+
+/* chapter navigator (quick jump) */
+.book-jump { display: inline-flex; align-items: center; gap: 0.45rem; }
+.book-jump-label {
+  font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7;
+}
+.book-select {
+  font-family: inherit; font-size: var(--fs-body);
+  color: inherit; background-color: transparent;
+  border: 2px solid var(--accent-navy); border-radius: 0.4rem;
+  padding: 0.5rem 2rem 0.5rem 0.8rem; cursor: pointer;
+  max-width: 14rem;
+  /* custom chevron */
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 1rem) 1.05em, calc(100% - 0.65rem) 1.05em;
+  background-size: 0.35rem 0.35rem, 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+body.dark .book-select { border-color: var(--accent-gold); }
+.book-select:hover, .book-select:focus-visible { outline: none; border-color: var(--accent-red); }
+body.dark .book-select:hover, body.dark .book-select:focus-visible { border-color: var(--accent-cream); }
+.book-select option { color: var(--light-text-color); background: var(--light-base-color); }
+body.dark .book-select option { color: var(--dark-text-color); background: var(--dark-base-color); }
+
+/* ===================== a leaf ===================== */
+.page {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, #00000016, #0000 5%, #0000 95%, #00000016),
+    radial-gradient(130% 100% at 50% 0%, #ffffff30, #0000 60%);
+  color: var(--ink);
+  box-shadow: inset 0 0 70px #0000001f;
+  overflow: hidden;
+}
+.page-inner {
+  height: 100%; width: 100%;
+  padding: clamp(2rem, 5vmin, 3.6rem) clamp(2.2rem, 5.6vmin, 4rem);
+  display: flex; flex-direction: column;
+  font-family: "EB Garamond", Georgia, serif;
+}
+/* spine-side gutter shadow: left page darker on its right edge, vice-versa */
+.stf__item.--right .page { box-shadow: inset 14px 0 24px -14px #00000040, inset 0 0 70px #0000001f; }
+.stf__item.--left .page  { box-shadow: inset -14px 0 24px -14px #00000040, inset 0 0 70px #0000001f; }
+
+.page-folio {
+  margin-top: auto; padding-top: 0.7rem;
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 0.72rem; letter-spacing: 0.04em; color: var(--ink-soft);
+  border-top: 1px solid var(--rule);
+}
+.page-folio .folio-num { font-style: italic; }
+
+/* ---- cover (leather) ---- */
+.page--cover, .page--back {
+  background:
+    linear-gradient(145deg, #45351f 0%, #2c2012 55%, #20160c 100%);
+  color: #e9d8a7;
+  box-shadow: inset 0 0 0 1px #ffffff14, inset 0 0 60px #00000070;
+}
+.cover-wrap {
+  height: 100%; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  gap: var(--sp-md); padding: var(--sp-xl);
+  border: 1px solid #caa96655; outline: 2px solid #caa96633; outline-offset: -0.9rem;
+}
+.cover-wrap .cover-kicker { text-transform: uppercase; letter-spacing: 0.35em; font-size: 0.78rem; color: #caa966; }
+.cover-wrap h2 {
+  font-family: "EB Garamond", Georgia, serif; font-weight: var(--fw-bold);
+  font-size: clamp(2.2rem, 8vmin, 3.8rem); line-height: 1.05;
+  color: #f0e2b4; text-shadow: 0 1px 0 #00000060;
+}
+.cover-wrap .cover-author { font-style: italic; font-size: clamp(1rem, 3.4vmin, 1.4rem); color: #d8c69a; }
+.cover-rule { width: 42%; height: 1px; background: #caa96688; }
+.cover-wrap .cover-sub { font-size: 0.92rem; color: #cbb78e; max-width: 22rem; }
+
+/* ---- half-title / colophon ---- */
+.leaf-centered { height: 100%; display: flex; flex-direction: column; justify-content: center; text-align: center; gap: var(--sp-md); }
+.leaf-centered h2 { font-size: clamp(1.8rem, 6vmin, 2.8rem); font-weight: var(--fw-bold); }
+.leaf-centered p { font-size: 1.02rem; line-height: 1.5; }
+.leaf-centered .ornament { font-size: 1.5rem; color: var(--ink-soft); }
+
+/* ---- contents ---- */
+.toc-head { text-align: center; margin-bottom: clamp(0.5rem, 1.8vmin, 1.1rem); }
+.toc-kicker {
+  display: block; font-family: "EB Garamond", Georgia, serif;
+  font-size: 0.72rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink-soft);
+}
+.toc-title {
+  font-family: "EB Garamond", Georgia, serif; font-weight: 600;
+  font-size: clamp(1.45rem, 4.6vmin, 2rem); letter-spacing: 0.2em; text-transform: uppercase;
+  line-height: 1.1; margin: 0.2rem 0 0.45rem; padding-left: 0.2em; /* balance the tracking */
+}
+/* ornamental rule: hairline · diamond · hairline */
+.toc-orn { display: flex; align-items: center; justify-content: center; gap: 0.55rem; }
+.toc-orn span { width: 28%; height: 1px; background: linear-gradient(90deg, transparent, var(--rule)); }
+.toc-orn span:last-child { background: linear-gradient(90deg, var(--rule), transparent); }
+.toc-orn i { width: 0.42rem; height: 0.42rem; background: var(--leaf-red); transform: rotate(45deg); }
+
+.toc-entries {
+  list-style: none; margin: 0; padding: 0 0.35rem 0 0;
+  flex: 1; min-height: 0; overflow-y: auto;
+  display: flex; flex-direction: column; justify-content: space-evenly;
+}
+.toc-link {
+  display: grid; grid-template-columns: 2.1rem 1fr auto; align-items: end; column-gap: 0.55rem;
+  width: 100%; text-align: left; background: none; border: none; color: inherit; cursor: pointer;
+  font-family: "EB Garamond", Georgia, serif;
+  padding: 0.1rem 0.25rem; border-radius: 0.2rem;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.toc-link .tl-num {
+  font-family: "EB Garamond", Georgia, serif; font-variant-caps: small-caps;
+  font-size: 0.86rem; letter-spacing: 0.06em; color: var(--leaf-red); text-align: right; line-height: 1.3;
+  align-self: start; padding-top: 0.12em;
+}
+.toc-link .tl-main { display: flex; align-items: flex-end; gap: 0.35rem; min-width: 0; }
+.toc-link .tl-title { font-family: "EB Garamond", Georgia, serif; font-size: clamp(0.88rem, 2.4vmin, 1.06rem); line-height: 1.2; }
+.toc-link .tl-leader {
+  flex: 1; min-width: 0.9rem; margin-bottom: 0.32em;
+  border-bottom: 2px dotted #bfa978;
+}
+.toc-link .tl-folio {
+  font-family: "EB Garamond", Georgia, serif; font-variant-numeric: oldstyle-nums tabular-nums;
+  font-size: 0.95rem; color: var(--ink-soft); line-height: 1.25; min-width: 1.4rem; text-align: right;
+}
+.toc-link:hover, .toc-link:focus-visible { background-color: #8f2a2410; outline: none; }
+.toc-link:hover .tl-title, .toc-link:focus-visible .tl-title { color: var(--leaf-red); }
+.toc-link:hover .tl-leader, .toc-link:focus-visible .tl-leader { border-bottom-color: var(--leaf-red); }
+
+@media (max-width: 640px) {
+  .toc-link { padding-top: 0.04rem; padding-bottom: 0.04rem; }
+  .toc-kicker { display: none; }
+}
+
+/* ---- chapter header ---- */
+.chapter-open { margin-bottom: 0.7rem; }
+.chapter-open .ch-kicker {
+  display: block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.chapter-open h2 {
+  font-size: clamp(1.5rem, 5vmin, 2.1rem); font-weight: var(--fw-bold); line-height: 1.08;
+  margin-top: 0.15rem;
+}
+.chapter-open .ch-sub {
+  display: block; font-style: italic; font-size: 0.92rem; color: var(--ink-soft);
+  margin-top: 0.15rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--rule);
+}
+
+/* ---- ledger records ---- */
+.record {
+  display: grid; grid-template-columns: 1.6rem 1fr; gap: 0.6rem; align-items: baseline;
+  padding: 0.5rem 0; border-bottom: 1px solid var(--rule-soft);
+}
+.record:last-child { border-bottom: none; }
+.rec-no {
+  font-variant-numeric: tabular-nums; font-style: italic; font-size: 0.82rem;
+  color: var(--ink-soft); text-align: right;
+}
+.rec-quote {
+  font-size: clamp(0.92rem, 2.4vmin, 1.05rem); line-height: 1.42; hyphens: auto;
+}
+
+/* in-text clickable place mention — a small classical "plate" button:
+   parchment face, gold rule, slight relief; turns to leather + gold on hover */
+.loc-mention {
+  font: inherit;
+  font-family: "EB Garamond", Georgia, serif;
+  font-variant-caps: small-caps;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #6b231d;
+  cursor: pointer;
+  line-height: 1.15;
+  padding: 0 0.38em 0.04em;
+  margin: 0 0.08em;
+  vertical-align: baseline;
+  border: 1px solid #b99a5c;
+  border-radius: 0.28em;
+  background: linear-gradient(180deg, #fbf5e4 0%, #efe2c1 100%);
+  box-shadow: inset 0 1px 0 #fffdf6, inset 0 0 0 2px #fbf5e400, 0 1px 0 #a0814a, 0 2px 3px #00000014;
+  text-decoration: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+.loc-mention:hover,
+.loc-mention:focus-visible {
+  color: #f1e3b6;
+  border-color: #cfae6b;
+  background: linear-gradient(180deg, #4d3a27 0%, #2c1f13 100%);
+  box-shadow: inset 0 1px 0 #ffffff1f, 0 1px 0 #1a120a, 0 3px 6px #00000033;
+  outline: none;
+}
+.loc-mention:active { transform: translateY(1px); box-shadow: inset 0 1px 2px #00000040; }
+/* saved to "my tour": a small gold seal after the name */
+.loc-mention.is-saved::after,
+.place-chip.is-saved::after {
+  content: "\2713";
+  display: inline-block;
+  margin-left: 0.32em;
+  width: 1.05em; height: 1.05em; line-height: 1.05em;
+  border-radius: 50%;
+  font-size: 0.72em; font-weight: 700; text-align: center; vertical-align: 0.12em;
+  font-variant-caps: normal;
+  color: #2c1f13;
+  background: linear-gradient(180deg, #f3dc9c, #c39a48);
+  box-shadow: 0 0 0 1px #8a6a2e;
+}
+
+/* "also in this story" chips */
+.places-strip { margin-top: 0.8rem; padding-top: 0.55rem; border-top: 1px solid var(--rule); }
+.places-strip .ps-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); margin-bottom: 0.35rem; display: block; }
+.places-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.place-chip {
+  font-family: "EB Garamond", Georgia, serif;
+  font-variant-caps: small-caps; font-weight: 600; letter-spacing: 0.03em;
+  font-size: 0.85rem; padding: 0.12rem 0.6rem;
+  color: #6b231d; cursor: pointer;
+  border: 1px solid #b99a5c; border-radius: 0.28em;
+  background: linear-gradient(180deg, #fbf5e4 0%, #efe2c1 100%);
+  box-shadow: inset 0 1px 0 #fffdf6, 0 1px 0 #a0814a, 0 2px 3px #00000014;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.place-chip:hover, .place-chip:focus-visible {
+  color: #f1e3b6; border-color: #cfae6b;
+  background: linear-gradient(180deg, #4d3a27 0%, #2c1f13 100%);
+  box-shadow: inset 0 1px 0 #ffffff1f, 0 1px 0 #1a120a, 0 3px 6px #00000033; outline: none;
+}
+
+/* ===================== plain (accessible) mode ===================== */
+.book-plain[hidden] { display: none; }
+.book-plain { max-width: 44rem; margin: var(--sp-xl) auto; font-family: "EB Garamond", Georgia, serif; }
+.book-plain .plain-story { margin-bottom: var(--sp-xl); min-height: 40vh; }
+.book-plain .plain-story[hidden] { display: none; }
+.book-plain h2:focus { outline: none; }
+/* plain-text contents: same leaders-and-numerals look as the book's */
+.plain-toc-list { list-style: none; margin: 0.4rem 0 0; padding: 0; }
+.plain-toc-link {
+  display: grid; grid-template-columns: 2.6rem 1fr auto; align-items: baseline; gap: 0.7rem;
+  width: 100%; padding: 0.55rem 0.4rem; border: none; border-bottom: 1px dotted currentColor;
+  background: none; color: inherit; cursor: pointer; text-align: left;
+  font-family: "EB Garamond", Georgia, serif;
+}
+.plain-toc-link .tl-num { font-variant-caps: small-caps; color: var(--accent-red); text-align: right; letter-spacing: 0.05em; }
+body.dark .plain-toc-link .tl-num { color: var(--accent-gold); }
+.plain-toc-link .tl-title { font-size: 1.15rem; }
+.plain-toc-link .tl-count { font-size: 0.85rem; font-style: italic; opacity: 0.65; }
+.plain-toc-link:hover .tl-title, .plain-toc-link:focus-visible .tl-title { color: var(--accent-red); text-decoration: underline; text-underline-offset: 3px; }
+body.dark .plain-toc-link:hover .tl-title, body.dark .plain-toc-link:focus-visible .tl-title { color: var(--accent-gold); }
+.plain-toc-link:focus-visible { outline: 2px solid var(--accent-red); outline-offset: 2px; }
+.book-plain .ch-kicker { font-style: normal; letter-spacing: 0.1em; text-transform: uppercase; opacity: .7; font-size: 0.85rem; }
+.book-plain h2 { font-size: var(--fs-h3); font-weight: var(--fw-bold); line-height: 1.1; margin: 0.1rem 0 0.1rem; }
+.book-plain .ch-sub { display: block; font-style: italic; opacity: .75; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid currentColor; }
+.book-plain .rec-quote.plain { font-size: 1.1rem; line-height: 1.6; margin-bottom: 0.7rem; display: grid; grid-template-columns: 1.6rem 1fr; gap: 0.5rem; }
+.book-plain .rec-quote.plain .rec-no { color: inherit; opacity: .6; }
+.book-plain .places-strip { border-color: currentColor; }
+
+@media (max-width: 768px) { .book-plain .rec-quote.plain { font-size: 1rem; } }
+
+/* arriving from the Cover's "Open the book": fade in from the dark of the transition */
+html.arrive body::after {
+  content: ""; position: fixed; inset: 0; z-index: 5000; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 40%, #1a1613 0%, #0d0b09 100%);
+  animation: arrive-fade 0.9s ease 0.2s forwards;
+}
+@keyframes arrive-fade { to { opacity: 0; visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { html.arrive body::after { animation-duration: 0.01s; animation-delay: 0s; } }

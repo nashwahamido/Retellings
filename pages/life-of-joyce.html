@@ -3,179 +3,222 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life of James Joyce</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <title>The Preface — Retellings</title>
+    <meta name="description" content="The life of James Joyce and the making of Dubliners.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400..800&family=Epilogue:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../app/css/variable.css">
     <link rel="stylesheet" href="../app/css/global.css">
-    <link rel="stylesheet" href="../app/css/life-of-joyce.css">
+    <link rel="stylesheet" href="../app/css/preface.css">
+    <link rel="stylesheet" href="../app/css/windows.css">
+    <link rel="stylesheet" href="../app/css/deco.css">
+    <link rel="stylesheet" href="../app/css/folio.css">
+    <link rel="stylesheet" href="../app/css/type.css">
+    <script src="../app/js/loc-windows.js" defer></script>
+    <script src="../app/js/sources-data.js" defer></script>
+    <script src="../app/js/sources.js" defer></script>
     <script src="../app/js/script.js" defer></script>
-    <script src="../app/js/quotes.js" defer></script>
+    <script src="../app/js/folio.js" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#content">Skip to content</a>
     <!-- Back to top button -->
-    <a class="back-to-top" aria-label="back-to-top Button"><img src="assets/toTopBtn.svg" Alt="Back to top button"></img></a>
-    
+
     <!-- hamburger menu: shown when width <= 768px -->
-        <div class="mobile-menu">
-            <div class="close-menu">
-                <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                    <path
-                        d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z">
-                    </path>
-                </svg>
-            </div>
-            <ul>
-                <li><a href="index.html">Homepage</a></li>
-                <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-                <li><a href="walking-tour.html">Dubliner's Walking Tour</a></li>
-                <li><a href="locations.html">Dubliner's Locations</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li>
-                    <div class="toggle"></div>
-                </li>
-            </ul>
-        </div>
+    <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Contents">
+        <button type="button" class="close-menu" aria-label="Close menu">
+            <svg aria-hidden="true" focusable="false" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                <path
+                    d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z">
+                </path>
+            </svg>
+        </button>
+        <ul aria-label="Contents">
+            <li><a href="index.html">The Cover</a></li>
+            <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+            <li><a href="locations.html"><span class="toc-no">II.</span> The Places</a></li>
+            <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+            <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+            <li><a href="about.html#sources" data-sources=""><span class="toc-no">V.</span> Sources</a></li>
+            <li>
+                <button type="button" class="toggle" role="switch" aria-checked="false" aria-label="Dark mode"></button>
+            </li>
+        </ul>
+    </div>
 
     <!-- HEADER / NAVIGATION -->
     <header>
-        <a href="index.html" aria-label="Retellings - Home" class="logo-container">
-            <img  loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo">
-            <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo">
-        </a>
-        <nav aria-label="Main navigation">
+        <a href="index.html" class="header-mark" aria-label="Retellings – The Cover">Retellings</a>
+        <nav aria-label="Contents">
             <ul>
-                <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-                <li><a href="walking-tour.html">Dubliner's Walking Tour</a></li>
-                <li><a href="locations.html">Dubliner's Locations</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><div class="toggle"></div></li>
+                <li><a href="index.html">The Cover</a></li>
+                <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                <li><a href="locations.html"><span class="toc-no">II.</span> The Places</a></li>
+                <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+                <li><a href="about.html#sources" data-sources=""><span class="toc-no">V.</span> Sources</a></li>
+                <li><button type="button" class="toggle" role="switch" aria-checked="false" aria-label="Dark mode"></button></li>
             </ul>
         </nav>
-        <button class="nav-hamburger">
-            <svg xmlns="https://www.w3.org/2000/svg" fill="#37465e" viewBox="0 0 256 256">
+        <button type="button" class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+            <svg aria-hidden="true" focusable="false" xmlns="https://www.w3.org/2000/svg" fill="#37465e" viewBox="0 0 256 256">
                 <path
                     d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z">
                 </path>
             </svg>
         </button>
     </header>
+    <main id="content" tabindex="-1" class="folio">
+      <div class="folio-head">
+        <span class="folio-kicker">I &middot; The Preface</span>
+        <h1>James Joyce &amp; his Dubliners</h1>
+        <p class="folio-sub">The man, the city and the book</p>
+        <div class="folio-rule" aria-hidden="true"><span></span></div>
+      </div>
 
-    <main>
-
-        <!-- SECTION 1 - HERO -->
-        <section aria-label="Life of James Joyce hero">
-            <h1>The Life of<br>James Joyce</h1>
-            <img loading="lazy" src="assets/Hero_jj.png" alt="Portrait Painting of James Joyce by Jacques-Émile Blanche in 1935">
-            <!-- <p>James Augustine Aloysius Joyce (2 February 1882 - 13 January 1941) was an Irish novelist, short story writer, poet, teacher, and literary critic.</p> -->
-        </section>
-
-        <!-- SECTION 2 - QUOTE -->
-        <section aria-label="Quotes from James Joyce">
-            <img loading="lazy"  src="assets/QuotesIcon.png" alt="Open Quote">
-            <div id="quote" class="quote-position">JJ quotes wiil go here</div>
-            <!-- <p><small>— James Joyce, Dubliners</small></p> -->
-            <img  loading="lazy" src="assets/QuotesIcon.png" alt="End Quote">
-        </section>
-
-        <!-- SECTION 3 - ABOUT DUBLINERS -->
-        <section aria-label="All About Dubliners">
-            <div>
-                <hgroup>
-                    <h2>All About Dubliners</h2>
-                    <p>Written by James Joyce</p>
-                </hgroup>
-                    <p>Published in 1914, Dubliner’s is one of James Joyce’s early works depicting a vignette of middle-class Irish life in Dublin. The book holds a collection of 15 stories that mimic the stages of life from childhood to death.</p>
-                    <p>Joyce’s intentions behind the book was to “write a chapter of the moral history of his country”. The book begins with the childhood stage of life with stories that focus on themes of innocence, disillusionment and unsettling encounters. Shifting to adolescence, Joyce’s writings in Dubliners take a turn, focusing on the complexities of young adulthood such as missed opportunities and one’s struggle for independence. The book then shifts into the more mature stages of life analyzing the frustrations and mundanity of adulthood characterized by unfulfilled ambitions and the characters personal failings. Dubliner ends on a critical lens of public life, holding Dublin’s social and political landscape under a microscope revealing its hypocrisy stagnation and the vice-like grip the Dublin’s past and Irish history has on the city and its people.</p>
-                    <p>The final chapter in Dubliner’s, “the Dead”, is noted as the masterpiece of this collection and has been hailed by prominent literary figures, like T.S. Elliot, James Baldwin, and more. 
-                    </p>
+      <section class="folio-section" aria-labelledby="author-title">
+        <div class="spread">
+          <figure class="plate plate--portrait">
+            <span class="plate-frame"><img loading="lazy" src="assets/Hero_jj.png" alt="Portrait painting of James Joyce by Jacques-&Eacute;mile Blanche, 1935"></span>
+            <figcaption><span class="plate-no">Frontispiece</span>James Joyce, by Jacques-&Eacute;mile Blanche, 1935.</figcaption>
+          </figure>
+          <div>
+            <h2 class="folio-h2 folio-h2--left" id="author-title"><span class="num">Chapter I</span>The Author</h2>
+            <div class="measure">
+            <p class="dropcap">Born on February 2nd 1882, James Joyce is considered one of Ireland’s most celebrated writers for his books, Dubliners and Ulysses. The eldest of 10 children, Joyce lived in Brighton Square, Rathgar with his parents, John Stanislaus Joyce and Mary Jane “May” (née Murray). Joyce attended Clongowes Wood College, Belvedere College and University College, formally located on St. Stephen’s Green, before moving to Paris to study medicine. Joyce returned to Ireland in April 1903 to attend to his family after the death of his mother and stayed until 1904. During this time, he met his future wife Nora Barnacle, from county Galway.</p>
+            <p>During this time Joyce also wrote his first short story for the magazine Irish Homestead. In October 1904, Joyce and Nora left Ireland to live in Pola, now known as Pula Croatia, where Joyce became an english teacher. After 1904, Joyce only visited Ireland three other times with his last visit being in 1912.</p>
             </div>
-            <div>
-                <img loading="lazy"  src="assets/TheDubliners.png" alt="The Dubliners book cover">
-            </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <!-- SECTION 4 - WORKS / BOOK RECOMMENDATIONS -->
-        <section aria-label="Works by James Joyce">
-            <hgroup>
-                <h2>Book Recommendations</h2>
-                <p>If You Enjoyed Dubliners</p>
-            </hgroup>
-            <ul>
-                <!-- BOOK 1 -->
-                <li>
-                    <article>
-                        <img loading="lazy" src="assets/BookRecommendation 1.png" alt="Book cover of Joyce by Ian Pindar">
-                        <div>
-                            <h3>Joyce</h3>
-                            <p>A biography of James Joyce by Ian Pindar exploring pivotal events in Joyce's life.</p>
-                            <a href="https://www.hodgesfiggis.ie/book/joyce/ian-pindar/9781914979255" class = "btn btn-s2">Learn More</a>
-                        </div>
-                    </article>
-                </li>
-                <!-- BOOK 2 -->
-                <li>
-                    <article>
-                        <img loading="lazy" src="assets/BookRecommendation 2.png" alt="Book cover of The Importance of Being Earnest by Oscar Wilde">
-                        <div>
-                            <h3>The Importance of Being Earnest</h3>
-                            <p>A comedic play written by Oscar Wilde on the ridiculousness of propriety and etiquette.</p>
-                            <a href="https://www.hodgesfiggis.ie/book/the-importance-of-being-earnest-and-other-plays/oscar-wilde/9780140436068" class = "btn btn-s2">Learn More</a>
-                        </div>
-                    </article>
-                </li>
-                <!-- BOOK 3 -->
-                <li>
-                    <article>
-                        <img loading="lazy" src="assets/BookRecommendation 3.png" alt="Book cover of An Apology For Roses by John Broderick">
-                        <div>
-                            <h3>An Apology for Roses</h3>
-                            <p>Marie Fogerty is a young girl tangled in a love triangle who exposes the social and religious hypocrisy of her small town in 1970s Ireland.</p>
-                            <a href="https://www.hodgesfiggis.ie/book/an-apology-for-roses/john-broderick/9781843516927" class = "btn btn-s2">Learn More</a>
-                        </div>
-                    </article>
-                </li>
-                <!-- BOOK 4 -->
-                <li>
-                    <article>
-                        <img loading="lazy" src="assets/BookRecommendation 4.png" alt="Book cover of Waiting for Godot by Samuel Beckett">
-                        <div>
-                            <h3>Waiting for Godot</h3>
-                            <p>A tragic comedy in two acts written by Samuel Beckett</p>
-                            <a href="https://www.hodgesfiggis.ie/book/waiting-for-godot/samuel-beckett/9780571244591" class = "btn btn-s2">Learn More</a>
-                        </div>
-                    </article>
-                </li>
-            </ul>
-        </section>
+      <section class="epigraph" aria-label="In his words">
+        <div class="folio-rule" aria-hidden="true"><span></span></div>
+        <blockquote id="quote" aria-live="polite">Life is too short to read a bad book.</blockquote>
+        <cite id="quote-cite">James Joyce</cite>
+        <div class="folio-rule" aria-hidden="true"><span></span></div>
+      </section>
 
-    </main>
-    
-    <!-- FOOTER -->
-   <footer>
-        <div class="footer-col-left">
-            <div class="footer-brand">
-                <a href="index.html" aria-label="Retellings – Home">
-                    <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo logo-footer">
-                    <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo logo-footer">
-                </a>
-                <h3><strong>Retellings Digital Experience</strong></h3>
+      <section class="folio-section dubliners" aria-labelledby="dubliners-title">
+        <div class="spread spread--flip dub-intro">
+          <div>
+            <h2 class="folio-h2 folio-h2--left" id="dubliners-title"><span class="num">Chapter II</span>All About <em>Dubliners</em></h2>
+            <div class="measure">
+              <p class="dropcap">Published in 1914, <em>Dubliners</em> is one of James Joyce’s early works depicting a vignette of middle-class Irish life in Dublin. The book holds a collection of 15 stories that mimic the stages of life from childhood to death.</p>
             </div>
-            <p>Bridging the literary genius of The Dubliners by James Joyce with the historical and physical landscape of Dublin.</p>
-            <strong><small>&copy;2026 Retellings. <br>Created for academic purposes as part of the MSc Interactive Digital Media</small></strong>
+            <blockquote class="dub-aim">
+              <p>&ldquo;to write a chapter of the moral history of my country&rdquo;</p>
+              <cite>Joyce&rsquo;s intention behind the book</cite>
+            </blockquote>
+          </div>
+          <figure class="plate plate--narrow">
+            <span class="plate-frame"><img loading="lazy" src="assets/TheDubliners.png" alt="The title page of Dubliners by James Joyce"></span>
+            <figcaption><span class="plate-no">Plate</span><em>Dubliners</em>, first published in 1914.</figcaption>
+          </figure>
         </div>
 
-        <div class="footer-col-right">
-                <h2>Credits</h2>
-                <h3>Thanks to:</h3>
-                <ul>   
-                    <li>Cathal O'Connor</li>
-                    <li>Ren Paul</li>
-                    <li>Maiyse Abuleil</li>
+        <h3 class="dub-stages-title">The stages of life</h3>
+        <ol class="stages">
+          <li class="stage">
+            <span class="stage-no">I</span>
+            <h3 class="stage-name">Childhood</h3>
+            <p class="stage-theme">Stories that focus on themes of innocence, disillusionment and unsettling encounters.</p>
+            <p class="stage-stories"><em>The Sisters</em> &middot; <em>An Encounter</em> &middot; <em>Araby</em></p>
+          </li>
+          <li class="stage">
+            <span class="stage-no">II</span>
+            <h3 class="stage-name">Adolescence</h3>
+            <p class="stage-theme">The complexities of young adulthood, such as missed opportunities and one’s struggle for independence.</p>
+            <p class="stage-stories"><em>Eveline</em> &middot; <em>After the Race</em> &middot; <em>Two Gallants</em> &middot; <em>The Boarding House</em></p>
+          </li>
+          <li class="stage">
+            <span class="stage-no">III</span>
+            <h3 class="stage-name">Maturity</h3>
+            <p class="stage-theme">The frustrations and mundanity of adulthood, characterised by unfulfilled ambitions and the characters’ personal failings.</p>
+            <p class="stage-stories"><em>A Little Cloud</em> &middot; <em>Counterparts</em> &middot; <em>Clay</em> &middot; <em>A Painful Case</em></p>
+          </li>
+          <li class="stage">
+            <span class="stage-no">IV</span>
+            <h3 class="stage-name">Public life</h3>
+            <p class="stage-theme">A critical lens on Dublin’s social and political landscape, revealing its hypocrisy, stagnation and the vice-like grip Dublin’s past and Irish history have on the city and its people.</p>
+            <p class="stage-stories"><em>Ivy Day in the Committee Room</em> &middot; <em>A Mother</em> &middot; <em>Grace</em></p>
+          </li>
+        </ol>
+
+        <div class="dub-coda">
+          <span class="dub-coda-no">Coda</span>
+          <p>The final story in <em>Dubliners</em>, &ldquo;The Dead&rdquo;, is noted as the masterpiece of this collection and has been hailed by prominent literary figures, like T. S. Eliot, James Baldwin, and more.</p>
+          <a class="btn" href="locations.html#read">See its places</a>
+        </div>
+      </section>
+
+      <section class="folio-section" aria-labelledby="shelf-title">
+        <h2 class="folio-h2" id="shelf-title"><span class="num">Chapter III</span>Further Reading</h2>
+        <p class="folio-sub">If you enjoyed <em>Dubliners</em></p>
+        <ul class="shelf">
+          <li class="shelf-book">
+            <span class="plate-frame"><img loading="lazy" src="assets/BookRecommendation 1.png" alt="Book cover of Joyce by Ian Pindar"></span>
+            <div>
+              <h3>Joyce</h3>
+              <p>A biography of James Joyce by Ian Pindar exploring pivotal events in Joyce's life.</p>
+              <a class="link-quiet" href="https://www.hodgesfiggis.ie/book/joyce/ian-pindar/9781914979255" target="_blank" rel="noopener">Find it at Hodges Figgis &rarr;</a>
+            </div>
+          </li>
+          <li class="shelf-book">
+            <span class="plate-frame"><img loading="lazy" src="assets/BookRecommendation 2.png" alt="Book cover of The Importance of Being Earnest by Oscar Wilde"></span>
+            <div>
+              <h3>The Importance of Being Earnest</h3>
+              <p>A comedic play written by Oscar Wilde on the ridiculousness of propriety and etiquette.</p>
+              <a class="link-quiet" href="https://www.hodgesfiggis.ie/book/the-importance-of-being-earnest-and-other-plays/oscar-wilde/9780140436068" target="_blank" rel="noopener">Find it at Hodges Figgis &rarr;</a>
+            </div>
+          </li>
+          <li class="shelf-book">
+            <span class="plate-frame"><img loading="lazy" src="assets/BookRecommendation 3.png" alt="Book cover of An Apology For Roses by John Broderick"></span>
+            <div>
+              <h3>An Apology for Roses</h3>
+              <p>Marie Fogerty is a young girl tangled in a love triangle who exposes the social and religious hypocrisy of her small town in 1970s Ireland.</p>
+              <a class="link-quiet" href="https://www.hodgesfiggis.ie/book/an-apology-for-roses/john-broderick/9781843516927" target="_blank" rel="noopener">Find it at Hodges Figgis &rarr;</a>
+            </div>
+          </li>
+          <li class="shelf-book">
+            <span class="plate-frame"><img loading="lazy" src="assets/BookRecommendation 4.png" alt="Book cover of Waiting for Godot by Samuel Beckett"></span>
+            <div>
+              <h3>Waiting for Godot</h3>
+              <p>A tragic comedy in two acts written by Samuel Beckett.</p>
+              <a class="link-quiet" href="https://www.hodgesfiggis.ie/book/waiting-for-godot/samuel-beckett/9780571244591" target="_blank" rel="noopener">Find it at Hodges Figgis &rarr;</a>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <button type="button" class="back-to-top" aria-label="Back to top"><img src="assets/toTopBtn.svg" alt="" width="48" height="48"></button>
+    </main>
+
+   <footer class="endpaper">
+        <div class="endpaper-inner">
+            <a class="endpaper-brand" href="index.html" aria-label="Retellings – The Cover">
+                <img src="assets/emblem-navy.svg" alt="" loading="lazy" class="endpaper-logo emblem emblem--light" width="100" height="148"><img src="assets/emblem-ink.svg" alt="" loading="lazy" class="endpaper-logo emblem emblem--dark" width="100" height="148">
+                <span class="endpaper-name">Retellings</span>
+            </a>
+            <p class="endpaper-tag">Bridging the literary genius of James Joyce&rsquo;s <em>Dubliners</em> with the historical and physical landscape of Dublin.</p>
+            <div class="endpaper-rule" aria-hidden="true"><span></span></div>
+            <nav aria-label="Footer contents">
+                <ul class="endpaper-toc">
+                    <li><a href="index.html">The Cover</a></li>
+                    <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                    <li><a href="locations.html"><span class="toc-no">II.</span> The Places</a></li>
+                    <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                    <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+                    <li><a href="about.html#sources" data-sources=""><span class="toc-no">V.</span> Sources</a></li>
                 </ul>
-                <p>Without whom, this website wouldn’t have been possible to plan this tour.</p>
+            </nav>
+            <p class="endpaper-small">&copy; 2026 Retellings &middot; Created for academic purposes as part of the MSc in Interactive Digital Media, Trinity College Dublin</p>
+            <p class="endpaper-small">With thanks to Cathal O&rsquo;Connor, Ren Paul and Maiyse Abuleil</p>
+            <p class="endpaper-finis" aria-hidden="true">&#10087;</p>
         </div>
     </footer>
   </body>
- </html>
+</html>

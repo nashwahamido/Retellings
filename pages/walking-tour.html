@@ -3,58 +3,77 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dubliner's Walking Tour</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <title>My Tour — Retellings</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400..800&family=Epilogue:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../app/css/variable.css">
     <link rel="stylesheet" href="../app/css/walking-tour.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" href="../app/css/faq.css">
+    <link rel="stylesheet" href="../app/js/vendor/leaflet/leaflet.css">
+    <link rel="stylesheet" href="../app/css/windows.css">
+    <link rel="stylesheet" href="../app/css/tour.css">
+    <link rel="stylesheet" href="../app/css/deco.css" />
+    <link rel="stylesheet" href="../app/css/folio.css" />
+    <link rel="stylesheet" href="../app/css/type.css">
+    <script src="../app/js/locations-data.js" defer></script>
+    <script src="../app/js/tour-data.js" defer></script>
+    <script src="../app/js/nearby-data.js" defer></script>
+    <script src="../app/js/tour-store.js" defer></script>
+    <script src="../app/js/loc-windows.js" defer></script>
+    <script src="../app/js/sources-data.js" defer></script>
+    <script src="../app/js/sources.js" defer></script>
+    <script src="../app/js/vendor/leaflet/leaflet.js" defer></script>
+    <script src="../app/js/tour.js" defer></script>
     <script src="../app/js/script.js" defer></script>
+    <script src="../app/js/faq.js" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#content">Skip to content</a>
 
     <!-- Back to top button -->
-    <a class="back-to-top" aria-label="back-to-top Button"><img loading="lazy"  src="assets/toTopBtn.svg" Alt="Back to top button"></a>
 
     <!-- hamburger menu: shown when width <= 768px -->
-    <div class="mobile-menu">
-        <div class="close-menu">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+    <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Contents">
+        <button type="button" class="close-menu" aria-label="Close menu">
+            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                 <path
                     d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z">
                 </path>
             </svg>
-        </div>
-        <ul>
-            <li><a href="index.html">Homepage</a></li>
-            <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-            <li><a href="walking-tour.html">Dubliner's Walking Tour</a></li>
-            <li><a href="locations.html">Dubliner's Locations</a></li>
-            <li><a href="about.html">About Us</a></li>
+        </button>
+        <ul aria-label="Contents">
+            <li><a href="index.html">The Cover</a></li>
+            <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+            <li><a href="locations.html"><span class="toc-no">II.</span> The Places</a></li>
+            <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+            <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+            <li><a href="about.html#sources" data-sources=""><span class="toc-no">V.</span> Sources</a></li>
             <li>
-                <div class="toggle"></div>
+                <button type="button" class="toggle" role="switch" aria-checked="false" aria-label="Dark mode"></button>
             </li>
         </ul>
     </div>
 
     <!-- HEADER / NAVIGATION -->
     <header>
-        <a href="index.html" aria-label="Retellings - Home" class="logo-container">
-            <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo">
-            <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo">
-        </a>
-        <nav aria-label="Main navigation">
+        <a href="index.html" class="header-mark" aria-label="Retellings – The Cover">Retellings</a>
+        <nav aria-label="Contents">
             <ul>
-                <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-                <li><a href="walking-tour.html">Dubliner's Walking Tour</a></li>
-                <li><a href="locations.html">Dubliner's Locations</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><div class="toggle"></div></li>
+                <li><a href="index.html">The Cover</a></li>
+                <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                <li><a href="locations.html"><span class="toc-no">II.</span> The Places</a></li>
+                <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+                <li><a href="about.html#sources" data-sources=""><span class="toc-no">V.</span> Sources</a></li>
+                <li><button type="button" class="toggle" role="switch" aria-checked="false" aria-label="Dark mode"></button></li>
             </ul>
         </nav>
-        <button class="nav-hamburger">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#37465e" viewBox="0 0 256 256">
+        <button type="button" class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="#37465e" viewBox="0 0 256 256">
                 <path
                     d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z">
                 </path>
@@ -62,441 +81,327 @@
         </button>
     </header>
 
-    <main>
+    <main id="content" tabindex="-1">
 
-        <!-- SECTION 1 - HERO -->
-        <section aria-label="Walking tour hero">
-            <img  loading="lazy" src="assets/Hero_PlaceholderMap.webp" alt="Map showing the walking tour route in Dublin">
-            <div>
-                <hgroup>
-                    <h1>Retelling Dubliners</h1>
-                    <p class="tagline">A Walking Tour through Dublin <a class="btnjump" href="#mapsection">
-    <span class="btn-text">~ 2 hours</span>
-    <div class="btn-icon">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </div>
-</a></p>
-                </hgroup>
-                <p>Walk in the footsteps of James Joyce's Dubliners while learning Dublin's iconic history. Starting at the James Joyce Centre and ending at Kennedy's Pub, visit the famous locations mentioned in the book at your own pace.</p>
-                <br>
-                <!-- Welcome audio: introduction to the tour -->
-                <audio controls>
-                    <source src="audio/welcome_v2.mp3" type="audio/mpeg">
-                    <source src="audio/welcome_v2.m.ogg" type="audio/ogg">
-                    <a href="audio/welcome.mp3" download>Download audio</a>
-                </audio>
-                <details class="audio-transcript">
-                    <summary>Read transcript</summary>
-                    <div class="transcript-body">
-                        <p>Welcome to the Retellings Walking Tour! Together we'll walk in the footsteps of James Joyce's Dubliners while learning about some of Dublin's local haunts, about the life of James Joyce, and revisiting key locations in the book Dubliners at your own pace.</p>
-                        <p>Our tour will start at the James Joyce Centre, which is easily accessible on the Green or Red line of the Luas tram or from various bus routes. To see which one is closest to you, add our Retellings Walking Tour to your Google Maps app with the link provided from our website.</p>
+        <!-- SECTION 1 - MY TOUR: intro -->
+        <section class="tour-intro" aria-labelledby="tour-title">
+            <span class="tour-kicker">III &middot; Your itinerary</span>
+            <h1 id="tour-title">My Tour</h1>
+            <p class="folio-sub page-sub">Your walk through Joyce&rsquo;s Dublin</p>
+            <p class="tour-lead">The places you&rsquo;ve gathered from the book, set out on the map of Dublin. Reorder them to plan your walk, or start from our suggested route.</p>
+            <p class="book-howto">
+                <span class="bh-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5C5.5 4 8.5 4 12 6c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 6v13.5"/></svg>Add from <a href="locations.html">the book</a></span>
+                <span class="bh-sep" aria-hidden="true"></span>
+                <span class="bh-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg><a href="#add-place" data-focus-add>Pick from the place list</a></span>
+                <span class="bh-sep" aria-hidden="true"></span>
+                <span class="bh-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.3"/></svg>Select a faint pin on the map</span>
+            </p>
+        </section>
+
+        <!-- shown only when printing -->
+        <div class="print-head" id="print-head" aria-hidden="true">
+            <p class="print-kicker">Retellings &middot; A walk through James Joyce&rsquo;s <em>Dubliners</em></p>
+            <h2 class="print-title" id="print-title">My Tour</h2>
+            <p class="print-meta" id="print-meta"></p>
+        </div>
+        <p class="print-note print-only" aria-hidden="true">Distances are approximate: straight lines between stops, allowing for streets, at an easy 4.5&nbsp;km/h. Planned on Retellings.</p>
+
+        <!-- SECTION 2 - PLANNER: list + map -->
+        <section class="planner" aria-label="Tour planner">
+            <div class="planner-panel">
+                <div class="tour-tabs" role="tablist" aria-label="Which tour to show">
+                    <button type="button" class="tour-tab" role="tab" id="tab-mine" aria-selected="true" aria-controls="stop-list">My tour</button>
+                    <button type="button" class="tour-tab" role="tab" id="tab-suggested" aria-selected="false" aria-controls="stop-list">Suggested walk</button>
+                </div>
+
+                <div class="planner-head">
+                    <h2 id="planner-heading">Your stops</h2>
+                    <span class="planner-count" id="planner-count" aria-live="polite"></span>
+                </div>
+                <p class="planner-note" id="planner-note"></p>
+
+                <ol class="stop-list" id="stop-list" aria-labelledby="planner-heading"></ol>
+
+                <div class="planner-empty" id="planner-empty" hidden>
+                    <p class="pe-orn" aria-hidden="true">&#10087;</p>
+                    <p><strong>Your tour is empty.</strong></p>
+                    <p>Open <a href="locations.html">the book</a> and choose <em>Add to my tour</em> on any place, pick one below, or start from the <button type="button" class="link-btn" data-goto="suggested">suggested walk</button>.</p>
+                </div>
+
+                <div class="planner-totals" id="planner-totals" hidden>
+                    <div><span class="pt-label">Walking distance</span><span class="pt-value" id="pt-distance">&ndash;</span></div>
+                    <div><span class="pt-label">Walking time</span><span class="pt-value" id="pt-time">&ndash;</span></div>
+                    <p class="pt-note">Approximate: straight lines between stops, allowing for streets, at an easy 4.5&nbsp;km/h.</p>
+                </div>
+
+                <div class="planner-add" id="planner-add">
+                    <label for="add-place">Add a place to my tour</label>
+                    <div class="tour-field">
+                        <select id="add-place" class="tour-select"></select>
                     </div>
+                </div>
+
+                <div class="planner-actions" id="actions-mine">
+                    <button type="button" class="book-btn" id="best-order">Best order</button>
+                    <button type="button" class="book-btn" id="clear-tour">Clear tour</button>
+                </div>
+                <div class="planner-actions" id="actions-suggested" hidden>
+                    <button type="button" class="book-btn" id="copy-suggested">Add these stops to my tour</button>
+                </div>
+
+                <section class="take-away" id="take-away" aria-labelledby="take-away-title" hidden>
+                    <h3 class="ta-title" id="take-away-title">Take it with you</h3>
+                    <div class="ta-buttons">
+                        <button type="button" class="ta-btn" id="ta-print">
+                            <span class="ta-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9V3h10v6M7 17H4v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6h-3"/><path d="M7 14h10v7H7z"/></svg></span>
+                            <span class="ta-text"><span class="ta-btn-main">Print or save as PDF</span><span class="ta-btn-sub">One-page map and itinerary</span></span>
+                            <span class="ta-arrow" aria-hidden="true">&rsaquo;</span>
+                        </button>
+                        <div class="ta-gmaps" id="ta-gmaps"></div>
+                        <button type="button" class="ta-btn" id="ta-kml">
+                            <span class="ta-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9.5 14.5 12 17l2.5-2.5"/></svg></span>
+                            <span class="ta-text"><span class="ta-btn-main">Download KML</span><span class="ta-btn-sub">To save it in Google My Maps</span></span>
+                            <span class="ta-arrow" aria-hidden="true">&rsaquo;</span>
+                        </button>
+                        <button type="button" class="ta-btn" id="ta-gpx">
+                            <span class="ta-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9.5 14.5 12 17l2.5-2.5"/></svg></span>
+                            <span class="ta-text"><span class="ta-btn-main">Download GPX</span><span class="ta-btn-sub">For offline map apps</span></span>
+                            <span class="ta-arrow" aria-hidden="true">&rsaquo;</span>
+                        </button>
+                    </div>
+                    <details class="ta-help">
+                        <summary>How do I keep it on my phone?</summary>
+                        <ol>
+                            <li><strong>As a PDF:</strong> choose <em>Print or save as PDF</em>, then <em>Save as PDF</em> (on a phone: <em>Share</em> &rarr; <em>Save to Files</em>). It opens without signal.</li>
+                            <li><strong>Walking directions now:</strong> <em>Open in Google Maps</em> opens the app with your stops in order.</li>
+                            <li><strong>Saved in Google Maps:</strong> download the KML, go to <a href="https://www.google.com/mymaps" target="_blank" rel="noopener">Google My Maps</a>, choose <em>Create a new map</em> &rarr; <em>Import</em> and pick the file. It then appears in the Google Maps app under <em>Saved</em> &rarr; <em>Maps</em>.</li>
+                            <li><strong>Offline:</strong> in the Google Maps app, download an offline map of central Dublin, or open the GPX in an offline app such as Organic Maps.</li>
+                        </ol>
+                    </details>
+                </section>
+
+                <details class="suggested-card" id="suggested-card" hidden>
+                    <summary>About the suggested walk</summary>
+                    <p id="suggested-summary"></p>
+                    <div id="suggested-audio"></div>
                 </details>
             </div>
-        </section>
 
-        <!-- SECTION 2 - INTERACTIVE MAP -->
-        <section aria-label="Interactive map" id="mapsection">
-            <div class="map-iframe-wrapper"><iframe src="https://www.google.com/maps/d/u/0/embed?mid=1gUuzkJVAerD3f9yYEMclUwhE23V8mVI&ehbc=2E312F&noprof=1" width="640" height="480" title="Retelling Dubliners walking tour map" loading="lazy"></iframe></div>
-            <div class="map-overlay-container">
-                <div class="map-overlay">
-                    <h2>Save Our Tour to Google Maps</h2>
-                    <p>Lost WIFI or took a wrong turn? Save the "Retelling Dubliners" walking tour to your Google Map app for navigating Dublin. Use the "download map route" feature to save the walking tour to your phone without using all your phone's data.</p>
-                    <a class="btn-s1" href="https://maps.app.goo.gl/Uh1yXw4iDZvTAvtYA" target="_blank" rel="noopener noreferrer">
-                        Save Map
-                        <div class="icon">
-                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
-                            </svg>
-                        </div>
-                    </a>
+            <div class="planner-map">
+                <div id="tour-map" role="region" aria-label="Map of Dublin showing your tour"></div>
+                <div class="map-tools">
+                    <button type="button" class="map-chip map-chip--main" id="toggle-nearby" aria-pressed="false" aria-controls="nearby-filters">Eat &amp; rest nearby</button>
+                    <div class="nearby-filters" id="nearby-filters" role="group" aria-label="Kinds of places to show" hidden>
+                        <button type="button" class="map-chip" data-kind="cafe" aria-pressed="true">Caf&eacute;s</button>
+                        <button type="button" class="map-chip" data-kind="food" aria-pressed="true">Food</button>
+                        <button type="button" class="map-chip" data-kind="pub" aria-pressed="true">Pubs</button>
+                        <button type="button" class="map-chip" data-kind="wc" aria-pressed="true">Toilets &amp; water</button>
+                        <button type="button" class="map-chip" data-kind="park" aria-pressed="true">Parks</button>
+                    </div>
+                </div>
+                <div class="map-legend" aria-hidden="true">
+                    <span><i class="lg-stop"></i> In your tour</span>
+                    <span><i class="lg-place"></i> Other places from the book</span>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 3 - NAVIGATING DUBLIN (FAQ) -->
-        <section aria-label="Navigating Dublin FAQ">
-            <h2>Navigating Dublin</h2>
-            <p class="section-lead">Frequently asked questions about Dublin's public transport system.</p>
+        <!-- SECTION 3 - NAVIGATING DUBLIN (transport guide) -->
+        <section class="transit-guide folio-section" aria-labelledby="tg-title">
+        <h2 class="folio-h2" id="tg-title"><span class="num">Appendix</span>Navigating Dublin</h2>
+        <p class="folio-sub">Getting around the city by public transport. Choose a topic to read about it.</p>
 
-            <!-- FAQ ITEM 1 -->
-            <details>
-                <summary>01 What are the main types of public transport in Dublin Centre?</summary>
-                <p>Dublin's public transport network includes buses, trams, trains, and bike sharing schemes. Routes, maps, planning a journey, ticketing, real-time traffic and travel updates can all be found at <a href="https://www.transportforireland.ie/" target="_blank" rel="noopener noreferrer">TransportforIreland</a>.</p>
-                <br>
-                <p><strong><a href="https://www.dublinbikes.ie/en/mapping" target="_blank" rel="noopener noreferrer">DublinBikes</a></strong> is a self-service rental system open to everyone aged 14 and up. Users must purchase a ticket (1-day, 3-day, or annual subscription) to access the service. Within each ticket, the first 30 minutes of every individual journey are free. You can view nearby stations and available bikes via the official RedClick dublinbikes app or at a station terminal. Payment is via TFI Leap Card or a dublinbikes card. <a href="https://bleeperactive.com/" target="_blank" rel="noopener noreferrer">Bleeper</a> and <a href="https://mobybikes.com/" target="_blank" rel="noopener noreferrer">MOBY Bikes</a> are two stationless bike sharing services also operating in Dublin, mainly in areas not covered by DublinBikes.</p>
-                <br>
-                <p><strong>Dublin Bus</strong> serves Dublin and the Greater Dublin Area, covering the broadest area among all. Services generally run from around 5:30am to 11:30pm, though some <a href="https://www.dublinbus.ie/24-hour-timetables" target="_blank" rel="noopener noreferrer">24-hour routes</a> are in operation and <a href="https://www.dublinbus.ie/nitelink-timetables" target="_blank" rel="noopener noreferrer">Nitelink</a> services are available on weekend nights. You can check out their <a href="https://www.transportforireland.ie/plan-a-journey/timetables/" target="_blank" rel="noopener noreferrer">timetable</a>, or use <a href="https://www.transportforireland.ie/plan-a-journey/live-departures/" target="_blank" rel="noopener noreferrer">TFI Live</a> (app version available) to learn about specific operation times for your bus.</p>
-                <br>
-                <p><strong><a href="https://www.luas.ie/" target="_blank" rel="noopener noreferrer">Luas</a></strong> (Irish for 'speed') is Dublin's tram network, with two lines serving the city. The Green Line runs north–south through the city centre, while the Red Line connects the southwest to the Docklands. Luas operates on a frequency-based system, not a fixed timetable. You can check real time information for any stop <a href="https://www.transportforireland.ie/plan-a-journey/live-departures/" target="_blank" rel="noopener noreferrer">here</a>.</p>
-                <br>
-                <p><strong><a href="https://www.irishrail.ie/en-ie/about-us/iarnrod-eireann-services/dart-commuter" target="_blank" rel="noopener noreferrer">DART</a></strong> is Dublin's electric train system, one of the fastest ways to move through Dublin city centre and out to other parts of the city, running along the coast of the Irish Sea from Malahide or Howth in North County Dublin southwards as far as Greystones, Co. Wicklow. Commuter rail services extend further beyond the DART, reaching into the surrounding counties.</p>
-                <br>
-                <p><strong>Payment Method:</strong> Dublin Bus accepts coins only. Exact fare is required and no change is given. Card and contactless payments are not yet available on board.</p>
-            </details>
-            <hr>
+        <div class="tg-nav" role="tablist" aria-label="Transport topics">
+          <button class="tg-q" role="tab" id="tg-tab-1" aria-controls="tg-panel-1" aria-selected="true" tabindex="0">
+            <span class="tg-num">01</span><span class="tg-qt">Getting around</span>
+          </button>
+          <button class="tg-q" role="tab" id="tg-tab-2" aria-controls="tg-panel-2" aria-selected="false" tabindex="-1">
+            <span class="tg-num">02</span><span class="tg-qt">Apps</span>
+          </button>
+          <button class="tg-q" role="tab" id="tg-tab-3" aria-controls="tg-panel-3" aria-selected="false" tabindex="-1">
+            <span class="tg-num">03</span><span class="tg-qt">Accessibility</span>
+          </button>
+          <button class="tg-q" role="tab" id="tg-tab-4" aria-controls="tg-panel-4" aria-selected="false" tabindex="-1">
+            <span class="tg-num">04</span><span class="tg-qt">At night</span>
+          </button>
+          <button class="tg-q" role="tab" id="tg-tab-5" aria-controls="tg-panel-5" aria-selected="false" tabindex="-1">
+            <span class="tg-num">05</span><span class="tg-qt">From the airport</span>
+          </button>
+        </div>
 
-            <!-- FAQ ITEM 2 -->
-            <details>
-                <summary>02 What apps can I use for transport-related information?</summary>
-                <p><strong><a href="https://www.transportforireland.ie/available-apps/tfi-live/" target="_blank" rel="noopener noreferrer">TFI Live</a></strong> is the official Transport for Ireland app. It provides real-time departures for Dublin Bus, Go-Ahead Ireland, Bus Éireann, Luas, and Irish Rail, alongside timetables, interactive maps, and accessibility information including wheelchair-accessible stops and services. You can also save your favourite journeys, stops, and timetables for quick access on the go.</p>
-                <p><strong><a href="https://www.transportforireland.ie/tfi-go-app/" target="_blank" rel="noopener noreferrer">TFI Go</a></strong> App allows you to buy tickets for participating Transport for Ireland bus services and participating commercial bus operators directly from your phone. Your ticket is downloaded to the TFI Go App and can be used to travel straight away.</p>
-            </details>
-            <hr>
+        <div class="tg-panels">
+          <div class="tg-a" role="tabpanel" id="tg-panel-1" aria-labelledby="tg-tab-1" tabindex="0">
+            <div class="tg-a-head">
+              <span class="tg-a-num">01</span>
+              <div>
+                <h3 class="tg-a-title">What are the main types of public transport?</h3>
+                <p class="tg-a-intro">Dublin's public transport network includes buses, trams, trains, and bike sharing schemes. Routes, maps, planning a journey, ticketing, real-time traffic and travel updates can all be found at <a href="https://www.transportforireland.ie/" target="_blank" rel="noopener noreferrer">TransportforIreland</a>.</p>
+              </div>
+            </div>
+            <div class="tg-cards" data-count="5">
+              <article class="tg-card">
+                <h4 class="tg-card-title">Dublin Bus</h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">Serves Dublin and the Greater Dublin Area, covering the broadest area among all. Services generally run from around 5:30am to 11:30pm, though some <a href="https://www.dublinbus.ie/24-hour-timetables" target="_blank" rel="noopener noreferrer">24-hour routes</a> are in operation and <a href="https://www.dublinbus.ie/nitelink-timetables" target="_blank" rel="noopener noreferrer">Nitelink</a> services are available on weekend nights. You can check out their <a href="https://www.transportforireland.ie/plan-a-journey/timetables/" target="_blank" rel="noopener noreferrer">timetable</a>, or use <a href="https://www.transportforireland.ie/plan-a-journey/live-departures/" target="_blank" rel="noopener noreferrer">TFI Live</a> (app version available) to learn about specific operation times for your bus.</p>
+              </article>
+              <article class="tg-card">
+                <h4 class="tg-card-title"><a href="https://www.luas.ie/" target="_blank" rel="noopener noreferrer">Luas</a></h4>
+                <p class="tg-card-tag">Irish for 'speed'</p>
+                <p class="tg-card-text">Dublin's tram network, with two lines serving the city. The Green Line runs north–south through the city centre, while the Red Line connects the southwest to the Docklands. Luas operates on a frequency-based system, not a fixed timetable. You can check real time information for any stop <a href="https://www.transportforireland.ie/plan-a-journey/live-departures/" target="_blank" rel="noopener noreferrer">here</a>.</p>
+              </article>
+              <article class="tg-card">
+                <h4 class="tg-card-title"><a href="https://www.irishrail.ie/en-ie/about-us/iarnrod-eireann-services/dart-commuter" target="_blank" rel="noopener noreferrer">DART</a></h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">Dublin's electric train system, one of the fastest ways to move through Dublin city centre and out to other parts of the city, running along the coast of the Irish Sea from Malahide or Howth in North County Dublin southwards as far as Greystones, Co. Wicklow. Commuter rail services extend further beyond the DART, reaching into the surrounding counties.</p>
+              </article>
+              <article class="tg-card">
+                <h4 class="tg-card-title"><a href="https://www.dublinbikes.ie/en/mapping" target="_blank" rel="noopener noreferrer">DublinBikes</a></h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">A self-service rental system open to everyone aged 14 and up. Users must purchase a ticket (1-day, 3-day, or annual subscription) to access the service. Within each ticket, the first 30 minutes of every individual journey are free. You can view nearby stations and available bikes via the official RedClick dublinbikes app or at a station terminal. Payment is via TFI Leap Card or a dublinbikes card. <a href="https://bleeperactive.com/" target="_blank" rel="noopener noreferrer">Bleeper</a> and <a href="https://mobybikes.com/" target="_blank" rel="noopener noreferrer">MOBY Bikes</a> are two stationless bike sharing services also operating in Dublin, mainly in areas not covered by DublinBikes.</p>
+              </article>
+              <article class="tg-card">
+                <h4 class="tg-card-title">Payment Method</h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">Dublin Bus accepts coins only. Exact fare is required and no change is given. Card and contactless payments are not yet available on board.</p>
+              </article>
+            </div>
+          </div>
 
-            <!-- FAQ ITEM 3 -->
-            <details>
-                <summary>03 How accessible is Dublin public transport?</summary>
-                <p>Dublin's public transport is generally accessible, though the level of support varies by mode. <a href="https://www.transportforireland.ie/plan-a-journey/" target="_blank" rel="noopener noreferrer">TFI Journey Planner</a> shows whether your chosen service is wheelchair accessible.</p>
-                <p>Dublin Bus uses low-floor, wheelchair-accessible buses on all routes. Each bus has one dedicated wheelchair space, accessible via a ramp at the front doors. Luas provides step-free access at all stops and all trams are wheelchair accessible. DART stations are mostly step and gate free, with the exceptions of Greystones, Killiney and Sutton. Wheelchair ramps and staff assistance are available at most stations. If you need to <a href="https://www.transportforireland.ie/accessibility/#:~:text=Booking%20Accessibility%20Assistance" target="_blank" rel="noopener noreferrer">book accessibility assistance</a> for any TFI service, advance notice is required. For full accessibility information across all modes, visit <a href="https://www.transportforireland.ie/accessibility/" target="_blank" rel="noopener noreferrer">transportforireland.ie/accessibility</a>.</p>
-                <p>Additionally, <a href="https://www.transportforireland.ie/accessibility/independent-travel-support/" target="_blank" rel="noopener noreferrer">Independent Travel Support</a> is a free scheme helping people with disabilities travel confidently across all modes.</p>
-            </details>
-            <hr>
+          <div class="tg-a" role="tabpanel" id="tg-panel-2" aria-labelledby="tg-tab-2" tabindex="0" hidden>
+            <div class="tg-a-head">
+              <span class="tg-a-num">02</span>
+              <div>
+                <h3 class="tg-a-title">What apps can I use for transport info?</h3>
+                
+              </div>
+            </div>
+            <div class="tg-cards" data-count="2">
+              <article class="tg-card">
+                <h4 class="tg-card-title"><a href="https://www.transportforireland.ie/available-apps/tfi-live/" target="_blank" rel="noopener noreferrer">TFI Live</a></h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">The official Transport for Ireland app. It provides real-time departures for Dublin Bus, Go-Ahead Ireland, Bus Éireann, Luas, and Irish Rail, alongside timetables, interactive maps, and accessibility information including wheelchair-accessible stops and services. You can also save your favourite journeys, stops, and timetables for quick access on the go.</p>
+              </article>
+              <article class="tg-card">
+                <h4 class="tg-card-title"><a href="https://www.transportforireland.ie/tfi-go-app/" target="_blank" rel="noopener noreferrer">TFI Go</a></h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">An app that lets you buy tickets for participating Transport for Ireland bus services and participating commercial bus operators directly from your phone. Your ticket is downloaded to the TFI Go App and can be used to travel straight away.</p>
+              </article>
+            </div>
+          </div>
 
-            <!-- FAQ ITEM 4 -->
-            <details>
-                <summary>04 Is there public transport late at night?</summary>
-                <p><strong><a href="https://www.transportforireland.ie/getting-around/by-bus/night-services-dublin/" target="_blank" rel="noopener noreferrer">24-hour Routes</a></strong>: Dublin Bus offer fifteen 24-hour services which are in operation seven days a week across ten routes: 15, 39a, 41, C1, C2, C5, C6, E1, E2, G1, G2, N4, F1, F2, 80. Full timetables are available at <a href="https://www.dublinbus.ie/24-hour-timetables" target="_blank" rel="noopener noreferrer">dublinbus.ie/24-hour-timetables</a>.</p>
-                <p><strong><a href="https://www.transportforireland.ie/getting-around/by-bus/night-services-dublin/" target="_blank" rel="noopener noreferrer">Nitelink</a></strong>: Twelve Nitelink bus routes depart from Dublin City Centre every Friday and Saturday night to suburbs all over Dublin: 7n, 29n, 31n, 33n, 42n, 46n, 49n, 69n, 70n, 77n, 84n, 88n. Full timetables are available at <a href="https://www.dublinbus.ie/nitelink-timetables" target="_blank" rel="noopener noreferrer">dublinbus.ie/nitelink-timetables</a>.</p>
-            </details>
-            <hr>
+          <div class="tg-a" role="tabpanel" id="tg-panel-3" aria-labelledby="tg-tab-3" tabindex="0" hidden>
+            <div class="tg-a-head">
+              <span class="tg-a-num">03</span>
+              <div>
+                <h3 class="tg-a-title">How accessible is Dublin public transport?</h3>
+                <p class="tg-a-intro">Dublin's public transport is generally accessible, though the level of support varies by mode. <a href="https://www.transportforireland.ie/plan-a-journey/" target="_blank" rel="noopener noreferrer">TFI Journey Planner</a> shows whether your chosen service is wheelchair accessible.</p>
+              </div>
+            </div>
+            <div class="tg-cards" data-count="5">
+              <article class="tg-card">
+                <h4 class="tg-card-title">Dublin Bus</h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">Dublin Bus uses low-floor, wheelchair-accessible buses on all routes. Each bus has one dedicated wheelchair space, accessible via a ramp at the front doors.</p>
+              </article>
+              <article class="tg-card">
+                <h4 class="tg-card-title">Luas</h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">Luas provides step-free access at all stops and all trams are wheelchair accessible.</p>
+              </article>
+              <article class="tg-card">
+                <h4 class="tg-card-title">DART</h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">DART stations are mostly step and gate free, with the exceptions of Greystones, Killiney and Sutton. Wheelchair ramps and staff assistance are available at most stations.</p>
+              </article>
+              <article class="tg-card">
+                <h4 class="tg-card-title">Booking assistance</h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">If you need to <a href="https://www.transportforireland.ie/accessibility/#:~:text=Booking%20Accessibility%20Assistance" target="_blank" rel="noopener noreferrer">book accessibility assistance</a> for any TFI service, advance notice is required. For full accessibility information across all modes, visit <a href="https://www.transportforireland.ie/accessibility/" target="_blank" rel="noopener noreferrer">transportforireland.ie/accessibility</a>.</p>
+              </article>
+              <article class="tg-card">
+                <h4 class="tg-card-title">Independent Travel Support</h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">Additionally, <a href="https://www.transportforireland.ie/accessibility/independent-travel-support/" target="_blank" rel="noopener noreferrer">Independent Travel Support</a> is a free scheme helping people with disabilities travel confidently across all modes.</p>
+              </article>
+            </div>
+          </div>
 
-            <!-- FAQ ITEM 5 -->
-            <details>
-                <summary>05 How do I get from Dublin Airport to the city?</summary>
-                <p><strong><a href="https://www.dublinbus.ie/journey-information/dublin-airport-hub" target="_blank" rel="noopener noreferrer">Dublin Bus</a></strong> (routes 16, 19, 24, 41): Dublin Bus routes 16, 19, 24 and 41 operate between city centre and the airport. You can pay on the bus in coins or by a Leap Card. These are slower but cheaper options.</p>
-                <p><strong><a href="https://www.dublinexpress.ie/dublin-airport" target="_blank" rel="noopener noreferrer">Dublin Express</a></strong> (routes 782, 783, 784): Dublin Express provides three express routes between Dublin Airport and Dublin City Centre. Tickets can be booked through the <a href="https://www.dublinexpress.ie/" target="_blank" rel="noopener noreferrer">Dublin Express website</a> or purchased on board by card only (no cash, no Leap Card). Young Adult and Student Leap Card holders receive a discounted fare.</p>
-                <p><strong><a href="https://www.aircoach.ie/timetables" target="_blank" rel="noopener noreferrer">Aircoach</a></strong> (routes 700 &amp; 700X): The Aircoach service operates up to every 15 minutes between Dublin Airport and Dublin City Centre, continuing onward to Leopardstown. Tickets can be bought on the website, through the Aircoach mobile app, on board, or at the Aircoach departure stand at Terminal 1 (Zone 2) and Terminal 2 (Zone 20). Most services accept both cash and contactless payments on board. Leap Cards are also accepted on Aircoach services for single journey fares.</p>
-            </details>
-            <hr>
-        </section>
+          <div class="tg-a" role="tabpanel" id="tg-panel-4" aria-labelledby="tg-tab-4" tabindex="0" hidden>
+            <div class="tg-a-head">
+              <span class="tg-a-num">04</span>
+              <div>
+                <h3 class="tg-a-title">Is there public transport late at night?</h3>
+                
+              </div>
+            </div>
+            <div class="tg-cards" data-count="2">
+              <article class="tg-card">
+                <h4 class="tg-card-title"><a href="https://www.transportforireland.ie/getting-around/by-bus/night-services-dublin/" target="_blank" rel="noopener noreferrer">24-hour Routes</a></h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">Dublin Bus offer fifteen 24-hour services which are in operation seven days a week across ten routes: 15, 39a, 41, C1, C2, C5, C6, E1, E2, G1, G2, N4, F1, F2, 80. Full timetables are available at <a href="https://www.dublinbus.ie/24-hour-timetables" target="_blank" rel="noopener noreferrer">dublinbus.ie/24-hour-timetables</a>.</p>
+              </article>
+              <article class="tg-card">
+                <h4 class="tg-card-title"><a href="https://www.transportforireland.ie/getting-around/by-bus/night-services-dublin/" target="_blank" rel="noopener noreferrer">Nitelink</a></h4>
+                <p class="tg-card-tag" aria-hidden="true"></p>
+                <p class="tg-card-text">Twelve Nitelink bus routes depart from Dublin City Centre every Friday and Saturday night to suburbs all over Dublin: 7n, 29n, 31n, 33n, 42n, 46n, 49n, 69n, 70n, 77n, 84n, 88n. Full timetables are available at <a href="https://www.dublinbus.ie/nitelink-timetables" target="_blank" rel="noopener noreferrer">dublinbus.ie/nitelink-timetables</a>.</p>
+              </article>
+            </div>
+          </div>
 
-        <!-- SECTION 4 - TOUR STOPS -->
-        <section aria-label="Tour stops">
-            <h2>Tour Stops</h2>
-            <ol>
+          <div class="tg-a" role="tabpanel" id="tg-panel-5" aria-labelledby="tg-tab-5" tabindex="0" hidden>
+            <div class="tg-a-head">
+              <span class="tg-a-num">05</span>
+              <div>
+                <h3 class="tg-a-title">How do I get from Dublin Airport to the city?</h3>
+                
+              </div>
+            </div>
+            <div class="tg-cards" data-count="3">
+              <article class="tg-card">
+                <h4 class="tg-card-title"><a href="https://www.dublinbus.ie/journey-information/dublin-airport-hub" target="_blank" rel="noopener noreferrer">Dublin Bus</a></h4>
+                <p class="tg-card-tag">routes 16, 19, 24, 41</p>
+                <p class="tg-card-text">Dublin Bus routes 16, 19, 24 and 41 operate between city centre and the airport. You can pay on the bus in coins or by a Leap Card. These are slower but cheaper options.</p>
+              </article>
+              <article class="tg-card">
+                <h4 class="tg-card-title"><a href="https://www.dublinexpress.ie/dublin-airport" target="_blank" rel="noopener noreferrer">Dublin Express</a></h4>
+                <p class="tg-card-tag">routes 782, 783, 784</p>
+                <p class="tg-card-text">Dublin Express provides three express routes between Dublin Airport and Dublin City Centre. Tickets can be booked through the <a href="https://www.dublinexpress.ie/" target="_blank" rel="noopener noreferrer">Dublin Express website</a> or purchased on board by card only (no cash, no Leap Card). Young Adult and Student Leap Card holders receive a discounted fare.</p>
+              </article>
+              <article class="tg-card">
+                <h4 class="tg-card-title"><a href="https://www.aircoach.ie/timetables" target="_blank" rel="noopener noreferrer">Aircoach</a></h4>
+                <p class="tg-card-tag">routes 700 &amp; 700X</p>
+                <p class="tg-card-text">The Aircoach service operates up to every 15 minutes between Dublin Airport and Dublin City Centre, continuing onward to Leopardstown. Tickets can be bought on the website, through the Aircoach mobile app, on board, or at the Aircoach departure stand at Terminal 1 (Zone 2) and Terminal 2 (Zone 20). Most services accept both cash and contactless payments on board. Leap Cards are also accepted on Aircoach services for single journey fares.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                <!-- STOP 1 - JAMES JOYCE CENTER -->
-                <li>
-                    <article>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>1. James Joyce Center</h3>
-                            <p>The James Joyce Center is a restored Georgian townhouse near the childhood home of James Joyce. Full of exhibitions, readings, lectures, and promoting Joyce's other works. It's a great place to get your bearings and expand your knowledge on the Irish famed author. <br><br><strong>Open from 10:30 AM to 4:30 PM Tuesday through Saturday. Tickets are €7 for adults, €5 for seniors and students (with a valid student ID) and free for children 12 and under.</strong></p>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/JJ_Centre_v2.mp3" type="audio/mpeg">
-                                <source src="audio/JJ_Centre_v2.m.ogg" type="audio/ogg">
-                                <a href="audio/JJ_Centre.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>Located on North Great George's Street, the James Joyce Center is a restored Georgian townhouse honoring the legacy of James Joyce.</p>
-                                    <p>Full of exhibitions, readings, lectures, and displaying Joyce's other works. It's a great place to get your bearings and expand your knowledge on the famed Irish author.</p>
-                                    <p>Built in 1784 for Valentine Brown, the First Earl of Kenmare, the townhouse was preserved by a Joycean Scholar Senator David Norris in 1982. With the help of generous donors and lovers of Joyce's works, the townhouse was renovated and opened to the public in 1996 as the James Joyce Centre.</p>
-                                    <p>The James Joyce Centre is one of many museums and tributes to Joyce, but features more community centered events. If you happen to visit in February or June, check out their website to see what special events they have to celebrate James Joyce's birthday or the annual Bloomsday Festival.</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Venture past Nelson's Pillar also known as "The Pillar", a large granite column capped by a statue of Horatio Nelson, and across the O'Connell Bridge towards your next destination. "From Ballsbridge to the Pillar, twenty minutes; from the Pillar to Drumcondra, twenty minutes; and twenty minutes to buy the things. She would be there before eight" (pg. 100) "A very sullen-faced man stood at the corner of O'Connell Bridge waiting for the little Sandymount tram to take him home" (pg. 96).</p>
-                            </details>
-                        </div>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img src="assets/JJCenter_then-now.JPG" alt="James Joyce Center then and now" class="spot-image">
-                        </div>
-                    </article>
-                </li>
-
-                <!-- STOP 2 - TRINITY COLLEGE DUBLIN -->
-                <li>
-                    <article>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img src="assets/tcd_then.jpg" alt="Trinity College in 1909" class="spot-image image-past">
-                            <img src="assets/tcd_now.jpg" alt="Trinity College Dublin now" class="spot-image image-present">
-                            <!-- slider -->
-                            <input type="range" id="slider-1" min="0" max="100" value="50" class="slider" aria-label="Percentage of present photo">
-                            <div class="slider-line" aria-hidden="true"></div>
-                            <div class="slider-btn" aria-hidden="true">
-                                <em class="ph ph-arrows-out-line-horizontal"></em>
-                            </div>
-                        </div>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>2. Trinity College Dublin</h3>
-                            <p>Trinity College Dublin is a historic 400 year old university right in Dublin's city center. Ranked the No. 1 university in Ireland, its hallowed halls have been the home to thought leaders and creative minds, like Oscar Wilde, Bram Stoker, Edmund Burke and more. In Dubliners, Trinity College Dublin appears in three stories, serving both as a central city landmark and as an institution inseparable from Ireland's colonial history.</p>
-                            <blockquote>"As they passed along the railings of Trinity College, Lenehan skipped out into the road and peered up at the clock" <em>(pg. 53)</em>.</blockquote>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/Trinity_v2.mp3" type="audio/mpeg">
-                                <source src="audio/Trinity_v2.ogg" type="audio/ogg">
-                                <a href="audio/Trinity.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>Trinity College Dublin is a historic 400 year old university right in Dublin's city center. Ranked the No. 1 university in Ireland, its hallowed halls have been the home to thought leaders and creative minds, like Oscar Wilde, Bram Stoker, Edmund Burke and more. Trinity College is also home to decades of Joycean Scholars who've spent years studying James Joyce's works.</p>
-                                    <p>In Dubliners, Trinity College Dublin appears in three separate stories, serving both as a central city landmark and as an institution inseparable from Ireland's colonial history.</p>
-                                    <p>"As they passed along the railings of Trinity College, Lenehan skipped out into the road and peered up at the clock" (pg. 53 of Dubliners).</p>
-                                    <p>Founded in 1592, through a royal charter from Queen Elizabeth the First, Trinity is Ireland's oldest university in continuous operation. The university has undergone several changes over the course of its longstanding history but focuses on preservation and honoring the original architecture of the school for its students, staff, and visitors to enjoy.</p>
-                                    <p>Some key reminders while visiting Trinity: as it is an active university campus, please be mindful and courteous to all students and staff while visiting. All buildings with keycard access are restricted to students and staff only. Finally, watch out for the seagulls near the rugby pitch or they'll steal your food.</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Visit the Book of Kells Experience or a guided tour of the famous Old Library. Please note that all tickets must be booked in advance through: <a href="https://www.visittrinity.ie/book-of-kells-experience/" target="_blank" rel="noopener noreferrer">visittrinity.ie</a>. Or visit the Douglas Hyde gallery, a free contemporary art gallery with exciting new exhibitions, artist talks and workshops available 5 days a week. Visit their website and see what's on display: <a href="https://thedouglashyde.ie" target="_blank" rel="noopener noreferrer">thedouglashyde.ie</a>.</p>
-                            </details>
-                        </div>
-                    </article>
-                </li>
-
-                <!-- STOP 3 - THE SECRET BOOK AND RECORD STORE -->
-                <li>
-                    <article>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>3. The Secret Book and Record Store</h3>
-                            <p>Tucked in between several shops and restaurants on Wicklow Street visit this cosy, independent bookstore offering new and secondhand books at an affordable price with CDs and vinyl. Pick up your own James Joyce!</p>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/secretbookstore_v2.m.mp3" type="audio/mpeg">
-                                <source src="audio/secretbookstore_v2.ogg" type="audio/ogg">
-                                <a href="audio/secretbookstore.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>For our next stop, leave Trinity's campus through the Nassau Street gate. Then walk up Nassau Street and turn up Wicklow Street to find this literary treasure trove.</p>
-                                    <p>Tucked in between several shops and restaurants on Wicklow Street lies The Secret Book and Record Store, a small, independent bookstore that offers new and secondhand books, CDs and vinyl. Find rare books, vintage vinyl and all the latest releases. Pick up your own copy of Dubliners or any other book by James Joyce for only €5 in their classics collection!</p>
-                                    <p>While browsing the bookstore's selection, here's some history on James Joyce. Born on February 2nd 1882, James Joyce is considered one of Ireland's most celebrated writers for his books, Dubliners and Ulysses. The eldest of 10 children, Joyce lived in Brighton Square, Rathgar with his parents, John Stanislaus Joyce and Mary Jane "May" (née Murray).</p>
-                                    <p>Joyce has led a long storied life, where he wasn't only a writer but an educator as well. His works have been praised by literary figures like T.S. Eliot, James Baldwin and more. Joyce's work has been described as a "colossus of modernist fiction" by the Yale Press. He sought to "give a picture of Dublin so complete that if the city suddenly disappeared from the earth it could be reconstructed out of my book" — from a conversation with Frank Budgen, 1918. For more information on James Joyce's life, visit our website.</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Walk up to the corner of Wicklow street to the International Bar, a famed pub that James Joyce frequented for a pint and some lunch. For a vegan and vegetarian alternative, walk in the opposite direction to Cornucopia, a family run vegan restaurant with a chic art nouveau style.</p>
-                            </details>
-                        </div>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img src="assets/Bookshop_then-now.jpg" alt="The Secret Book and Record Store then and now" class="spot-image">
-                        </div>
-                    </article>
-                </li>
-
-                <!-- STOP 4 - CITY MARKETS -->
-                <li>
-                    <article>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img src="assets/CityMarket_then.png" alt="City Market, Dublin during likely 1894–1899" class="spot-image image-past">
-                            <img src="assets/CityMarket_now.jpg" alt="St. George's Arcade, Dublin, photographed in 2018" class="spot-image image-present">
-                            <!-- slider -->
-                            <input type="range" min="0" max="100" value="50" class="slider" aria-label="Percentage of present photo shown">
-                            <div class="slider-line" aria-hidden="true"></div>
-                            <div class="slider-btn" aria-hidden="true">
-                                <em class="ph ph-arrows-out-line-horizontal"></em>
-                            </div>
-                        </div>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>4. City Markets</h3>
-                            <p>Want a souvenir or to do some window shopping, wander through the City Markets on Grafton Street, in the heart of Dublin right between Trinity College and St. Stephen's Green. South City Markets opened in 1881 as Dublin's first purpose-built Victorian shopping arcade, funded by affluent property-owning families and designed by English architects. Today, the market is more known under the name of George's Street Arcade, and has been operating under the Layden Family Group's ownership since 1992. </p>
-                            <p>In Dubliners, City Market appears in the story "Two Gallants," serving as a turning point directing Lenehan from George's Street toward Grafton Street. More often referred to as the South City Markets, it is a busy covered market complex on South Great George’s Street, associated with small trade, everyday commerce, and a dense pedestrian flow.</p>
-                            <blockquote>"He left his friends at a quarter to ten and went up George's Street. He turned to the left at the City Markets and walked on into Grafton Street" <em>(pg. 58)</em>.</blockquote>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/citymarkets_v2.mp3" type="audio/mpeg">
-                                <source src="audio/citymarkets_v2.m.ogg" type="audio/ogg">
-                                <a href="audio/citymarkets.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>Want a souvenir or to do some window shopping? Then walk past Wicklow Street onto Exchequer Street to visit the City Markets. Spanning several blocks and located in the heart of Dublin right between Trinity College and St. Stephen's Green.</p>
-                                    <p>For some gorgeous architecture and shopping, visit the South City Markets — opened in 1881 as Dublin's first purpose-built Victorian shopping arcade, funded by affluent property-owning families and designed by English architects. Today, the City Markets are associated with the George's Street Arcade, and have been operating under the Layden Family Group's ownership since 1992.</p>
-                                    <p>In Dubliners, City Market appears in "Two Gallants," serving as a turning point directing Lenehan from George's Street toward Grafton Street.</p>
-                                    <p>"He left his friends at a quarter to ten and went up George's Street. He turned to the left at the City Markets and walked on into Grafton Street" (pg. 58).</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Walk down South Great George's Street to the George's Street Arcade, Ireland's first purpose-built shopping center and one of Europe's oldest city markets. The enclosed Victorian-styled market is home to several independent and vintage boutiques.</p>
-                            </details>
-                        </div>
-                    </article>
-                </li>
-
-                <!-- STOP 5 - ST. STEPHEN'S GREEN -->
-                <li>
-                    <article>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>5. St. Stephen's Green</h3>
-                            <p>A Victorian gem in Dublin's greatest garden square, it's one of Ireland's most famous public parks. This 9-hectare green space has been maintained to its original Victorian layout with over 3.5 km of accessible pathways, a waterfall, ornamental lake and several sculptures; including the James Joyce Memorial Sculpture. St. Stephen's Green appears in "After the Race" and "Two Gallants." Noticeably, it is mentioned three times in "Two Gallants," establishing itself as an important symbolic space in the story. It is described as crowded and noisy, imbued with people, trams, and city lights.</p>
-                            <blockquote>"That night the city wore the mask of a capital. The five young men strolled along Stephen's Green in a faint cloud of aromatic smoke." <em>(p. 46)</em>.</blockquote>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/stephensgreen_v2.m.mp3" type="audio/mpeg">
-                                <source src="audio/stephensgreen_v2.m.ogg" type="audio/ogg">
-                                <a href="audio/stephensgreen.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>After you've done some shopping, start making your way down to St. Stephen's Green, a 9 minute walk from the City Markets. A Victorian gem in Dublin's greatest garden square, it's one of Ireland's most famous public parks. This 9-hectare green space has been maintained to its original Victorian layout with over 3.5 km of accessible pathways, a waterfall, ornamental lake and several sculptures — including the James Joyce Memorial Sculpture.</p>
-                                    <p>A little known fact is that this public park used to be marshland that served as common ground for grazing livestock. In 1663 the City Assembly of Dublin decided the land could generate income for the city. It wasn't until Sir Arthur Guinness, later known as Ardilaun, bought the Green in 1877 that the land was redeveloped and opened as St. Stephen's Green to the public on July 27th, 1880.</p>
-                                    <p>"That night the city wore the mask of a capital. The five young men strolled along Stephen’s Green in a faint cloud of aromatic smoke. They talked loudly and gaily and their cloaks dangled from their shoulders. The people made way for them. At the corner of Grafton Street a short fat man was putting two handsome ladies in a car in charge of another fat man. The car drove off and the short fat man caught sight of the party." (p. 46).</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Get a head! Find the bust of James Joyce located somewhere in the park!</p>
-                            </details>
-                        </div>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img src="assets/StStephens_then.png" alt="Fusiliers Arch, St Stephen's Green, taken around 1900" class="spot-image image-past">
-                            <img src="assets/StStephens_now.jpg" alt="St. Stephen's Green, photographed by Ralf Houven in 2012" class="spot-image image-present">
-                            <!-- slider -->
-                           
-                            <input type="range" min="0" max="100" value="50" class="slider" aria-label="Percentage of present photo shown">
-                            <div class="slider-line" aria-hidden="true"></div>
-                            <div class="slider-btn" aria-hidden="true">
-                                <em class="ph ph-arrows-out-line-horizontal"></em>
-                            </div>
-                        </div>
-                    </article>
-                </li>
-
-                <!-- STOP 6 - MUSEUM OF LITERATURE -->
-                <li>
-                    <article>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img  src="assets/MoLi.JPG" alt="A current image of the Museum of Literature, Dublin" class="spot-image image-present">
-
-                        </div>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>6. Museum of Literature</h3>
-                            <p>If you were able to find the statue of James Joyce, turn around, exit the park and right in front of you, you'll find the entrance to the Museum of Literature Ireland. The Museum of Literature Ireland, celebrates Irish writers featuring not only James Joyce, but Oscar Wilde, Mary Murphy, and more! Visit the permanent exhibit "Dear, Dirty Dublin" a 3D experience of Dublin through Joyce's eyes. Joyce's works are featured throughout the museum, including his early writings and letters to other authors about, "Dubliners". If you need to take a quick break visit the Commons Cafe, which is set in the original student dining hall of UCD Newman House or enjoy the museum's gardens which is home to the protected ash tree that James Joyce had his graduation photo taken.<br><br><strong>Open from 10:30 AM to 5:30 PM. Tickets must be purchased on their website or in-person. First Fridays of the month are free from 6 PM to 9 PM.</strong></p>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/MoLI_v2.mp3" type="audio/mpeg">
-                                <source src="audio/MoLI_v2.m.ogg" type="audio/ogg">
-                                <a href="audio/MoLI.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>If you were able to find the statue of James Joyce, turn around, exit the park and right in front of you, you'll find the entrance to the Museum of Literature Ireland. The Museum of Literature Ireland celebrates Irish writers featuring not only James Joyce, but Oscar Wilde, Mary Murphy, and more!</p>
-                                    <p>Visit the permanent exhibit "Dear, Dirty Dublin" — a 3D experience of Dublin through Joyce's eyes.</p>
-                                    <p>If you need to take a quick break, visit the Commons Cafe, which is set in the original student dining hall of UCD Newman House, or enjoy the museum's gardens which is home to the protected ash tree that James Joyce had his graduation photo taken under.</p>
-                                    <p>The museum is open from 10:30 AM to 5:30 PM. Tickets must be purchased on their website or in-person.</p>
-                                    <p>Side quest: As you’re walking towards our final destination on the tour, stop by the Shelbourne Hotel, a historic hotel on the north-side of St. Stephen’s Green. Featured in Dubliners and Ulysses, the building holds a deep historic significance in Irish history. 
-                                      In the 1916, during the Easter Rising, the hotel was occupied by 40 British troops to counter the Irish Citizen Army who had occupied St. Stephen’s Green. In 1992, the Constitution of the Irish Free State was drafted in room 112, which is now known as the Constitution Room.</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Walk past the Shelbourne Hotel, a historic hotel on the north-side of St. Stephen's Green. For those interested in a luxury afternoon tea, make a reservation on their website to enjoy their tea sandwiches, homemade scones, decadent deserts, and signature tea blends. "Lenehan walked as far as the Shelbourne Hotel where he halted and waited" (pg. 56).</p>
-                            </details>
-                        </div>
-                    </article>
-                </li>
-
-                <!-- STOP 7 - KENNEDY'S BAR -->
-                <li>
-                    <article>
-                        <!-- location card - text -->
-                        <div class="text-column">
-                            <h3>7. Kennedy's Bar</h3>
-                            <p>A short seven minute walk away from the park, celebrate the end of the "Retelling's" walking tour with a pint at Kennedy's Pub and Restaurant. Kennedy's has been a Dublin staple since 1850 and was frequented by not only James Joyce, but Samuel Beckett and Oscar Wilde as well. Ask to sit at the table where the honorary James Joyce plaque is located.</p>
-                            <h4>Play Audio Description</h4>
-                            <audio controls>
-                                <source src="audio/Kennedys_v2.mp3" type="audio/mpeg">
-                                <source src="audio/Kennedys_v2.m.ogg" type="audio/ogg">
-                                <a href="audio/Kennedys.mp3" download>Download audio</a>
-                            </audio>
-                            <details class="audio-transcript">
-                                <summary>Read transcript</summary>
-                                <div class="transcript-body">
-                                    <p>A short seven-minute walk away from St.Stephen’s Green, celebrate the end of the “Retelling’s” walking tour with a pint at Kennedy’s Pub and Restaurant. Kennedy’s has been a Dublin staple since 1850 and was frequented by not only James Joyce, but Samuel Beckett and Oscar Wilde as well. Ask to sit at the table where the honorary James Joyce plaque is located and take a load off!</p>
-                                </div>
-                            </details>
-                            <hr>
-                            <details class="side-quest">
-                                <summary>Side Quest</summary>
-                                <p>Venture past the Nelson's Pillar bar for a quick bite to eat and across the canal towards your next destination.</p>
-                            </details>
-                        </div>
-                        <!-- location card - image -->
-                        <div class="img-column">
-                            <img src="assets/KennedyBar_then-now.JPG" alt="A modern image of Kennedy's, Dublin" class="spot-image">
-                        </div>
-                    </article>
-                </li>
-
-            </ol>
-        </section>
-
-        <!-- SECTION 5 - TOUR OUTRO -->
-
-        <section aria-label="Tour conclusion">
-            <h2>You've Completed the Tour</h2>
-            <p>Thank you for walking with us through Joyce's Dublin. We hope the stories and places you've encountered today stay with you long after you leave the city.</p>
-            <p>Listen to our closing message below:</p>
-            <audio controls>
-                <source src="audio/end_v2.o.mp3" type="audio/mpeg">
-                <source src="audio/end_v2.ogg" type="audio/ogg">
-                <a href="audio/end.mp3" download>Download audio</a>
-            </audio>
-            <details class="audio-transcript">
-                <summary>Read transcript</summary>
-                <div class="transcript-body">
-                    <p>Thank you for taking the Retelling's walking tour and experiencing James Joyce's Dublin with us. We hope you enjoyed, and if you'd like to see more locations featured in James Joyce's Dubliners, please check out our website</p>
-                </div>
-            </details>
-        </section>
-
+      <button type="button" class="back-to-top" aria-label="Back to top"><img src="assets/toTopBtn.svg" alt="" width="48" height="48"></button>
     </main>
 
     <!-- FOOTER -->
-   <footer>
-        <div class="footer-col-left">
-            <div class="footer-brand">
-                <a href="index.html" aria-label="Retellings – Home">
-                    <img  loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo logo-footer">
-                    <img  loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo logo-footer">
-                </a>
-                <h3><strong>Retellings Digital Experience</strong></h3>
-            </div>
-            <p>Bridging the literary genius of The Dubliners by James Joyce with the historical and physical landscape of Dublin.</p>
-            <strong><small>&copy;2026 Retellings. <br>Created for academic purposes as part of the MSc Interactive Digital Media</small></strong>
-        </div>
-
-        <div class="footer-col-right">
-                <h2>Credits</h2>
-                <h3>Thanks to:</h3>
-                <ul>   
-                    <li>Cathal O'Connor</li>
-                    <li>Ren Paul</li>
-                    <li>Maiyse Abuleil</li>
+   <footer class="endpaper">
+        <div class="endpaper-inner">
+            <a class="endpaper-brand" href="index.html" aria-label="Retellings – The Cover">
+                <img src="assets/emblem-navy.svg" alt="" loading="lazy" class="endpaper-logo emblem emblem--light" width="100" height="148"><img src="assets/emblem-ink.svg" alt="" loading="lazy" class="endpaper-logo emblem emblem--dark" width="100" height="148">
+                <span class="endpaper-name">Retellings</span>
+            </a>
+            <p class="endpaper-tag">Bridging the literary genius of James Joyce&rsquo;s <em>Dubliners</em> with the historical and physical landscape of Dublin.</p>
+            <div class="endpaper-rule" aria-hidden="true"><span></span></div>
+            <nav aria-label="Footer contents">
+                <ul class="endpaper-toc">
+                    <li><a href="index.html">The Cover</a></li>
+                    <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                    <li><a href="locations.html"><span class="toc-no">II.</span> The Places</a></li>
+                    <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                    <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+                    <li><a href="about.html#sources" data-sources=""><span class="toc-no">V.</span> Sources</a></li>
                 </ul>
-                <p>Without whom, this website wouldn’t have been possible to plan this tour.</p>
+            </nav>
+            <p class="endpaper-small">&copy; 2026 Retellings &middot; Created for academic purposes as part of the MSc in Interactive Digital Media, Trinity College Dublin</p>
+            <p class="endpaper-small">With thanks to Cathal O&rsquo;Connor, Ren Paul and Maiyse Abuleil</p>
+            <p class="endpaper-finis" aria-hidden="true">&#10087;</p>
         </div>
     </footer>
   </body>

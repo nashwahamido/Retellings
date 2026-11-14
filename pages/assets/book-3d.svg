@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img" aria-label="An open book">
+  <defs>
+    <linearGradient id="cover" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a442d"/>
+      <stop offset="1" stop-color="#3a2a1a"/>
+    </linearGradient>
+    <linearGradient id="coverEdge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2e2114"/>
+      <stop offset="1" stop-color="#1c130a"/>
+    </linearGradient>
+    <linearGradient id="pageL" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#efe3c4"/>
+      <stop offset="0.7" stop-color="#f7eedb"/>
+      <stop offset="1" stop-color="#d9c9a2"/>
+    </linearGradient>
+    <linearGradient id="pageR" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0" stop-color="#efe3c4"/>
+      <stop offset="0.7" stop-color="#fbf4e3"/>
+      <stop offset="1" stop-color="#d9c9a2"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="1" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#e2d4b0"/>
+      <stop offset="0.5" stop-color="#fbf5e6"/>
+      <stop offset="1" stop-color="#f1e6ca"/>
+    </linearGradient>
+    <pattern id="edges" width="6" height="3" patternUnits="userSpaceOnUse">
+      <rect width="6" height="3" fill="#ead9b3"/>
+      <rect y="2" width="6" height="1" fill="#cdb98c"/>
+    </pattern>
+    <radialGradient id="shadow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#000" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- floor shadow -->
+  <ellipse cx="320" cy="392" rx="270" ry="30" fill="url(#shadow)"/>
+
+  <!-- cover: thickness band, then top face (two boards meeting at the spine) -->
+  <path d="M52 330 Q320 372 588 330 L586 344 Q320 386 54 344 Z" fill="url(#coverEdge)"/>
+  <path d="M52 330 L106 150 Q214 136 320 158 Q426 136 534 150 L588 330 Q452 316 320 352 Q188 316 52 330 Z" fill="url(#cover)"/>
+  <!-- gold tooling line on the boards -->
+  <path d="M74 322 L118 164 Q214 151 312 170" fill="none" stroke="#c9a463" stroke-opacity=".55" stroke-width="1.5"/>
+  <path d="M566 322 L522 164 Q426 151 328 170" fill="none" stroke="#c9a463" stroke-opacity=".55" stroke-width="1.5"/>
+  <!-- spine notch at the front -->
+  <path d="M300 344 Q320 362 340 344 L340 362 Q320 380 300 362 Z" fill="#20160c"/>
+
+  <!-- LEFT page block: page-edge thickness then the curved top -->
+  <path d="M78 306 Q190 282 316 332 L316 346 Q190 298 80 322 Z" fill="url(#edges)"/>
+  <path d="M316 176 Q214 146 126 164 L78 306 Q190 282 316 332 Z" fill="url(#pageL)"/>
+
+  <!-- RIGHT page block -->
+  <path d="M562 306 Q450 282 324 332 L324 346 Q450 298 560 322 Z" fill="url(#edges)"/>
+  <path d="M324 176 Q426 146 514 164 L562 306 Q450 282 324 332 Z" fill="url(#pageR)"/>
+
+  <!-- spine valley shading -->
+  <path d="M308 172 Q320 180 332 172 L332 338 Q320 350 308 338 Z" fill="#000" fill-opacity=".14"/>
+
+  <!-- leaves lifting from the spine on the left -->
+  <path d="M318 330 Q262 250 232 132 Q178 118 130 148 L96 288 Q206 270 318 330 Z" fill="url(#leaf)" filter="url(#soft)" opacity=".97"/>
+  <path d="M318 330 Q282 226 290 96 Q238 74 186 98 L150 262 Q240 262 318 330 Z" fill="url(#leaf)" filter="url(#soft)"/>
+
+  <g fill="none" stroke="#a8956a" stroke-opacity=".35" stroke-width="2" stroke-linecap="round">
+    <path d="M200 132 Q240 120 278 118"/><path d="M194 156 Q236 146 280 146"/><path d="M188 180 Q232 172 282 174"/>
+    <path d="M182 204 Q228 198 284 202"/><path d="M176 228 Q224 224 288 230"/>
+  </g>
+  <!-- faint text lines on the right page -->
+  <g fill="none" stroke="#a8956a" stroke-opacity=".5" stroke-width="2.5" stroke-linecap="round">
+    <path d="M350 196 Q420 176 492 186"/>
+    <path d="M354 214 Q426 194 498 204"/>
+    <path d="M358 232 Q430 212 504 222"/>
+    <path d="M362 250 Q434 230 508 240"/>
+    <path d="M366 268 Q438 248 512 258"/>
+    <path d="M370 286 Q430 268 490 274"/>
+  </g>
+</svg>

@@ -1,0 +1,210 @@
+/* =====================================================================
+   type.css — the type system, in one place. Loaded last on every page.
+
+   Two typefaces:
+     EB Garamond (serif)  headings, sub-lines, captions, quotations, the
+                          book itself, small "quiet" links and disclosures
+     Epilogue (sans)      body text, descriptions, labels, buttons, data
+
+   One size per role (rem, 1rem = 16px):
+     label     0.75   uppercase sans labels, tabs, chips, small buttons
+     nav       0.8    contents bar and footer links
+     small     0.8    small print, notes, distances
+     caption   0.9    serif italic captions under pictures
+     body-sm   0.9    dense UI text: lists, help, descriptions in cards
+     body      1      reading text
+     lead      1.1    the opening paragraph of a page
+     sub       1.1    serif italic sub-lines under section headings
+     sub-lg    1.3    serif italic sub-line under a page title
+     h3        1.3    serif card / panel headings
+     h2        2.1    serif section headings
+     h1        --fs-h1 serif page titles (the Cover title is larger)
+   The interactive book scales its own text with the page and is left as is.
+   ===================================================================== */
+:root {
+  --serif: "EB Garamond", Georgia, serif;
+  --sans: "Epilogue", sans-serif;
+  --t-label: 0.75rem;
+  --t-nav: 0.8rem;
+  --t-small: 0.8rem;
+  --t-caption: 0.9rem;
+  --t-body-sm: 0.9rem;
+  --t-body: 1rem;
+  --t-lead: 1.1rem;
+  --t-sub: 1.1rem;
+  --t-sub-lg: 1.3rem;
+  --t-h3: 1.3rem;
+  --t-h2: 2.1rem;
+}
+@media (max-width: 768px) {
+  :root { --t-h2: 1.75rem; --t-sub-lg: 1.15rem; }
+}
+
+/* ---------- which typeface ---------- */
+/* containers whose own text is serif but whose contents are ordinary UI text */
+:root body :is(.loc-window .win-body, .planner-panel, .map-legend, .leaflet-container, .win-close, .story-chip) {
+  font-family: var(--sans);
+}
+/* serif roles */
+:root body :is(
+  h1, .folio-h2, .book-intro h1, .tour-intro h1, .transit-guide h2,
+  #planner-heading, .ta-title, .src-head, .shelf-book h3, .member h3, .tg-a-title, .sources-group h3,
+  .folio-sub, .folio-kicker, .book-kicker, .tour-kicker,
+  figcaption, .win-caption, .link-quiet, .src-intro, .epigraph,
+  .ta-help summary, .suggested-card > summary, .win-transcript summary
+) { font-family: var(--serif); }
+
+/* ---------- sizes ---------- */
+/* page titles: one weight */
+:root body :is(.folio-head h1, .book-intro h1, .tour-intro h1) { font-size: var(--fs-h1); font-weight: 600; }
+
+/* section headings */
+:root body :is(.folio-h2, .folio-section > h2, .transit-guide h2) { font-size: var(--t-h2) !important; font-weight: 600; }
+
+/* card and panel headings */
+:root body :is(#planner-heading, .ta-title, .src-head, .shelf-book h3, .member h3, .tg-a-title, .sources-group h3) {
+  font-size: var(--t-h3); font-weight: 600;
+}
+
+/* sub-lines */
+:root body .folio-head .folio-sub, :root body .cover-title .folio-sub { font-size: var(--t-sub-lg); font-style: italic; }
+:root body .folio-section > .folio-sub, :root body .src-intro { font-size: var(--t-sub); font-style: italic; }
+
+/* leads */
+:root body :is(.cover-lead, .folio-lead, .page-lead, .tour-lead, .book-intro .page-lead) { font-size: var(--t-lead); }
+
+/* reading text */
+:root body :is(.measure, .win-desc, .tg-lead, .shelf-book p, .tg-a-intro) { font-size: var(--t-body); }
+
+/* dense UI text */
+:root body :is(.src-list, .ta-help, .toc .toc-desc, .member p, .tg-card p, .win-gmaps, .win-transcript p, .planner-count) { font-size: var(--t-body-sm); }
+
+/* captions */
+:root body :is(.plate figcaption, .plates .plate figcaption, .win-caption) { font-size: var(--t-caption); font-style: italic; line-height: 1.4; }
+
+/* small print and notes */
+:root body :is(.endpaper-small, .stop-leg, .pt-note, .planner-note, .stop-sub) { font-size: var(--t-small); }
+
+/* uppercase labels: tabs, chips, small buttons, field labels */
+:root body :is(
+  .src-tab, .story-chip, .win-tag, .win-guide-label, .ta-btn-main, .tour-tab, .map-chip, .map-chip--main,
+  .pt-label, .planner-add label, .plate figcaption .plate-no, .sc-count, .toc .toc-go, .cover-stage-hint,
+  .np-kind, .map-legend
+) { font-size: var(--t-label); }
+
+/* the contents bar and the footer links */
+:root body :is(header nav ul a, .endpaper-toc a) { font-size: var(--t-nav); }
+
+/* disclosures ("How do I keep it on my phone?", "About the suggested walk") */
+:root body :is(.ta-help summary, .suggested-card > summary) {
+  font-size: var(--t-body); font-style: italic; font-weight: 400; color: var(--tp-red, #8f2a24);
+}
+
+/* ---------- stragglers, snapped to the scale ---------- */
+:root body .stop-name { font-size: var(--t-lead); }
+:root body .win-stories .label { font-size: var(--t-body-sm); }
+:root body .endpaper-tag { font-size: var(--t-sub); }
+:root body .sc-title { font-size: var(--t-h3); }
+:root body .leaflet-control-zoom a { font-family: var(--sans); }
+/* quotations: the same size wherever they appear */
+:root body :is(.epigraph blockquote, .erratum-quote p) { font-size: clamp(1.3rem, 2.4vw, 1.7rem); }
+:root body :is(.epigraph cite, .erratum-quote cite) { font-size: var(--t-label); }
+/* the audio transcript disclosure in place windows matches the other disclosures */
+:root body .win-transcript summary { font-family: var(--serif); font-size: var(--t-body-sm); font-style: italic; }
+
+/* ---------- layout tweaks that belong with the text ---------- */
+
+/* My Tour and The Places: the page title and introduction are centred, like the other pages */
+:root body :is(.tour-intro, .book-intro) { max-width: 64rem; margin-inline: auto; text-align: center; }
+:root body :is(.tour-lead, .book-intro .page-lead) { margin-inline: auto; }
+:root body :is(.tour-lead, .book-intro .page-lead) { width: auto; max-width: 60rem; margin-top: 0; line-height: 1.55; text-align: justify; text-align-last: center; hyphens: none; }
+/* on narrow screens justified lines open up wide gaps between words, so centre them instead */
+@media (max-width: 600px) {
+  :root body :is(.tour-lead, .book-intro .page-lead) { text-align: center; }
+}
+/* the line under the Places title */
+:root body :is(.book-intro .book-sub, .tour-intro .page-sub) { font-size: var(--t-sub-lg); font-style: italic; margin: 0.1rem 0 1.1rem; color: var(--folio-soft); }
+:root body :is(.book-intro h1, .tour-intro h1) { margin-bottom: 0.15rem; }
+
+/* The Places: how to turn the pages, on its own line under the introduction */
+:root body .book-howto {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem 0.9rem;
+  margin: 1rem auto 0; padding: 0.55rem 1.2rem; width: fit-content; max-width: 100%;
+  font-family: var(--sans); font-size: var(--t-label); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #8a6a2e; border-top: 1px solid #d2ae6380; border-bottom: 1px solid #d2ae6380;
+}
+body.dark .book-howto { color: var(--accent-gold); }
+.book-howto .bh-item { display: inline-flex; align-items: center; gap: 0.45rem; }
+.book-howto svg { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.book-howto .bh-sep { width: 0.38rem; height: 0.38rem; background: var(--deco-gold, #d2ae63); transform: rotate(45deg); }
+@media (max-width: 600px) {
+  .book-howto { flex-direction: column; gap: 0.35rem; }
+  .book-howto .bh-sep { display: none; }
+}
+.book-howto a { color: inherit; text-decoration: underline; text-decoration-color: currentColor; text-underline-offset: 3px; }
+.book-howto a:hover { color: var(--accent-red); }
+body.dark .book-howto a:hover { color: #fff3cf; }
+
+/* the map's credit line: small print in the corner, kept clear of the map key */
+:root body .leaflet-control-attribution { font-size: 0.62rem; line-height: 1.5; padding: 0 0.4rem; background: #f4ecd6cc; }
+:root body .leaflet-control-attribution a { color: inherit; }
+:root body .map-legend span { white-space: nowrap; }
+
+/* ---------- no italics anywhere ----------
+   Emphasis, book titles, captions, notes and sub-lines are all set upright. */
+:root *, :root *::before, :root *::after { font-style: normal !important; }
+
+/* ---------- accessibility helpers ---------- */
+/* skip link: hidden until focused with the keyboard */
+.skip-link {
+  position: absolute; left: 1rem; top: -4rem; z-index: 6000;
+  padding: 0.6rem 1rem; background: var(--plate-2, #141c33); color: #ecd18e;
+  font-family: var(--sans); font-size: var(--t-label); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  border: 2px solid #d2ae63; text-decoration: none; transition: top 0.15s ease;
+}
+.skip-link:focus { top: 1rem; outline: none; }
+main:focus { outline: none; }
+/* controls that are now real buttons keep their old look */
+button.back-to-top, button.close-menu { border: 0; background: none; padding: 0; cursor: pointer; }
+button.toggle { padding: 0; cursor: pointer; font: inherit; }
+:root body :is(button.toggle, button.back-to-top, button.close-menu, .nav-hamburger):focus-visible { outline: 2px solid #d2ae63; outline-offset: 3px; }
+/* gold numerals on light paper need a deeper gold to stay readable */
+:root body :is(.stage-no, .dub-coda-no, .tg-a-num) { color: #8a6a2e; }
+body.dark :is(.stage-no, .dub-coda-no, .tg-a-num) { color: var(--deco-gold, #d2ae63); }
+/* the book's page counter, readable in dark mode */
+:root body #book-progress { opacity: 1; }
+body.dark #book-progress { color: #b9ad91; }
+/* a navy backing behind the text of every plate button: hidden under the plate, but it keeps the
+   gold lettering readable if the plate image ever fails to load (and lets checkers see the contrast) */
+:root:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a) {
+  background-color: var(--plate-2, #141c33) !important;
+  background-clip: content-box !important;
+}
+:root body .book-jump-label { opacity: 1; color: var(--folio-soft); }
+:root body .win-tag { color: #6f5626; }
+:root body :is(.tour-kicker, .book-kicker, .folio-kicker) { opacity: 1; }
+/* the counter is dimmed while the book is put down, but stays legible */
+:root body .book-controls.is-closed #book-progress { opacity: 0.8; }
+
+/* ---------- phone layout ---------- */
+@media (max-width: 600px) {
+  /* footer contents: a tidy column, no stray diamonds at line starts */
+  .endpaper-toc { flex-direction: column; gap: 0.55rem; }
+  .endpaper-toc li + li::before { display: none; }
+
+  /* the book's controls: an orderly grid
+     row 1: previous · contents · next   row 2: leaf counter
+     row 3: view the book                row 4: chapter menu   row 5: plain text */
+  :root body .book-controls {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem 0.5rem; justify-items: stretch; align-items: center;
+  }
+  :root body .book-controls .book-btn { width: 100%; padding: 0 0.9em !important; font-size: 0.78rem; }
+  :root body .book-controls #book-prev { grid-column: 1; grid-row: 1; }
+  :root body .book-controls #book-contents { grid-column: 2; grid-row: 1; }
+  :root body .book-controls #book-next { grid-column: 3; grid-row: 1; }
+  :root body .book-controls #book-progress { grid-column: 1 / -1; grid-row: 2; text-align: center; min-width: 0; }
+  :root body .book-controls #book-toggle { grid-column: 1 / -1; grid-row: 3; }
+  :root body .book-controls .book-jump { grid-column: 1 / -1; grid-row: 4; display: flex; align-items: center; gap: 0.6rem; }
+  :root body .book-controls .book-jump .book-select { flex: 1; min-width: 0; }
+  :root body .book-controls #book-mode { grid-column: 1 / -1; grid-row: 5; }
+}

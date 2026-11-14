@@ -1,0 +1,48 @@
+/* =====================================================================
+   colophon.css — Colophon (about, team, thanks and sources)
+   ===================================================================== */
+.team {
+  list-style: none; padding: 0; margin: 1.6rem auto 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+  gap: 2rem 1.6rem; max-width: 62rem; text-align: center;
+}
+.member-photo {
+  display: block; width: 8.5rem; aspect-ratio: 1; margin: 0 auto 0.8rem;
+  border-radius: 50%; padding: 5px; background: var(--folio-paper);
+  border: 3px double var(--deco-gold, #d2ae63); box-shadow: 0 6px 16px #00000026;
+}
+.member-photo img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; filter: sepia(0.15); }
+.member h3 { font-family: var(--folio-serif); font-size: 1.3rem; font-weight: 600; margin: 0 0 0.25rem; }
+.member p { margin: 0; font-size: 0.86rem; color: var(--folio-soft); line-height: 1.45; }
+
+.thanks { text-align: center; font-family: var(--folio-serif); font-size: var(--fs-h5); margin: 0.6rem 0 0.2rem; }
+
+/* the sources: one card per part of the site, each opens the Sources window */
+.source-cards {
+  list-style: none; padding: 0; margin: 1.6rem auto 0; max-width: 56rem;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem;
+}
+.source-card {
+  width: 100%; height: 100%;
+  display: grid; grid-template-columns: 2.4rem 1fr; grid-template-rows: auto auto; column-gap: 0.8rem;
+  align-items: center; text-align: left; cursor: pointer;
+  padding: 0.9rem 1rem; color: inherit; background: var(--folio-paper);
+  border: 3px double var(--deco-gold, #d2ae63);
+  box-shadow: 0 4px 12px #0000001a;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.source-card:is(:hover, :focus-visible) { transform: translateY(-2px); box-shadow: 0 8px 18px #00000026; outline: none; }
+.source-card:focus-visible { border-color: var(--folio-accent); }
+.sc-letter {
+  grid-row: 1 / 3; position: relative; isolation: isolate;
+  display: grid; place-items: center; width: 2.4rem; aspect-ratio: 1;
+  font-family: var(--folio-serif); font-size: 1.2rem; font-weight: 600; color: #ecd18e;
+}
+.sc-letter::before {
+  content: ""; position: absolute; inset: 15%; z-index: -1;
+  background: linear-gradient(180deg, var(--plate-1), var(--plate-2));
+  outline: 1px solid var(--deco-gold, #d2ae63); outline-offset: 2px;
+  transform: rotate(45deg);
+}
+.sc-title { font-family: var(--folio-serif); font-size: 1.2rem; font-weight: 600; line-height: 1.2; }
+.sc-count { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--folio-soft); }

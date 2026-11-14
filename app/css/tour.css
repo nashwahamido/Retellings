@@ -1,0 +1,425 @@
+/* =====================================================================
+   tour.css — the My Tour planner (walking-tour.html)
+   A parchment list panel and a framed map, side by side; stacked on
+   phones. Buttons and frames come from deco.css.
+   ===================================================================== */
+
+/* ---- intro ---- */
+.tour-intro { max-width: 58rem; margin: var(--sp-xl) 0 var(--sp-lg); }
+.tour-kicker {
+  display: block; font-family: "EB Garamond", Georgia, serif;
+  font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.7;
+}
+.tour-intro h1 {
+  font-family: "EB Garamond", Georgia, serif; font-weight: 600;
+  font-size: var(--fs-h1); line-height: 1.05; margin: 0.15rem 0 0.6rem;
+}
+.tour-lead { font-size: var(--fs-h6); line-height: 1.5; max-width: 46rem; }
+.tour-lead a { color: inherit; text-decoration-color: var(--accent-red); text-underline-offset: 3px; }
+body.dark .tour-lead a { text-decoration-color: var(--accent-gold); }
+
+/* ---- layout ---- */
+.planner {
+  --tp-paper: #f4ecd6; --tp-ink: #35301f; --tp-soft: #6c6244; --tp-rule: #c6b488; --tp-red: #8f2a24;
+  display: grid;
+  grid-template-columns: minmax(18rem, 24rem) 1fr;
+  gap: var(--sp-lg);
+  align-items: stretch;
+  height: clamp(32rem, 78vh, 46rem);
+  margin-bottom: var(--sp-2xl);
+}
+
+/* ---- list panel ---- */
+.planner-panel {
+  display: flex; flex-direction: column; gap: 0.9rem; min-height: 0;
+  padding: 1.1rem 1.1rem 1rem;
+  background: var(--tp-paper); color: var(--tp-ink);
+  border-style: solid; border-width: 14px;
+  border-image: url("deco/frame.svg") 20 / 14px stretch;
+  font-family: "EB Garamond", Georgia, serif;
+  overflow-y: auto;
+}
+.planner-head { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 2px solid var(--tp-rule); padding-bottom: 0.45rem; }
+.planner-head h2 { font-size: 1.45rem; font-weight: 600; margin: 0; }
+.planner-count { font-size: 0.9rem; color: var(--tp-soft); font-style: italic; }
+
+/* ---- stops ---- */
+.stop-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.stop {
+  display: grid; grid-template-columns: 2.1rem 1fr auto; align-items: center; gap: 0.6rem;
+  padding: 0.5rem 0.4rem; border-radius: 0.3rem; cursor: grab;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.stop.is-hot { background: #cfae6b33; box-shadow: inset 3px 0 0 #b38a3c; }
+.stop.is-dragging { opacity: 0.45; }
+.stop.drop-before { box-shadow: inset 0 3px 0 var(--tp-red); }
+.stop.drop-after { box-shadow: inset 0 -3px 0 var(--tp-red); }
+.stop-num {
+  width: 2rem; height: 2rem; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Epilogue", sans-serif; font-weight: 700; font-size: 0.85rem; color: #ecd18e;
+  background: radial-gradient(circle at 35% 30%, var(--plate-hi), var(--plate-2));
+  box-shadow: 0 0 0 1.5px #d2ae63, 0 0 0 3px var(--plate-2), 0 0 0 4px #d2ae6366;
+}
+.stop-main { display: flex; flex-direction: column; min-width: 0; }
+.stop-name {
+  all: unset; cursor: pointer; font-size: 1.08rem; font-weight: 600; line-height: 1.2;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+.stop-name:hover, .stop-name:focus-visible { color: var(--tp-red); text-decoration: underline; text-underline-offset: 3px; }
+.stop-sub { font-size: 0.8rem; color: var(--tp-soft); font-style: italic; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stop-tools { display: flex; gap: 0.25rem; }
+.stop-tool {
+  width: 1.55rem; height: 1.55rem; border-radius: 50%; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.62rem; line-height: 1; cursor: pointer;
+  color: #6c5427; background: #fbf5e4; border: 1px solid #c6a96a;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.stop-tool:hover:not(:disabled), .stop-tool:focus-visible { background: var(--plate-2); color: #ecd18e; border-color: #d2ae63; outline: none; }
+.stop-tool:disabled { opacity: 0.3; cursor: default; }
+.stop-remove { font-size: 0.95rem; }
+.stop-remove:hover, .stop-remove:focus-visible { background: var(--tp-red) !important; color: #fff3cf !important; }
+/* the walk between two stops */
+.stop-leg {
+  margin-left: 0.95rem; padding: 0.1rem 0 0.1rem 1.6rem;
+  border-left: 2px dotted #c6a96a; font-size: 0.78rem; font-style: italic; color: var(--tp-soft);
+}
+
+/* ---- empty state ---- */
+.planner-empty { text-align: center; padding: 1.4rem 0.6rem; line-height: 1.45; }
+.planner-empty .pe-orn { font-size: 1.5rem; color: var(--tp-soft); margin-bottom: 0.4rem; }
+.planner-empty a { color: var(--tp-red); }
+
+/* ---- totals ---- */
+.planner-totals {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 0.8rem;
+  padding: 0.75rem 0; border-top: 1px solid var(--tp-rule); border-bottom: 1px solid var(--tp-rule);
+}
+.planner-totals[hidden] { display: none; }
+.pt-label { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tp-soft); }
+.pt-value { font-size: 1.4rem; font-weight: 600; color: var(--tp-red); }
+.pt-note { grid-column: 1 / -1; font-size: 0.74rem; font-style: italic; color: var(--tp-soft); margin: 0; }
+
+/* ---- add + actions ---- */
+.planner-add { display: flex; flex-direction: column; gap: 0.3rem; }
+.planner-add label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tp-soft); }
+/* the field: parchment well in a gold double frame, serif text, gold chevron */
+.tour-field { position: relative; }
+.tour-field::after {
+  content: ""; position: absolute; right: 1rem; top: 50%; width: 0.5rem; height: 0.5rem;
+  border-right: 2px solid #8a6a2e; border-bottom: 2px solid #8a6a2e;
+  transform: translateY(-70%) rotate(45deg); pointer-events: none;
+}
+.tour-select {
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+  width: 100%; min-height: 3rem; padding: 0.55rem 2.6rem 0.55rem 0.9rem;
+  font-family: "EB Garamond", Georgia, serif; font-size: 1.08rem; color: var(--tp-ink);
+  background: linear-gradient(180deg, #fffaf0, #f3e8cc);
+  border: 3px double #b99a5c; border-radius: 2px;
+  box-shadow: inset 0 1px 3px #0000001a;
+  cursor: pointer; transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.tour-select:hover { border-color: #8a6a2e; }
+.tour-select:focus-visible { outline: none; border-color: #8f2a24; box-shadow: inset 0 1px 3px #0000001a, 0 0 0 3px #cfae6b66; }
+.tour-select option { font-family: "EB Garamond", Georgia, serif; color: #35301f; background: #fbf5e4; }
+
+/* ---- tabs: my tour / suggested walk ---- */
+.tour-tabs { display: grid; grid-template-columns: 1fr 1fr; border: 3px double #b99a5c; }
+.tour-tab {
+  padding: 0.55rem 0.4rem; border: none; cursor: pointer;
+  font-family: "Epilogue", sans-serif; font-size: 0.74rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #6c5427; background: #fbf5e4;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.tour-tab + .tour-tab { border-left: 1px solid #b99a5c; }
+.tour-tab[aria-selected="true"] { color: #ecd18e; background: linear-gradient(180deg, var(--plate-1), var(--plate-2)); }
+.tour-tab:hover:not([aria-selected="true"]) { background: #efe2c1; }
+.tour-tab:focus-visible { outline: 2px solid #8f2a24; outline-offset: -4px; }
+.planner-note { font-size: 0.86rem; font-style: italic; color: var(--tp-soft); margin: -0.4rem 0 0; }
+.link-btn { all: unset; cursor: pointer; color: var(--tp-red); text-decoration: underline; text-underline-offset: 2px; }
+.link-btn:focus-visible { outline: 2px solid var(--tp-red); outline-offset: 2px; }
+.planner-actions[hidden], .planner-add[hidden], .suggested-card[hidden] { display: none; }
+.planner-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.planner-actions .book-btn { font-size: 0.78rem !important; }
+.suggested-card { border-top: 1px solid var(--tp-rule); padding-top: 0.6rem; font-size: 0.95rem; }
+.suggested-card summary { cursor: pointer; color: var(--tp-red); font-weight: 600; }
+.suggested-card p { margin: 0.5rem 0; line-height: 1.45; }
+.suggested-card audio { width: 100%; }
+.suggested-card .win-guide-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--tp-soft); font-weight: 600; margin-top: 0.6rem; }
+.suggested-card .win-transcript summary { font-weight: 400; font-size: 0.86rem; }
+
+/* ---- map ---- */
+.planner-map {
+  position: relative; min-height: 0;
+  border-style: solid; border-width: 14px;
+  border-image: url("deco/window-navy.svg") 14 / 14px stretch;
+  box-shadow: 0 18px 40px -16px #00000080;
+}
+body.dark .planner-map { border-image-source: url("deco/window-ink.svg"); }
+#tour-map { position: absolute; inset: 0; background: #e9e1cc; }
+/* soft sepia so the modern map sits with the period palette */
+#tour-map .leaflet-tile-pane { filter: sepia(0.42) saturate(0.85) brightness(1.02) contrast(0.95); }
+body.dark #tour-map .leaflet-tile-pane { filter: sepia(0.5) saturate(0.7) brightness(0.62) contrast(1.05); }
+#tour-map .leaflet-control-attribution { font-size: 0.62rem; background: #f4ecd6cc; }
+#tour-map .leaflet-bar a { background: var(--plate-2); color: #ecd18e; border-color: #d2ae6366; }
+#tour-map .leaflet-bar a:hover { background: var(--plate-1); }
+
+/* pins */
+.pin-place span {
+  display: block; width: 14px; height: 14px; border-radius: 50%;
+  background: #fbf5e4; border: 2px solid #8f2a24; opacity: 0.8;
+  box-shadow: 0 1px 2px #0000004d; transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.pin-place:hover span, .pin-place:focus-visible span { transform: scale(1.35); opacity: 1; }
+.pin-stop span {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%;
+  font-family: "Epilogue", sans-serif; font-weight: 700; font-size: 14px; color: #ecd18e;
+  background: radial-gradient(circle at 35% 30%, var(--plate-hi), var(--plate-2));
+  box-shadow: 0 0 0 2px #d2ae63, 0 0 0 4px var(--plate-2), 0 0 0 5px #d2ae6399, 0 4px 8px #00000066;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.pin-stop.is-hot span, .pin-stop:hover span, .pin-stop:focus-visible span {
+  transform: scale(1.22);
+  box-shadow: 0 0 0 2px #f6e2a8, 0 0 0 4px #8f2a24, 0 0 0 6px #f6e2a8, 0 0 14px #d2ae63, 0 4px 10px #00000080;
+}
+.tour-route { stroke: #8f2a24; }
+body.dark .tour-route { stroke: #d2ae63; }
+
+/* legend */
+.map-legend {
+  position: absolute; left: 0.6rem; bottom: 0.6rem; z-index: 500;
+  display: flex; gap: 0.9rem; padding: 0.35rem 0.7rem;
+  font-family: "EB Garamond", Georgia, serif; font-size: 0.82rem; color: #35301f;
+  background: #f4ecd6e6; border: 1px solid #c6b488;
+}
+.map-legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+.lg-stop, .lg-place { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+.lg-stop { background: var(--plate-2); box-shadow: 0 0 0 1.5px #d2ae63; }
+.lg-place { background: #fbf5e4; border: 2px solid #8f2a24; }
+
+/* ---- phones: map first, then the list ---- */
+@media (max-width: 860px) {
+  .planner { grid-template-columns: 1fr; height: auto; }
+  .planner-map { order: -1; height: 58vh; min-height: 20rem; }
+  .planner-panel { overflow: visible; }
+  .map-legend { font-size: 0.72rem; gap: 0.6rem; padding: 0.25rem 0.5rem; }
+  .stop-tools { gap: 0.15rem; }
+  .stop-tool { width: 1.4rem; height: 1.4rem; }
+}
+
+/* ---- on-page dialog (Clear tour) ---- */
+.deco-dialog-backdrop {
+  position: fixed; inset: 0; z-index: 3000;
+  display: flex; align-items: center; justify-content: center; padding: 1rem;
+  background: #0d0b09b3; backdrop-filter: blur(2px);
+  animation: dd-fade 0.18s ease;
+}
+.deco-dialog {
+  width: min(28rem, 100%);
+  padding: 1.6rem 1.6rem 1.4rem;
+  text-align: center;
+  color: #35301f;
+  background: #f4ecd6;
+  border-style: solid; border-width: 14px;
+  border-image: url("deco/window-navy.svg") 14 / 14px stretch;
+  box-shadow: 0 24px 60px -12px #000000cc;
+  font-family: "EB Garamond", Georgia, serif;
+  animation: dd-rise 0.2s ease;
+}
+body.dark .deco-dialog { border-image-source: url("deco/window-ink.svg"); }
+.dd-title { font-size: 1.5rem; font-weight: 600; margin: 0 0 0.4rem; }
+.dd-title::after {
+  content: ""; display: block; width: 0.45rem; height: 0.45rem; margin: 0.55rem auto 0;
+  background: #8f2a24; transform: rotate(45deg);
+}
+.dd-msg { font-size: 1.05rem; line-height: 1.45; margin: 0 0 1.3rem; }
+.dd-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; }
+.dd-actions .book-btn { font-size: 0.8rem !important; }
+@keyframes dd-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dd-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ---- brief notice with Undo ---- */
+.deco-toast {
+  position: fixed; left: 50%; bottom: 1.5rem; z-index: 2900;
+  display: flex; align-items: center; gap: 1rem;
+  max-width: calc(100vw - 2rem); padding: 0.75rem 1.1rem;
+  font-family: "EB Garamond", Georgia, serif; font-size: 1.02rem; color: #f1e3b6;
+  background: linear-gradient(180deg, var(--plate-1), var(--plate-2));
+  border: 3px double #d2ae63; box-shadow: 0 12px 30px -8px #000000aa;
+  transform: translate(-50%, 160%); opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.deco-toast.is-shown { transform: translate(-50%, 0); opacity: 1; }
+.dt-action {
+  border: 1px solid #d2ae63; background: none; color: #ecd18e; cursor: pointer;
+  font-family: "Epilogue", sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.35rem 0.75rem;
+}
+.dt-action:hover, .dt-action:focus-visible { background: #d2ae63; color: var(--plate-2); outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .deco-dialog-backdrop, .deco-dialog { animation: none; }
+  .deco-toast { transition: none; }
+}
+
+/* ---- eat & rest: map chips ---- */
+.map-tools {
+  position: absolute; top: 0.6rem; right: 0.6rem; z-index: 500;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem;
+  max-width: calc(100% - 4rem);
+}
+.nearby-filters { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.3rem; }
+.nearby-filters[hidden] { display: none; }
+.map-chip {
+  font-family: "Epilogue", sans-serif; font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.38rem 0.7rem; cursor: pointer;
+  color: #6c5427; background: #fbf5e4f2;
+  border: 3px double #b99a5c; box-shadow: 0 2px 6px #00000033;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.map-chip[aria-pressed="true"] { color: #ecd18e; background: linear-gradient(180deg, var(--plate-1), var(--plate-2)); border-color: #d2ae63; }
+.map-chip--main { font-size: 0.74rem; padding: 0.5rem 0.9rem; }
+.map-chip:focus-visible { outline: 2px solid #8f2a24; outline-offset: 2px; }
+
+/* ---- eat & rest: pins ---- */
+.pin-near span {
+  display: flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #fbf5e4; color: #35301f;
+  border: 2px solid currentColor; box-shadow: 0 1px 3px #00000066;
+  transition: transform 0.12s ease;
+}
+.pin-near:hover span, .pin-near:focus-visible span { transform: scale(1.25); }
+.pin-near--cafe span { color: #7a4b22; }
+.pin-near--food span { color: #8f2a24; }
+.pin-near--pub span { color: #5b3b12; }
+.pin-near--wc span, .pin-near--water span { color: #2f5d7a; }
+.pin-near--park span { color: #3f6b2a; }
+
+/* popups in the same parchment style */
+.near-popup .leaflet-popup-content-wrapper {
+  background: #f4ecd6; color: #35301f; border-radius: 0;
+  border: 3px double #b99a5c; box-shadow: 0 8px 20px #00000055;
+}
+.near-popup .leaflet-popup-tip { background: #f4ecd6; }
+.near-popup .leaflet-popup-content { margin: 0.7rem 0.9rem; font-family: "EB Garamond", Georgia, serif; }
+.near-pop p { margin: 0; }
+.np-kind { font-family: "Epilogue", sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8a6a2e; }
+.np-name { font-size: 1.1rem; font-weight: 600; margin: 0.1rem 0 0.25rem !important; }
+.np-meta { font-size: 0.85rem; }
+.np-near { font-size: 0.8rem; font-style: italic; color: #6c6244; margin-top: 0.3rem !important; }
+
+/* the "Nearby:" line under each stop */
+.stop-nearby { display: block; font-size: 0.74rem; line-height: 1.35; color: #3f6b2a; margin-top: 0.15rem; }
+
+@media (max-width: 860px) {
+  .map-chip { font-size: 0.62rem; padding: 0.3rem 0.55rem; }
+}
+
+/* =====================================================================
+   Take it with you: print / Google Maps / KML / GPX
+   ===================================================================== */
+.take-away { margin-top: 1.4rem; padding-top: 1.1rem; border-top: 1px solid var(--tp-rule); }
+.take-away[hidden] { display: none; }
+.ta-title {
+  font-family: "EB Garamond", Georgia, serif; font-size: 1.3rem; font-weight: 600;
+  margin: 0 0 0.7rem; color: var(--tp-ink);
+}
+.ta-buttons, .ta-gmaps { display: grid; gap: 0.45rem; }
+:root body .ta-btn {
+  display: grid; grid-template-columns: 2.3rem minmax(0, 1fr) auto; align-items: center; gap: 0.75rem;
+  width: 100%; box-sizing: border-box; text-align: left; cursor: pointer; text-decoration: none;
+  padding: 0.55rem 0.8rem 0.55rem 0.6rem; color: var(--tp-ink); background: #fbf5e4;
+  border: 3px double #b99a5c; font: inherit;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.ta-icon {
+  display: grid; place-items: center; width: 2.3rem; height: 2.3rem;
+  background: linear-gradient(180deg, var(--plate-1), var(--plate-2));
+  box-shadow: inset 0 0 0 1px #d2ae63, inset 0 0 0 3px var(--plate-2), inset 0 0 0 4px #d2ae6380;
+}
+.ta-icon svg { width: 1.15rem; height: 1.15rem; fill: none; stroke: #ecd18e; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.ta-text { display: flex; flex-direction: column; gap: 0.12rem; min-width: 0; }
+.ta-btn-main {
+  font-family: "Epilogue", sans-serif; font-size: 0.74rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: #5a4520;
+}
+.ta-btn-sub {
+  font-family: "Epilogue", sans-serif; font-size: 0.84rem; font-weight: 400; color: #4f4834;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ta-arrow { font-size: 1.5rem; line-height: 1; color: #b99a5c; transition: transform 0.15s ease, color 0.15s ease; }
+:root body .ta-btn:is(:hover, :focus-visible) { background: #fffaf0; border-color: #8f6f2e; outline: none; }
+:root body .ta-btn:is(:hover, :focus-visible) .ta-arrow { transform: translateX(3px); color: var(--tp-red); }
+:root body .ta-btn:focus-visible { box-shadow: 0 0 0 2px var(--tp-red); }
+.ta-btn:disabled { opacity: 0.55; cursor: progress; }
+.ta-help { margin-top: 0.8rem; font-size: 0.88rem; color: var(--tp-ink); }
+.ta-help summary { cursor: pointer; font-family: "EB Garamond", Georgia, serif; font-size: 1rem; font-style: italic; color: var(--tp-red); }
+.ta-help ol { margin: 0.6rem 0 0; padding-left: 1.2rem; line-height: 1.5; display: grid; gap: 0.45rem; }
+.ta-help a { color: inherit; text-decoration-color: var(--tp-red); text-underline-offset: 2px; }
+
+.print-head, .stop-print-desc { display: none; }
+
+/* while preparing to print, the map takes the size it will have on paper */
+body.print-prep .planner-map { width: 700px !important; height: 410px !important; flex: none; }
+body.print-prep #tour-map { height: 100% !important; }
+
+/* =====================================================================
+   The printed itinerary: one A4 page, map then stops
+   ===================================================================== */
+@media print {
+  @page { size: A4 portrait; margin: 12mm; }
+  html, body { background: #fff !important; color: #222 !important; }
+  body { padding: 0 !important; display: block !important; }
+  header, .mobile-menu, footer, .back-to-top, .tour-intro, .transit-guide, .window-layer,
+  .tour-tabs, #planner-heading, .planner-note, #planner-note, .planner-add, .planner-actions,
+  .suggested-card, .take-away, .planner-empty, .stop-tools, .map-tools, .map-legend,
+  .leaflet-control-zoom, .deco-toast, .deco-dialog-backdrop, .stop-nearby { display: none !important; }
+
+  .print-head { display: block; text-align: center; margin: 0 0 4mm; }
+  .print-kicker { margin: 0; font: italic 10pt "EB Garamond", Georgia, serif; letter-spacing: 0.12em; color: #555; }
+  .print-title { margin: 1mm 0; font: 600 24pt "EB Garamond", Georgia, serif; color: #1f2a48; }
+    .print-note { margin: 3mm 0 0; font: italic 8pt "Epilogue", sans-serif; color: #666; text-align: center; }
+  .print-meta { margin: 0; font: 9.5pt "Epilogue", sans-serif; color: #444; }
+
+  .planner { display: flex !important; flex-direction: column; gap: 4mm; border: none !important; box-shadow: none !important; background: none !important; }
+  .planner-map { order: -1; width: 700px !important; height: 410px !important; margin: 0 auto; border: 1.5px solid #1f2a48 !important; box-shadow: none !important; break-inside: avoid; }
+  .pin-place, .pin-near, .planner-head { display: none !important; }
+  .planner-map::before, .planner-map::after { display: none !important; }
+  #tour-map { height: 100% !important; }
+  .leaflet-control-attribution { font-size: 7pt !important; }
+  .planner-panel { padding: 0 !important; border: none !important; background: none !important; box-shadow: none !important; max-height: none !important; overflow: visible !important; }
+  .planner-panel::before, .planner-panel::after { display: none !important; }
+
+  .stop-list { display: block !important; columns: 2; column-gap: 8mm; }
+  .stop { display: grid !important; }
+  .stop, .stop-leg { break-inside: avoid; }
+  .stop { padding: 1.2mm 0 !important; background: none !important; box-shadow: none !important; }
+  .stop-num { background: #1f2a48 !important; color: #fff !important; box-shadow: none !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .stop-name { font-size: 11pt !important; color: #111 !important; }
+  .stop-sub { font-size: 8.5pt !important; }
+  .stop-print-desc { display: block; font: 8.5pt/1.35 "Epilogue", sans-serif; color: #333; margin-top: 0.8mm; }
+  .stop-leg { font-size: 8pt !important; padding: 0.5mm 0 0.5mm 9mm !important; }
+  .planner-totals { display: none !important; }
+  .pin-stop, .tour-route, .leaflet-tile { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+.print-only { display: none; }
+@media print {
+  .print-only { display: block; }
+  .print-note { order: 5; }
+}
+@media print {
+  .pin-stop span { transform: none !important; box-shadow: 0 0 0 2px #f6e2a8, 0 2px 4px #00000066 !important; }
+  .stop.is-hot { background: none !important; box-shadow: none !important; }
+}
+/* narrow screens: drop the arrow so each description stays on one line */
+@media (max-width: 520px) {
+  :root body .ta-btn { grid-template-columns: 2.1rem minmax(0, 1fr); gap: 0.65rem; padding-right: 0.6rem; }
+  .ta-icon { width: 2.1rem; height: 2.1rem; }
+  .ta-arrow { display: none; }
+  .ta-btn-sub { font-size: 0.8rem; }
+}

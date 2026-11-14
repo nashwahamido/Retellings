@@ -3,164 +3,184 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <title>Colophon — Retellings</title>
+    <meta name="description" content="Who made Retellings, and every source and image it uses.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400..800&family=Epilogue:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../app/css/variable.css">
     <link rel="stylesheet" href="../app/css/global.css">
-    <link rel="stylesheet" href="../app/css/about.css">
+    <link rel="stylesheet" href="../app/css/colophon.css">
+    <link rel="stylesheet" href="../app/css/windows.css">
+    <link rel="stylesheet" href="../app/css/deco.css">
+    <link rel="stylesheet" href="../app/css/folio.css">
+    <link rel="stylesheet" href="../app/css/type.css">
+    <script src="../app/js/loc-windows.js" defer></script>
+    <script src="../app/js/sources-data.js" defer></script>
+    <script src="../app/js/sources.js" defer></script>
     <script src="../app/js/script.js" defer></script>
+    <script src="../app/js/folio.js" defer></script>
   </head>
   <body>
-     <!-- Back to top button -->
-    <a class="back-to-top" aria-label="back-to-top Button"><img loading="lazy" src="assets/toTopBtn.svg" Alt="Back to top button"></img></a>
-    
+    <a class="skip-link" href="#content">Skip to content</a>
+    <!-- Back to top button -->
+
     <!-- hamburger menu: shown when width <= 768px -->
-    <div class="mobile-menu">
-        <div class="close-menu">
-            <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 256 256">
+    <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Contents">
+        <button type="button" class="close-menu" aria-label="Close menu">
+            <svg aria-hidden="true" focusable="false" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 256 256">
                 <path
                     d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z">
                 </path>
             </svg>
-        </div>
-        <ul>
-            <li><a href="index.html">Homepage</a></li>
-            <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-            <li><a href="walking-tour.html">Dubliner's Walking Tour</a></li>
-            <li><a href="locations.html">Dubliner's Locations</a></li>
-            <li><a href="about.html">About Us</a></li>
+        </button>
+        <ul aria-label="Contents">
+            <li><a href="index.html">The Cover</a></li>
+            <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+            <li><a href="locations.html"><span class="toc-no">II.</span> The Places</a></li>
+            <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+            <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+            <li><a href="about.html#sources" data-sources=""><span class="toc-no">V.</span> Sources</a></li>
             <li>
-                <div class="toggle"></div>
+                <button type="button" class="toggle" role="switch" aria-checked="false" aria-label="Dark mode"></button>
             </li>
         </ul>
     </div>
 
     <!-- HEADER / NAVIGATION -->
     <header>
-        <a href="index.html" aria-label="Retellings - Home" class="logo-container">
-            <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo">
-            <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo">
-        </a>
-        <nav aria-label="Main navigation">
+        <a href="index.html" class="header-mark" aria-label="Retellings – The Cover">Retellings</a>
+        <nav aria-label="Contents">
             <ul>
-                <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-                <li><a href="walking-tour.html">Dubliner's Walking Tour</a></li>
-                <li><a href="locations.html">Dubliner's Locations</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><div class="toggle"></div></li>
+                <li><a href="index.html">The Cover</a></li>
+                <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                <li><a href="locations.html"><span class="toc-no">II.</span> The Places</a></li>
+                <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+                <li><a href="about.html#sources" data-sources=""><span class="toc-no">V.</span> Sources</a></li>
+                <li><button type="button" class="toggle" role="switch" aria-checked="false" aria-label="Dark mode"></button></li>
             </ul>
         </nav>
-        <button class="nav-hamburger">
-            <svg xmlns="https://www.w3.org/2000/svg" fill="#37465e" viewBox="0 0 256 256">
+        <button type="button" class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+            <svg aria-hidden="true" focusable="false" xmlns="https://www.w3.org/2000/svg" fill="#37465e" viewBox="0 0 256 256">
                 <path
                     d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z">
                 </path>
             </svg>
         </button>
     </header>
-    <main>
-        <!-- SECTION 1 - HERO -->
-        <section aria-label="About Us hero">
-            <h1>About Us</h1>
-            <img loading="lazy" src="assets/Hero_about.png" alt="College Green, Dublin 1800, applied with oil-paint effect.">
-        </section>
+    <main id="content" tabindex="-1" class="folio">
+      <div class="folio-head">
+        <span class="folio-kicker">IV &middot; Colophon</span>
+        <h1>How this book was made</h1>
+        <p class="folio-sub">The people, the purpose and the sources</p>
+        <div class="folio-rule" aria-hidden="true"><span></span></div>
+      </div>
 
-        <!-- SECTION 2 - TEAM -->
-        <section aria-label="Meet the team">
-            <h2>Team</h2>
-            <p class="section-lead">We are a group of students from Trinity College Dublin, specializing in Interactive Digital Media. We all have a strong curiosity to discover Dublin, and wanted to dig deeper into the sceneries behind the stories.</p>
-            <ul>
-                <!-- TEAM MEMBER 1 -->
-                <li>
-                    <img loading="lazy" src="assets/Emma_Sun.png" alt="Photo of Emma Sun">
-                    <h3>Emma Sun</h3>
-                    <p>Wireframer, Copywriter, Illustrator, Front-end Developer</p>
-                </li>
-                <!-- TEAM MEMBER 2 -->
-                <li>
-                    <img loading="lazy" src="assets/Ge_You.png" alt="Photo of Ge You">
-                    <h3>Ge You</h3>
-                    <p>Interface Designer, Image Editor, Front-end Developer</p>
-                </li>
-                <!-- TEAM MEMBER 3 -->
-                <li>
-                    <img loading="lazy" src="assets/Logan_Dulski.png" alt="Photo of Logan Dulski">
-                    <h3>Logan Dulski</h3>
-                    <p>Project Manager, Logo Designer, Audio Editor, Front-end Developer</p>
-                </li>
-                <!-- TEAM MEMBER 4 -->
-                <li>
-                    <img loading="lazy" src="assets/Nashwa_Hamido.png" alt="Photo of Nashwa Hamido">
-                    <h3>Nashwa Hamido</h3>
-                    <p>Accessibility Reviewer, Logo Designer, Front-end Developer</p>
-                </li>
-                <!-- TEAM MEMBER 5 -->
-                <li>
-                    <img loading="lazy" src="assets/Yayi_Liu.png" alt="Photo of Yayi Liu">
-                    <h3>Yayi Liu</h3>
-                    <p>Photographer, Copywriter, Front-end Developer</p>
-                </li>
-            </ul>
-        </section>
-
-        <!-- SECTION 3 - BACKGROUND & LINKS -->
-        <section aria-label="Project background" class="about-bg-section">
-
-            <div class="about-bg-text">
-                <h2>Background</h2>
-                <p>Inspired by Dubliners, James Joyce, we developed Retellings as a space for the bookworms, history buffs and travellers who want to look beyond the surface of the city.</p>
-            </div>
-
-            <div class="about-link-cards">
-                <a href="https://drive.google.com/file/d/1syxEjJ444AyrSEM038DZxU13RfFEmghK/view?usp=sharing"
-                   class="about-link-card"  aria-label="Open Accessibility Plan document">
-                    <div class="about-link-card__label">Document</div>
-                    <h3 class="about-link-card__title">Accessibility Plan</h3>
-                    <p class="about-link-card__desc">Read our detailed accessibility review and design decisions.</p>
-                    <span class="about-link-card__arrow" aria-hidden="true">&rarr;</span>
-                </a>
-
-                <a href="credits.html"
-                   class="about-link-card"
-                   aria-label="View Credits and Sources page">
-                    <div class="about-link-card__label">Page</div>
-                    <h3 class="about-link-card__title">Credits &amp; Sources</h3>
-                    <p class="about-link-card__desc">View all references, image credits, and acknowledgements.</p>
-                    <span class="about-link-card__arrow" aria-hidden="true">&rarr;</span>
-                </a>
-            </div>
-
-        </section>
-
-    </main>
-   
-     <!-- FOOTER -->
-   <footer>
-        <div class="footer-col-left">
-            <div class="footer-brand">
-                <a href="index.html" aria-label="Retellings – Home">
-                    <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo logo-footer">
-                    <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo logo-footer">
-                </a>
-                <h3><strong>Retellings Digital Experience</strong></h3>
-            </div>
-            <p>Bridging the literary genius of The Dubliners by James Joyce with the historical and physical landscape of Dublin.</p>
-            <strong><small>&copy;2026 Retellings. <br>Created for academic purposes as part of the MSc Interactive Digital Media</small></strong>
+      <section class="folio-section" aria-labelledby="edition-title">
+        <h2 class="folio-h2" id="edition-title"><span class="num">&#10022;</span>About this edition</h2>
+        <div class="measure">
+          <p class="dropcap">Inspired by James Joyce&rsquo;s <em>Dubliners</em>, Retellings is a space for the bookworms, history buffs and travellers who want to look beyond the surface of the city. It began as a team project for the MSc in Interactive Digital Media at Trinity College Dublin, in the spring of 2026.</p>
+          <p>This edition, with its book of records, place windows and walking-tour planner, was redesigned by Nashwa Hamido.</p>
         </div>
+        <div class="folio-actions">
+          <a class="btn" href="https://drive.google.com/file/d/1syxEjJ444AyrSEM038DZxU13RfFEmghK/view?usp=sharing" target="_blank" rel="noopener">Accessibility plan</a>
+        </div>
+      </section>
 
-        <div class="footer-col-right">
-                <h2>Credits</h2>
-                <h3>Thanks to:</h3>
-                <ul>   
-                    <li>Cathal O'Connor</li>
-                    <li>Ren Paul</li>
-                    <li>Maiyse Abuleil</li>
+      <section class="folio-section" aria-labelledby="team-title">
+        <h2 class="folio-h2" id="team-title"><span class="num">&#10022;</span>The original team</h2>
+        <p class="folio-sub">Students of Interactive Digital Media at Trinity College Dublin, curious to dig deeper into the scenery behind the stories.</p>
+        <ul class="team">
+          <li class="member">
+            <span class="member-photo"><img loading="lazy" src="assets/Emma_Sun.png" alt="Photo of Emma Sun"></span>
+            <h3>Emma Sun</h3>
+            <p>Wireframer, Copywriter, Illustrator, Front-end Developer</p>
+          </li>
+          <li class="member">
+            <span class="member-photo"><img loading="lazy" src="assets/Ge_You.png" alt="Photo of Ge You"></span>
+            <h3>Ge You</h3>
+            <p>Interface Designer, Image Editor, Front-end Developer</p>
+          </li>
+          <li class="member">
+            <span class="member-photo"><img loading="lazy" src="assets/Logan_Dulski.png" alt="Photo of Logan Dulski"></span>
+            <h3>Logan Dulski</h3>
+            <p>Project Manager, Logo Designer, Audio Editor, Front-end Developer</p>
+          </li>
+          <li class="member">
+            <span class="member-photo"><img loading="lazy" src="assets/Nashwa_Hamido.jpg" alt="Photo of Nashwa Hamido"></span>
+            <h3>Nashwa Hamido</h3>
+            <p>Accessibility Reviewer, Logo Designer, Front-end Developer</p>
+          </li>
+          <li class="member">
+            <span class="member-photo"><img loading="lazy" src="assets/Yayi_Liu.png" alt="Photo of Yayi Liu"></span>
+            <h3>Yayi Liu</h3>
+            <p>Photographer, Copywriter, Front-end Developer</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="folio-section" aria-labelledby="thanks-title">
+        <h2 class="folio-h2" id="thanks-title"><span class="num">&#10022;</span>With thanks to</h2>
+        <p class="thanks">Cathal O&rsquo;Connor &middot; Ren Paul &middot; Maiyse Abuleil</p>
+        <p class="folio-sub">without whom this tour could not have been planned.</p>
+      </section>
+
+      <section class="folio-section" id="sources" aria-labelledby="sources-title">
+        <h2 class="folio-h2" id="sources-title"><span class="num">&#10022;</span>Sources</h2>
+        <p class="folio-sub">Every reference used in researching Retellings: 42 entries across six parts of the site. They open in a window, so you can keep reading alongside them.</p>
+        <ul class="source-cards">
+          <li><button type="button" class="source-card" data-sources="past-present">
+            <span class="sc-letter">A</span><span class="sc-title">Past &amp; Present</span><span class="sc-count">12 sources</span>
+          </button></li>
+          <li><button type="button" class="source-card" data-sources="joyce">
+            <span class="sc-letter">B</span><span class="sc-title">Life of James Joyce</span><span class="sc-count">8 sources</span>
+          </button></li>
+          <li><button type="button" class="source-card" data-sources="locations">
+            <span class="sc-letter">C</span><span class="sc-title">All Locations</span><span class="sc-count">7 sources</span>
+          </button></li>
+          <li><button type="button" class="source-card" data-sources="dubliners">
+            <span class="sc-letter">D</span><span class="sc-title">Dubliners: Synopsis &amp; Facts</span><span class="sc-count">5 sources</span>
+          </button></li>
+          <li><button type="button" class="source-card" data-sources="transport">
+            <span class="sc-letter">E</span><span class="sc-title">Transportation Maps &amp; Historic Facts</span><span class="sc-count">9 sources</span>
+          </button></li>
+          <li><button type="button" class="source-card" data-sources="images">
+            <span class="sc-letter">F</span><span class="sc-title">Free Images</span><span class="sc-count">1 source</span>
+          </button></li>
+        </ul>
+        <div class="folio-actions">
+          <button type="button" class="btn" data-sources="">Open the sources</button>
+        </div>
+      </section>
+      <button type="button" class="back-to-top" aria-label="Back to top"><img src="assets/toTopBtn.svg" alt="" width="48" height="48"></button>
+    </main>
+
+   <footer class="endpaper">
+        <div class="endpaper-inner">
+            <a class="endpaper-brand" href="index.html" aria-label="Retellings – The Cover">
+                <img src="assets/emblem-navy.svg" alt="" loading="lazy" class="endpaper-logo emblem emblem--light" width="100" height="148"><img src="assets/emblem-ink.svg" alt="" loading="lazy" class="endpaper-logo emblem emblem--dark" width="100" height="148">
+                <span class="endpaper-name">Retellings</span>
+            </a>
+            <p class="endpaper-tag">Bridging the literary genius of James Joyce&rsquo;s <em>Dubliners</em> with the historical and physical landscape of Dublin.</p>
+            <div class="endpaper-rule" aria-hidden="true"><span></span></div>
+            <nav aria-label="Footer contents">
+                <ul class="endpaper-toc">
+                    <li><a href="index.html">The Cover</a></li>
+                    <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                    <li><a href="locations.html"><span class="toc-no">II.</span> The Places</a></li>
+                    <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                    <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+                    <li><a href="about.html#sources" data-sources=""><span class="toc-no">V.</span> Sources</a></li>
                 </ul>
-                <p>Without whom, this website wouldn’t have been possible to plan this tour.</p>
+            </nav>
+            <p class="endpaper-small">&copy; 2026 Retellings &middot; Created for academic purposes as part of the MSc in Interactive Digital Media, Trinity College Dublin</p>
+            <p class="endpaper-small">With thanks to Cathal O&rsquo;Connor, Ren Paul and Maiyse Abuleil</p>
+            <p class="endpaper-finis" aria-hidden="true">&#10087;</p>
         </div>
     </footer>
-
   </body>
 </html>

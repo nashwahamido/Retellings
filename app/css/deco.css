@@ -1,0 +1,393 @@
+/* =====================================================================
+   deco.css — Art Deco skin for buttons, the navigation bar and frames
+   Navy plates with gold double-line borders: pointed ends with a diamond
+   for buttons, ring ends for the navigation bar, and a double gold frame
+   with corner diamonds for panels. Frames are SVGs in ./deco/ applied as
+   9-slice border images, so ends and ornaments never stretch.
+   Loaded last on every page; it restyles existing classes, so a few
+   properties use !important to win over older page rules.
+   ===================================================================== */
+
+:root {
+  /* plate fills (buttons, tabs, pins, title bars): navy by day, leather by night */
+  --plate-1: #2c3a5e;
+  --plate-2: #1a2340;
+  --plate-hi: #34436d;
+  --deco-gold: #d2ae63;
+  --deco-gold-text: linear-gradient(180deg, #fbe9b8 0%, #e2c27c 45%, #b98f42 60%, #f0d797 100%);
+  --deco-gold-text-hi: linear-gradient(180deg, #fff6d8 0%, #f1d58f 45%, #d0a650 60%, #fff0c2 100%);
+  --deco-plate: url("deco/plate-navy.svg");
+  --deco-bar: url("deco/bar-navy.svg");
+}
+body.dark {
+  --plate-1: #3d3228;
+  --plate-2: #1e1812;
+  --plate-hi: #4b3f32;
+  --deco-plate: url("deco/plate-ink.svg");
+  --deco-bar: url("deco/bar-ink.svg");
+}
+
+/* ------------------------------------------------------------------ *
+   Buttons: pointed plate with a diamond at each end
+ * ------------------------------------------------------------------ */
+:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a) {
+  position: relative;
+  isolation: isolate;
+  z-index: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  height: 2.6em;
+  min-height: 0;
+  padding: 0 1.9em !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none;
+  font-family: "Epilogue", sans-serif;
+  font-size: var(--fs-button);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  /* gold lettering */
+  color: #ecd18e !important;
+  background: none !important;
+  text-shadow: 0 1px 0 #00000080, 0 0 1px #f6e2a855;
+  transition: filter 0.2s ease, transform 0.1s ease;
+}
+/* the plates set a display value, which would otherwise override [hidden] */
+:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a)[hidden] { display: none !important; }
+/* the plate itself */
+:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 1.2em 1.12em;
+  border-image: var(--deco-plate) 26 24 fill / 1.2em 1.12em stretch;
+  filter: drop-shadow(0 2px 3px #00000040);
+  transition: filter 0.2s ease;
+}
+:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a):is(:hover, :focus-visible):not(:disabled) {
+  color: #fff3cf !important;
+  text-shadow: 0 1px 0 #00000080, 0 0 8px #f1d58f99;
+}
+:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a):is(:hover, :focus-visible):not(:disabled)::before {
+  filter: brightness(1.25) drop-shadow(0 0 6px #d2ae6380) drop-shadow(0 2px 3px #00000040);
+}
+:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a):active:not(:disabled) { transform: translateY(1px); }
+:root body :is(.book-btn, .btn, .btn-s1):disabled { opacity: 0.4; cursor: default; }
+
+/* icons inside plates stay gold (text is transparent) */
+:root body :is(.btn-s1, .btnjump, .win-maplink) svg { color: currentColor; }
+:root body .btn-s1 .icon,
+:root body .btnjump .btn-icon {
+  position: static !important;
+  display: inline-flex;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+:root body :is(.btn-s1 .icon, .btnjump .btn-icon) svg { width: 1em; height: 1em; }
+:root body .btnjump { font-size: 0.8em; height: 2.4em; vertical-align: middle; margin-left: 0.6em; }
+/* the walking-tour tagline styles every span as a navy tag; not inside the plate */
+:root body .btnjump :is(.btn-text, .btn-icon) { background: none !important; padding: 0 !important; margin: 0 !important; color: inherit !important; font: inherit !important; border: 0 !important; }
+
+/* the window's map link is a plate too */
+:root body .win-maplink { font-size: 0.85rem; }
+
+/* ------------------------------------------------------------------ *
+   Navigation bar: one ring-ended bar holding the links
+ * ------------------------------------------------------------------ */
+header nav ul {
+  position: relative;
+  isolation: isolate;
+  height: 3.1em;
+  padding: 0 2.6em;
+  gap: 0;
+}
+header nav ul::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 1.4em 1.33em;
+  border-image: var(--deco-bar) 25 24 fill / 1.4em 1.33em stretch;
+  filter: drop-shadow(0 3px 5px #00000040);
+}
+header nav ul li { display: flex; align-items: center; }
+/* small gold diamond between items */
+header nav ul li + li::before {
+  content: "";
+  width: 0.42em;
+  height: 0.42em;
+  margin: 0 1.1em;
+  background: var(--deco-gold);
+  transform: rotate(45deg);
+  opacity: 0.85;
+}
+:root body header nav ul a {
+  position: relative;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: transparent !important;
+  background: var(--deco-gold-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  padding: 0.35em 0;
+  transition: filter 0.2s ease;
+}
+:root body header nav ul a:is(:hover, :focus-visible),
+:root body header nav ul a[aria-current="page"] {
+  background: var(--deco-gold-text-hi);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 4px #d2ae6399);
+  outline: none;
+}
+/* current page: a thin gold rule with a centre diamond beneath the link */
+header nav ul a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  bottom: -0.05em;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--deco-gold), transparent);
+}
+
+/* light/dark switch, restyled to sit in the bar */
+.toggle {
+  background-color: var(--plate-2) !important;
+  border: 1.5px solid var(--deco-gold) !important;
+  box-shadow: inset 0 1px 3px #00000080;
+}
+.toggle::before {
+  background: linear-gradient(180deg, #f6e2a8, #b38a3c) !important;
+  box-shadow: 0 0 4px #d2ae6380;
+}
+
+/* mobile menu: the links become stacked plates */
+:root body .mobile-menu ul a { font-size: 1rem; min-width: 14rem; }
+:root body .mobile-menu ul { gap: 1.1rem; }
+
+/* ------------------------------------------------------------------ *
+   Frames: double gold line with corner diamonds for panels and cards
+ * ------------------------------------------------------------------ */
+:root body :is(.about-link-card) {
+  border-style: solid !important;
+  border-width: 14px !important;
+  border-image: url("deco/frame.svg") 20 / 14px stretch !important;
+  border-radius: 0 !important;
+}
+/* ------------------------------------------------------------------ *
+   Location windows: navy frame, navy title bar, gold-ringed close
+ * ------------------------------------------------------------------ */
+:root { --deco-window: url("deco/window-navy.svg"); }
+body.dark { --deco-window: url("deco/window-ink.svg"); }
+:root body .loc-window {
+  border-style: solid !important;
+  border-width: 14px !important;
+  border-image: var(--deco-window) 14 / 14px stretch !important;
+  border-radius: 0 !important;
+  box-shadow: 0 22px 50px -12px #000000b0, 0 6px 16px -8px #00000099 !important;
+}
+:root body .loc-window::after { display: none; } /* old inner keyline replaced by the frame */
+:root body .win-bar {
+  background: linear-gradient(180deg, var(--plate-1) 0%, var(--plate-2) 100%) !important;
+  border-radius: 0 !important;
+  border-bottom: 3px double var(--deco-gold) !important;
+  padding: 0.55rem 0.7rem 0.55rem 0.9rem;
+  gap: 0.7rem;
+}
+:root body.dark .win-bar { background: linear-gradient(180deg, #2a2520 0%, #13100c 100%) !important; }
+:root body .loc-window:not(.is-active) .win-bar { filter: brightness(0.82) saturate(0.8); }
+/* the fleuron becomes a gold diamond */
+:root body .win-orn {
+  font-size: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: none;
+  background: var(--deco-gold);
+  transform: rotate(45deg);
+}
+:root body .win-title {
+  font-family: "Epilogue", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ecd18e;
+  text-shadow: 0 1px 0 #00000080;
+}
+/* close: a gold ring, like the ends of the nav bar */
+:root body .win-close {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--deco-gold) !important;
+  background: var(--plate-2) !important;
+  box-shadow: inset 0 0 0 2px var(--plate-2), inset 0 0 0 3px #d2ae6366 !important;
+  color: #ecd18e !important;
+  font-size: 1rem;
+}
+:root body.dark .win-close { background: #0d0a07 !important; box-shadow: inset 0 0 0 2px #0d0a07, inset 0 0 0 3px #d2ae6366 !important; }
+:root body .win-close:is(:hover, :focus-visible) {
+  background: #8f2a24 !important;
+  color: #fff3cf !important;
+  box-shadow: inset 0 0 0 2px #8f2a24, inset 0 0 0 3px #f6e2a880, 0 0 8px #d2ae6380 !important;
+}
+/* "appears in" chips: small gold-ruled plates */
+:root body .story-chip {
+  border: 3px double var(--deco-gold) !important;
+  border-radius: 0 !important;
+  background: var(--plate-2) !important;
+  color: #ecd18e !important;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.7rem;
+}
+:root body .story-chip:is(:hover, :focus-visible) { background: var(--plate-1) !important; color: #fff3cf !important; box-shadow: 0 0 6px #d2ae6380; }
+:root body .win-tag { letter-spacing: 0.14em; color: #8a6d35; font-weight: 600; }
+
+/* select box: matching double gold rule */
+:root body .book-select {
+  border: 3px double var(--deco-gold) !important;
+  border-radius: 0 !important;
+  background-color: var(--plate-2);
+  color: #f0dca4;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+:root body.dark .book-select { background-color: #120f0c; }
+:root body .book-jump-label { color: inherit; }
+
+/* the question list on the transport guide: deco rule for the active item */
+
+/* ------------------------------------------------------------------ *
+   Footer ("endpaper"): a framed plate like the windows and the nav bar
+ * ------------------------------------------------------------------ */
+:root body footer.endpaper {
+  display: block;
+  margin-top: var(--sp-2xl);
+  padding: 0;
+  gap: 0;
+  border-style: solid !important;
+  border-width: 14px !important;
+  border-image: var(--deco-window) 14 / 14px stretch !important;
+  background: linear-gradient(180deg, var(--plate-1) 0%, var(--plate-2) 100%);
+  color: #e9dcb8;
+  box-shadow: 0 14px 34px -14px #00000080;
+}
+body.dark footer.endpaper { background: linear-gradient(180deg, #2a2520 0%, #13100c 100%); }
+.endpaper-inner {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 0.9rem; padding: clamp(1.8rem, 4vw, 2.8rem) clamp(1rem, 4vw, 3rem) clamp(1.2rem, 3vw, 1.8rem);
+}
+.endpaper-brand { display: inline-flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+.endpaper-logo { width: 2.6rem; height: auto; display: block; }
+.endpaper-name {
+  font-family: "EB Garamond", Georgia, serif; font-size: clamp(1.8rem, 3.4vw, 2.3rem); font-weight: 600;
+  color: #ecd18e; letter-spacing: 0.02em;
+}
+.endpaper-tag {
+  margin: 0; max-width: none; text-wrap: balance;
+  font-family: "EB Garamond", Georgia, serif; font-style: italic; font-size: 1.12rem; line-height: 1.5;
+  color: #e9dcb8;
+}
+.endpaper-rule { display: flex; align-items: center; gap: 0.8rem; width: min(16rem, 70%); color: var(--deco-gold); margin: 0.2rem 0; }
+.endpaper-rule::before, .endpaper-rule::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, currentColor); }
+.endpaper-rule::after { background: linear-gradient(90deg, currentColor, transparent); }
+.endpaper-rule span { width: 0.45rem; height: 0.45rem; background: currentColor; transform: rotate(45deg); }
+.endpaper-toc {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem 0;
+}
+.endpaper-toc li { display: flex; align-items: center; }
+.endpaper-toc li + li::before {
+  content: ""; width: 0.38em; height: 0.38em; margin: 0 1em;
+  background: var(--deco-gold); transform: rotate(45deg); opacity: 0.8;
+}
+:root body .endpaper-toc a {
+  font-family: "Epilogue", sans-serif; font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+  color: #ecd18e; padding: 0.3em 0; transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+.endpaper-toc a .toc-no { font-family: "EB Garamond", Georgia, serif; font-size: 1.05em; margin-right: 0.15em; }
+:root body .endpaper-toc a:is(:hover, :focus-visible) { color: #fff3cf; text-shadow: 0 0 8px #d2ae6399; outline: none; }
+:root body .endpaper-toc a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+.endpaper-toc a[aria-current="page"] { color: #fff3cf; text-decoration: underline; text-decoration-color: var(--deco-gold); text-underline-offset: 5px; }
+.endpaper-small { margin: 0; font-size: 0.78rem; line-height: 1.5; color: #e9dcb8b3; max-width: none; text-wrap: balance; }
+.endpaper-small:first-of-type { margin-top: 0.4rem; }
+.endpaper-finis { margin: 0.2rem 0 0; color: var(--deco-gold); font-size: 1.2rem; line-height: 1; }
+
+@media (max-width: 1180px) {
+  /* nav links are hidden behind the hamburger here; nothing to frame */
+  header nav ul::before { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink)::before { transition: none; }
+}
+
+/* "My Tour" count badge in the navigation */
+.nav-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 1.35em; height: 1.35em; padding: 0 0.3em; margin-left: 0.45em;
+  border-radius: 1em; vertical-align: 0.1em;
+  font-size: 0.78em; font-weight: 700; letter-spacing: 0; line-height: 1;
+  color: var(--plate-2) !important; -webkit-text-fill-color: var(--plate-2);
+  background: linear-gradient(180deg, #f6e2a8, #c39a48) !important;
+  box-shadow: 0 0 0 1px #8a6a2e;
+  text-shadow: none;
+}
+
+/* table-of-contents numerals in the navigation */
+header nav ul a .toc-no { font-family: "EB Garamond", Georgia, serif; font-size: 1.05em; letter-spacing: 0.04em; margin-right: 0.15em; }
+.mobile-menu ul a .toc-no { font-family: "EB Garamond", Georgia, serif; margin-right: 0.35em; opacity: 0.85; }
+.endpaper-tag em { font-family: inherit; font-style: normal; letter-spacing: 0.01em; }
+:root body header nav ul a { white-space: nowrap; }
+
+/* ------------------------------------------------------------------ *
+   Header: the contents bar sits in the middle; no logo above it.
+   Below 1180px the bar folds into the menu button and a small
+   serif title takes the left side.
+ * ------------------------------------------------------------------ */
+:root body header { justify-content: center; }
+.header-mark { display: none; }
+@media (max-width: 1180px) {
+  :root body header { justify-content: space-between; }
+  .header-mark {
+    display: block;
+    font-family: "EB Garamond", Georgia, serif; font-size: 1.6rem; font-weight: 600;
+    color: inherit; text-decoration: none; letter-spacing: 0.01em;
+  }
+  .header-mark:hover { color: var(--accent-red); }
+  body.dark .header-mark:hover { color: var(--accent-gold); }
+  header nav { margin-left: auto; }
+}
+
+/* the emblem: map pin + fountain pen (navy by day, leather by night) */
+.emblem { display: block; height: auto; }
+.emblem--dark { display: none; }
+body.dark .emblem--light { display: none; }
+body.dark .emblem--dark { display: block; }
+:root body footer.endpaper .endpaper-logo { width: 2.3rem; height: auto; }
+.cover-emblem { display: block; width: 3.6rem; margin-bottom: 1.1rem; filter: drop-shadow(0 6px 10px #00000033); }
+.cover-emblem .emblem { width: 100%; }

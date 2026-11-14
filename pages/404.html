@@ -3,106 +3,114 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <title>Page not found — Retellings</title>
+    <meta name="description" content="This page could not be found.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400..800&family=Epilogue:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../app/css/variable.css">
     <link rel="stylesheet" href="../app/css/global.css">
-    <link rel="stylesheet" href="../app/css/404.css">
+    <link rel="stylesheet" href="../app/css/windows.css">
+    <link rel="stylesheet" href="../app/css/deco.css">
+    <link rel="stylesheet" href="../app/css/folio.css">
+    <link rel="stylesheet" href="../app/css/type.css">
+    <script src="../app/js/loc-windows.js" defer></script>
+    <script src="../app/js/sources-data.js" defer></script>
+    <script src="../app/js/sources.js" defer></script>
     <script src="../app/js/script.js" defer></script>
+    <script src="../app/js/folio.js" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <!-- Back to top button -->
+
     <!-- hamburger menu: shown when width <= 768px -->
-    <div class="mobile-menu">
-        <div class="close-menu">
-            <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 256 256">
+    <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Contents">
+        <button type="button" class="close-menu" aria-label="Close menu">
+            <svg aria-hidden="true" focusable="false" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 256 256">
                 <path
                     d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z">
                 </path>
             </svg>
-        </div>
-        <ul>
-            <li><a href="index.html">Homepage</a></li>
-            <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-            <li><a href="walking-tour.html">Dubliner's Walking Tour</a></li>
-            <li><a href="locations.html">Dubliner's Locations</a></li>
-            <li><a href="about.html">About Us</a></li>
+        </button>
+        <ul aria-label="Contents">
+            <li><a href="index.html">The Cover</a></li>
+            <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+            <li><a href="locations.html"><span class="toc-no">II.</span> The Places</a></li>
+            <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+            <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+            <li><a href="about.html#sources" data-sources=""><span class="toc-no">V.</span> Sources</a></li>
             <li>
-                <div class="toggle"></div>
+                <button type="button" class="toggle" role="switch" aria-checked="false" aria-label="Dark mode"></button>
             </li>
         </ul>
     </div>
 
     <!-- HEADER / NAVIGATION -->
     <header>
-        <a href="index.html" aria-label="Retellings - Home" class="logo-container">
-            <img src="assets/logo_navy.png" alt="Retellings Logo" class="logo">
-            <img src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo">
-        </a>
-        <nav aria-label="Main navigation">
+        <a href="index.html" class="header-mark" aria-label="Retellings – The Cover">Retellings</a>
+        <nav aria-label="Contents">
             <ul>
-                <li><a href="life-of-joyce.html">Life of James Joyce</a></li>
-                <li><a href="walking-tour.html">Dubliner's Walking Tour</a></li>
-                <li><a href="locations.html">Dubliner's Locations</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><div class="toggle"></div></li>
+                <li><a href="index.html">The Cover</a></li>
+                <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                <li><a href="locations.html"><span class="toc-no">II.</span> The Places</a></li>
+                <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+                <li><a href="about.html#sources" data-sources=""><span class="toc-no">V.</span> Sources</a></li>
+                <li><button type="button" class="toggle" role="switch" aria-checked="false" aria-label="Dark mode"></button></li>
             </ul>
         </nav>
-        <button class="nav-hamburger">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#37465e" viewBox="0 0 256 256">
+        <button type="button" class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+            <svg aria-hidden="true" focusable="false" xmlns="https://www.w3.org/2000/svg" fill="#37465e" viewBox="0 0 256 256">
                 <path
                     d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z">
                 </path>
             </svg>
         </button>
     </header>
-
-    <main>
-
-        <!-- SECTION 1 - 404 ERROR MESSAGE -->
-        <section aria-label="Page not found">
-            <h1>404</h1>
-            <p>The page you're looking for either doesn't exist or another error occurred.</p>
-
-            <!-- JAMES JOYCE QUOTE -->
-            <blockquote>
-                <img loading="lazy" src="assets/QuotesIcon.png" alt="Open Quote">
-                <p>Mistakes are the portals of discovery.</p>
-                <cite>- James Joyce</cite>
-                <img loading="lazy" src="assets/QuotesIcon.png" alt="End Quote">
-            </blockquote>
-
-            <!-- RETURN HOME LINK -->
-            <a href="index.html" class="btn btn-s3">Go Back</a>
-        </section>
-
-    </main>
-    <!-- FOOTER -->
-   <footer>
-        <div class="footer-col-left">
-            <div class="footer-brand">
-                <a href="index.html" aria-label="Retellings – Home">
-                    <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo logo-footer">
-                    <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo logo-footer">
-                </a>
-                <h3><strong>Retellings Digital Experience</strong></h3>
-            </div>
-            <p>Bridging the literary genius of The Dubliners by James Joyce with the historical and physical landscape of Dublin.</p>
-            <strong><small>&copy;2026 Retellings. <br>Created for academic purposes as part of the MSc Interactive Digital Media</small></strong>
+    <main id="content" tabindex="-1" class="folio">
+      <section class="folio-head erratum" aria-labelledby="nf-title">
+        <span class="folio-kicker">Erratum &middot; page 404</span>
+        <h1 id="nf-title">This page is missing from the book</h1>
+        <div class="folio-rule" aria-hidden="true"><span></span></div>
+        <blockquote class="erratum-quote">
+          <p>&ldquo;Mistakes are the portals of discovery.&rdquo;</p>
+          <cite>James Joyce</cite>
+        </blockquote>
+        <p class="folio-lead">The page you were looking for doesn&rsquo;t exist, or has been moved. Try one of these instead:</p>
+        <div class="folio-actions">
+          <a class="btn" href="index.html">Back to the cover</a>
+          <a class="btn" href="locations.html">Open the book</a>
         </div>
+      </section>
+      <button type="button" class="back-to-top" aria-label="Back to top"><img src="assets/toTopBtn.svg" alt="" width="48" height="48"></button>
+    </main>
 
-        <div class="footer-col-right">
-                <h2>Credits</h2>
-                <h3>Thanks to:</h3>
-                <ul>   
-                    <li>Cathal O'Connor</li>
-                    <li>Ren Paul</li>
-                    <li>Maiyse Abuleil</li>
+   <footer class="endpaper">
+        <div class="endpaper-inner">
+            <a class="endpaper-brand" href="index.html" aria-label="Retellings – The Cover">
+                <img src="assets/emblem-navy.svg" alt="" loading="lazy" class="endpaper-logo emblem emblem--light" width="100" height="148"><img src="assets/emblem-ink.svg" alt="" loading="lazy" class="endpaper-logo emblem emblem--dark" width="100" height="148">
+                <span class="endpaper-name">Retellings</span>
+            </a>
+            <p class="endpaper-tag">Bridging the literary genius of James Joyce&rsquo;s <em>Dubliners</em> with the historical and physical landscape of Dublin.</p>
+            <div class="endpaper-rule" aria-hidden="true"><span></span></div>
+            <nav aria-label="Footer contents">
+                <ul class="endpaper-toc">
+                    <li><a href="index.html">The Cover</a></li>
+                    <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                    <li><a href="locations.html"><span class="toc-no">II.</span> The Places</a></li>
+                    <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                    <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+                    <li><a href="about.html#sources" data-sources=""><span class="toc-no">V.</span> Sources</a></li>
                 </ul>
-                <p>Without whom, this website wouldn’t have been possible to plan this tour.</p>
+            </nav>
+            <p class="endpaper-small">&copy; 2026 Retellings &middot; Created for academic purposes as part of the MSc in Interactive Digital Media, Trinity College Dublin</p>
+            <p class="endpaper-small">With thanks to Cathal O&rsquo;Connor, Ren Paul and Maiyse Abuleil</p>
+            <p class="endpaper-finis" aria-hidden="true">&#10087;</p>
         </div>
     </footer>
-
   </body>
 </html>
