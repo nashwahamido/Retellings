@@ -123,8 +123,8 @@
   :root body :is(.tour-lead, .book-intro .page-lead) { text-align: center; }
 }
 /* the line under the Places title */
-:root body .book-intro .book-sub { font-size: var(--t-sub-lg); font-style: italic; margin: 0.1rem 0 1.1rem; color: var(--folio-soft); }
-:root body .book-intro h1 { margin-bottom: 0.15rem; }
+:root body :is(.book-intro .book-sub, .tour-intro .page-sub) { font-size: var(--t-sub-lg); font-style: italic; margin: 0.1rem 0 1.1rem; color: var(--folio-soft); }
+:root body :is(.book-intro h1, .tour-intro h1) { margin-bottom: 0.15rem; }
 
 /* The Places: how to turn the pages, on its own line under the introduction */
 :root body .book-howto {
@@ -141,3 +141,6 @@ body.dark .book-howto { color: var(--accent-gold); }
   .book-howto { flex-direction: column; gap: 0.35rem; }
   .book-howto .bh-sep { display: none; }
 }
+.book-howto a { color: inherit; text-decoration: underline; text-decoration-color: currentColor; text-underline-offset: 3px; }
+.book-howto a:hover { color: var(--accent-red); }
+body.dark .book-howto a:hover { color: #fff3cf; }
