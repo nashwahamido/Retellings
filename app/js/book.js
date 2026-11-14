@@ -458,7 +458,7 @@
   function openBook() {
     stage.classList.add("is-open");
     setReadingControls(true);
-    if (elToggle) { elToggle.textContent = "Close the book"; elToggle.setAttribute("aria-pressed", "true"); }
+    if (elToggle) { elToggle.textContent = "Put it down"; elToggle.setAttribute("aria-pressed", "true"); }
     // go straight into the stories: open on Chapter I (no closed-cover view)
     if (pageFlip && chapterStartIndex[1] != null && current() < chapterStartIndex[1]) {
       try { pageFlip.turnToPage(chapterStartIndex[1]); } catch (e) {}
