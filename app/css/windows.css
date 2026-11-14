@@ -20,7 +20,7 @@
 .loc-window {
   pointer-events: auto;
   position: absolute;
-  width: min(30rem, calc(100vw - 2rem));
+  width: min(33rem, calc(100vw - 2rem));
   max-height: min(82vh, 44rem);
   display: flex; flex-direction: column;
   background: var(--win-paper); color: var(--win-ink);
@@ -63,10 +63,10 @@
 
 /* body */
 .win-body { overflow-y: auto; }
-.win-figure { margin: 0; }
-.win-img { width: 100%; max-height: 15rem; object-fit: cover; display: block; }
-.win-caption { font-size: 0.74rem; color: var(--win-ink-soft); padding: 0.4rem 1.1rem 0; }
-.win-content { padding: 0.8rem 1.1rem 1.1rem; display: flex; flex-direction: column; gap: 0.7rem; }
+.win-figure { margin: 1.5rem 1.9rem 0; padding: 6px; background: #fbf5e4; border: 3px double #b99a5c; box-shadow: 0 4px 10px #0000001f; }
+.win-img { width: 100%; max-height: 14rem; object-fit: cover; display: block; }
+.win-caption { font-size: 0.8rem; font-style: italic; line-height: 1.4; text-align: center; color: var(--win-ink-soft); padding: 0.55rem 1.9rem 0; }
+.win-content { padding: 1.2rem 1.9rem 1.9rem; display: flex; flex-direction: column; gap: 0.8rem; }
 .win-tag { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--win-ink-soft); }
 .win-stories { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
 .win-stories .label { font-style: italic; color: var(--win-ink-soft); font-size: 0.82rem; }
@@ -156,3 +156,8 @@
 .src-none { font-style: italic; color: var(--win-ink-soft); }
 .win--sources.is-mobile { height: 86vh; }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* phones: slightly tighter margins so the text keeps a good measure */
+.loc-window.is-mobile .win-figure { margin: 1rem 1.1rem 0; }
+.loc-window.is-mobile .win-caption { padding: 0.5rem 1.1rem 0; }
+.loc-window.is-mobile .win-content { padding: 1rem 1.2rem 1.4rem; }
