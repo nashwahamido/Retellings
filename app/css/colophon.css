@@ -17,15 +17,32 @@
 
 .thanks { text-align: center; font-family: var(--folio-serif); font-size: var(--fs-h5); margin: 0.6rem 0 0.2rem; }
 
-.sources { columns: 2 22rem; column-gap: 3rem; margin: 1.6rem auto 0; max-width: 64rem; }
-.sources-group { break-inside: avoid-column; margin-bottom: 1.8rem; }
-.sources-group h3 {
-  font-family: var(--folio-serif); font-size: 1.25rem; font-weight: 600; margin: 0 0 0.6rem;
-  padding-bottom: 0.35rem; border-bottom: 1px solid var(--folio-rule);
+/* the sources: one card per part of the site, each opens the Sources window */
+.source-cards {
+  list-style: none; padding: 0; margin: 1.6rem auto 0; max-width: 56rem;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem;
 }
-.sources-group h3 .num { font-size: 0.9rem; letter-spacing: 0.2em; color: var(--folio-soft); margin-right: 0.6rem; }
-.sources-list { margin: 0; padding-left: 2.2rem; font-size: 0.9rem; line-height: 1.5; }
-.sources-list li { margin-bottom: 0.55rem; padding-left: 0.2rem; scroll-margin-top: 6rem; overflow-wrap: anywhere; }
-.sources-list li::marker { font-family: var(--folio-serif); color: var(--folio-soft); }
-.sources-list a { color: inherit; text-decoration-color: var(--folio-accent); text-underline-offset: 2px; }
-.sources-list li:target { background: color-mix(in srgb, var(--deco-gold, #d2ae63) 25%, transparent); outline: 1px solid var(--deco-gold, #d2ae63); outline-offset: 3px; }
+.source-card {
+  width: 100%; height: 100%;
+  display: grid; grid-template-columns: 2.4rem 1fr; grid-template-rows: auto auto; column-gap: 0.8rem;
+  align-items: center; text-align: left; cursor: pointer;
+  padding: 0.9rem 1rem; color: inherit; background: var(--folio-paper);
+  border: 3px double var(--deco-gold, #d2ae63);
+  box-shadow: 0 4px 12px #0000001a;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.source-card:is(:hover, :focus-visible) { transform: translateY(-2px); box-shadow: 0 8px 18px #00000026; outline: none; }
+.source-card:focus-visible { border-color: var(--folio-accent); }
+.sc-letter {
+  grid-row: 1 / 3; position: relative; isolation: isolate;
+  display: grid; place-items: center; width: 2.4rem; aspect-ratio: 1;
+  font-family: var(--folio-serif); font-size: 1.2rem; font-weight: 600; color: #ecd18e;
+}
+.sc-letter::before {
+  content: ""; position: absolute; inset: 15%; z-index: -1;
+  background: linear-gradient(180deg, var(--plate-1), var(--plate-2));
+  outline: 1px solid var(--deco-gold, #d2ae63); outline-offset: 2px;
+  transform: rotate(45deg);
+}
+.sc-title { font-family: var(--folio-serif); font-size: 1.2rem; font-weight: 600; line-height: 1.2; }
+.sc-count { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--folio-soft); }

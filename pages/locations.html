@@ -26,6 +26,8 @@
     <script src="../app/js/tour-data.js" defer></script>
     <script src="../app/js/tour-store.js" defer></script>
     <script src="../app/js/loc-windows.js" defer></script>
+    <script src="../app/js/sources-data.js" defer></script>
+    <script src="../app/js/sources.js" defer></script>
     <script src="../app/js/vendor/page-flip.browser.js" defer></script>
     <script src="../app/js/book.js" defer></script>
     <script src="../app/js/script.js" defer></script>
@@ -51,6 +53,7 @@
             <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
             <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
             <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+            <li><a href="about.html#sources" data-sources=""><span class="toc-no">&#10022;</span> Sources</a></li>
             <li>
                 <div class="toggle"></div>
             </li>
@@ -69,6 +72,7 @@
                 <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
                 <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
                 <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+                <li><a href="about.html#sources" data-sources=""><span class="toc-no">&#10022;</span> Sources</a></li>
                 <li><div class="toggle"></div></li>
             </ul>
       </nav>
@@ -135,29 +139,28 @@
     <div class="window-layer" id="window-layer" aria-label="Open location windows"></div>
 
     <!-- FOOTER -->
-    <footer>
-      <div class="footer-col-left">
-        <div class="footer-brand">
-          <a href="index.html" aria-label="Retellings – Home">
-            <img loading="lazy" src="assets/logo_navy.png" alt="Retellings Logo" class="logo logo-footer">
-            <img loading="lazy" src="assets/logo_offwhite.png" alt="Retellings Logo" class="logo logo-footer">
-          </a>
-          <h3><strong>Retellings Digital Experience</strong></h3>
+    <footer class="endpaper">
+        <div class="endpaper-inner">
+            <a class="endpaper-brand" href="index.html" aria-label="Retellings – The Cover">
+                <img loading="lazy" src="assets/logo_offwhite.png" alt="" class="endpaper-logo">
+                <span class="endpaper-name">Retellings</span>
+            </a>
+            <p class="endpaper-tag">Bridging the literary genius of James Joyce&rsquo;s <em>Dubliners</em> with the historical and physical landscape of Dublin.</p>
+            <div class="endpaper-rule" aria-hidden="true"><span></span></div>
+            <nav aria-label="Footer contents">
+                <ul class="endpaper-toc">
+                    <li><a href="index.html">The Cover</a></li>
+                    <li><a href="life-of-joyce.html"><span class="toc-no">I.</span> The Preface</a></li>
+                    <li><a href="locations.html"><span class="toc-no">II.</span> The Book</a></li>
+                    <li><a href="walking-tour.html"><span class="toc-no">III.</span> My Tour</a></li>
+                    <li><a href="about.html"><span class="toc-no">IV.</span> Colophon</a></li>
+                    <li><a href="about.html#sources" data-sources="">Sources</a></li>
+                </ul>
+            </nav>
+            <p class="endpaper-small">&copy; 2026 Retellings &middot; Created for academic purposes as part of the MSc in Interactive Digital Media, Trinity College Dublin</p>
+            <p class="endpaper-small">With thanks to Cathal O&rsquo;Connor, Ren Paul and Maiyse Abuleil</p>
+            <p class="endpaper-finis" aria-hidden="true">&#10087;</p>
         </div>
-        <p>Bridging the literary genius of The Dubliners by James Joyce with the historical and physical landscape of Dublin.</p>
-        <strong><small>&copy;2026 Retellings. <br>Created for academic purposes as part of the MSc Interactive Digital Media</small></strong>
-      </div>
-
-      <div class="footer-col-right">
-        <h2>Credits</h2>
-        <h3>Thanks to:</h3>
-        <ul>
-          <li>Cathal O'Connor</li>
-          <li>Ren Paul</li>
-          <li>Maiyse Abuleil</li>
-        </ul>
-        <p>Without whom, this website wouldn’t have been possible to plan this tour.</p>
-      </div>
     </footer>
   </body>
 </html>

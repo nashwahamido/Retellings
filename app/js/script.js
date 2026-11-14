@@ -72,7 +72,8 @@ if (closeMenu) closeMenu.addEventListener('click', () => {
 // mark the current page in the navigation (used by the deco nav styling)
 (function () {
     var here = location.pathname.split("/").pop() || "index.html";
-    document.querySelectorAll("header nav a, .mobile-menu a").forEach(function (a) {
+    document.querySelectorAll("header nav a, .mobile-menu a, .endpaper-toc a").forEach(function (a) {
+        if (a.hasAttribute("data-sources")) return;
         if ((a.getAttribute("href") || "").split("#")[0] === here) a.setAttribute("aria-current", "page");
     });
 })();

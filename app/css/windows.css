@@ -113,3 +113,45 @@
 .win-transcript p { font-size: 0.92rem; line-height: 1.5; margin: 0.45rem 0 0; }
 
 @media (prefers-reduced-motion: reduce) { .loc-window { animation: none; } }
+
+/* ===================== the Sources window (sources.js) ===================== */
+.loc-window.win--sources { width: min(44rem, calc(100vw - 2rem)); height: min(80vh, 40rem); }
+.win--sources .win-body { display: flex; flex-direction: column; overflow: hidden; flex: 1; min-height: 0; }
+.src-wrap { display: flex; flex-direction: column; gap: 0.7rem; padding: 0.9rem 1.1rem 0; flex: 1; min-height: 0; }
+.src-intro { margin: 0; font-style: italic; color: var(--win-ink-soft); font-size: 0.98rem; }
+.src-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.src-tab {
+  display: inline-flex; align-items: baseline; gap: 0.4rem;
+  padding: 0.38rem 0.75rem; cursor: pointer;
+  font-family: "Epilogue", sans-serif; font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #6c5427; background: #fbf5e4;
+  border: 3px double #b99a5c;
+  transition: background-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}
+.src-tab .src-letter { font-family: "EB Garamond", Georgia, serif; font-size: 1rem; letter-spacing: 0; }
+.src-tab:hover { background: #f1e5c4; }
+.src-tab[aria-selected="true"] { color: #ecd18e; background: linear-gradient(180deg, var(--plate-1), var(--plate-2)); border-color: #d2ae63; }
+.src-tab.is-dim { opacity: 0.55; }
+.src-tab:focus-visible { outline: 2px solid var(--win-red); outline-offset: 2px; }
+.src-search input {
+  width: 100%; box-sizing: border-box;
+  padding: 0.5rem 0.75rem; font: inherit; font-size: 1rem; color: var(--win-ink);
+  background: #fffaf0; border: 1px solid var(--win-rule); border-radius: 0;
+  box-shadow: inset 0 1px 3px #00000014;
+}
+.src-search input:focus { outline: 2px solid #b99a5c; outline-offset: 1px; }
+.src-panel { flex: 1; min-height: 0; overflow-y: auto; padding: 0.2rem 0.3rem 1.1rem 0; border-top: 1px solid var(--win-rule); }
+.src-panel:focus-visible { outline: 2px solid #b99a5c; outline-offset: -2px; }
+.src-head { margin: 0.8rem 0 0.6rem; font-size: 1.25rem; font-weight: 600; }
+.src-head .src-letter { color: var(--win-ink-soft); font-size: 0.95rem; letter-spacing: 0.2em; margin-right: 0.55rem; }
+.src-list { margin: 0; padding-left: 2.3rem; font-family: "Epilogue", sans-serif; font-size: 0.86rem; line-height: 1.5; }
+.src-list li { margin-bottom: 0.55rem; padding: 0.15rem 0.3rem; overflow-wrap: anywhere; }
+.src-list li::marker { font-family: "EB Garamond", Georgia, serif; color: var(--win-ink-soft); }
+.src-list a { color: inherit; text-decoration-color: var(--win-red); text-underline-offset: 2px; }
+.src-list a:hover { color: var(--win-red); }
+.src-list li.is-target { background: #e9d39a66; outline: 1px solid #b99a5c; }
+.src-from { display: inline-block; min-width: 1.2rem; font-family: "EB Garamond", Georgia, serif; font-weight: 600; color: var(--win-ink-soft); }
+.src-none { font-style: italic; color: var(--win-ink-soft); }
+.win--sources.is-mobile { height: 86vh; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

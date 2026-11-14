@@ -110,26 +110,25 @@
     else if (opener && opener.focus && document.contains(opener)) opener.focus();
   }
 
-  function openWindow(id, trigger) {
-    var l = window.Places && Places.get(id);
-    if (!l) return;
-    if (openWins[id]) { focusWindow(openWins[id]); openWins[id].focus(); return; }
+  // a framed, draggable window; `key` identifies it so it can be reused/focused
+  function createWindow(key, title, bodyHtml, trigger, extraClass) {
+    if (openWins[key]) { focusWindow(openWins[key]); openWins[key].focus(); return null; }
     var host = getLayer();
 
-    var win = el("div", "loc-window");
-    win.dataset.id = id;
+    var win = el("div", "loc-window" + (extraClass ? " " + extraClass : ""));
+    win.dataset.id = key;
     win.setAttribute("role", "dialog");
     win.tabIndex = -1;
     win._opener = trigger || document.activeElement;
 
-    var titleId = "win-title-" + id;
+    var titleId = "win-title-" + String(key).replace(/[^a-z0-9_-]/gi, "-");
     win.innerHTML =
       '<div class="win-bar">' +
         '<span class="win-orn" aria-hidden="true">&#10087;</span>' +
-        '<h2 class="win-title" id="' + titleId + '">' + esc(l.name) + "</h2>" +
-        '<button type="button" class="win-close" aria-label="Close ' + esc(l.name) + '">&times;</button>' +
+        '<h2 class="win-title" id="' + titleId + '">' + esc(title) + "</h2>" +
+        '<button type="button" class="win-close" aria-label="Close ' + esc(title) + '">&times;</button>' +
       "</div>" +
-      '<div class="win-body">' + windowBody(l) + "</div>";
+      '<div class="win-body">' + bodyHtml + "</div>";
     win.setAttribute("aria-labelledby", titleId);
 
     // position: centred-ish with a cascade offset; phones = pinned
@@ -146,18 +145,25 @@
       win.style.top = Math.min(baseY + off, Math.max(12, host.clientHeight - lh - 12)) + "px";
     }
 
-    openWins[id] = win;
+    openWins[key] = win;
     focusWindow(win);
-
     win.querySelector(".win-close").addEventListener("click", function () { closeWindow(win); });
     win.addEventListener("pointerdown", function () { focusWindow(win); }, true);
+    makeDraggable(win, win.querySelector(".win-bar"));
+    win.focus();
+    return win;
+  }
+
+  function openWindow(id, trigger) {
+    var l = window.Places && Places.get(id);
+    if (!l) return;
+    var win = createWindow(id, l.name, windowBody(l), trigger);
+    if (!win) return;
     win.querySelectorAll(".story-chip").forEach(function (chip) {
       chip.addEventListener("click", function () { api.onStory(chip.dataset.story); });
     });
     var save = win.querySelector("[data-save]");
     if (save) save.addEventListener("click", function () { TourStore.toggle(id); });
-    makeDraggable(win, win.querySelector(".win-bar"));
-    win.focus();
   }
 
   function makeDraggable(win, handle) {
@@ -213,6 +219,10 @@
 
   var api = {
     open: openWindow,
+    // any other window (e.g. the sources): returns the new window, or null if it was already open
+    openCustom: createWindow,
+    get: function (key) { return openWins[key] || null; },
+    close: function (key) { if (openWins[key]) closeWindow(openWins[key]); },
     count: function () { return winOrder.length; },
     sync: syncSaved,
     // default: story chips take you to the book; book.js replaces this to flip to the chapter
