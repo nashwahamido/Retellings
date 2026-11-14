@@ -50,30 +50,62 @@ body.dark .tg-q:focus-visible { outline-color: var(--accent-gold); }
 .tg-a-title { margin: 0.15rem 0 0.35rem; line-height: 1.2; }
 .tg-a-intro { margin: 0 0 0.35rem; line-height: 1.6; max-width: 46rem; }
 
-/* ---- one card per service ---- */
+/* ---- one card per service: all the same size ---- */
 .tg-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-  gap: 1rem;
-  align-items: start;
+  --tg-gap: 1rem;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: var(--tg-gap);
 }
 .tg-card {
-  padding: 0.95rem 1.1rem 1.05rem;
+  /* three to a row; a short last row is centred */
+  flex: 0 0 calc((100% - 2 * var(--tg-gap)) / 3);
+  box-sizing: border-box;
+  display: flex; flex-direction: column;
+  padding: 1rem 1.15rem 0.85rem;
   background: #fffbf0;
   border: 1px solid color-mix(in srgb, var(--deco-gold, #d2ae63) 55%, transparent);
   border-top: 3px double var(--deco-gold, #d2ae63);
 }
+/* two or four cards: two to a row */
+.tg-cards:is([data-count="2"], [data-count="4"]) .tg-card { flex-basis: calc((100% - var(--tg-gap)) / 2); }
 body.dark .tg-card { background: #2b2620; }
 .tg-card-title {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.6rem;
-  margin: 0 0 0.45rem;
-  font-family: var(--serif, "EB Garamond", serif); font-size: 1.2rem; font-weight: 600; line-height: 1.2;
+  margin: 0;
+  font-family: var(--serif, "EB Garamond", serif); font-size: 1.2rem; font-weight: 600; line-height: 1.25;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
+/* the route line under the name: always takes its line, so every card lines up */
 .tg-card-tag {
+  height: 1.2rem; margin: 0.1rem 0 0.45rem;
   font-family: var(--sans, "Epilogue", sans-serif); font-size: var(--t-label, 0.75rem); font-weight: 600;
-  letter-spacing: 0.06em; color: var(--folio-soft, #6c6244);
+  letter-spacing: 0.06em; line-height: 1.6; color: var(--folio-soft, #6c6244);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.tg-card p { margin: 0; line-height: 1.6; }
+/* the text: six lines in every card */
+.tg-card-text {
+  margin: 0; line-height: 1.6;
+  height: calc(1.6em * 6);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6; line-clamp: 6; overflow: hidden;
+}
+.tg-more {
+  align-self: flex-start; margin-top: 0.6rem; padding: 0.15rem 0;
+  background: none; border: none; cursor: pointer;
+  font-family: var(--serif, "EB Garamond", serif); font-style: italic; font-size: var(--t-body-sm, 0.9rem);
+  color: var(--accent-red);
+}
+.tg-more::after { content: " \2192"; font-style: normal; }
+.tg-more:hover { text-decoration: underline; text-underline-offset: 3px; }
+.tg-more[hidden] { display: inline-block !important; visibility: hidden; }  /* keeps every card the same height */
+body.dark .tg-more { color: var(--accent-gold); }
+
+/* the full text, opened in a window */
+.tg-win { padding: 1.4rem 1.9rem 1.8rem; }
+.tg-win .tg-win-tag { margin: 0 0 0.6rem; font-size: var(--t-label, 0.75rem); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--win-ink-soft, #6c6244); }
+.tg-win p { margin: 0; font-size: var(--t-body, 1rem); line-height: 1.6; }
+.tg-win a { color: inherit; text-decoration-color: var(--win-red, #8f2a24); text-underline-offset: 2px; }
+
+@media (max-width: 960px) {
+  .tg-card, .tg-cards:is([data-count="2"], [data-count="4"]) .tg-card { flex-basis: calc((100% - var(--tg-gap)) / 2); }
+}
 
 /* links in the guide */
 .tg-a a { color: inherit; text-decoration: underline; text-decoration-color: var(--accent-red); text-underline-offset: 2px; }
@@ -87,21 +119,8 @@ body.dark .tg-a a:hover { color: var(--accent-gold); }
   .tg-q { flex: 0 0 auto; }
   .tg-a-head { grid-template-columns: 1fr; gap: 0.2rem; }
   .tg-a-num { font-size: 1.8rem; }
-  .tg-cards { grid-template-columns: 1fr; }
+  .tg-card, .tg-cards:is([data-count="2"], [data-count="4"]) .tg-card { flex-basis: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .tg-a { animation: none; } }
-
-/* phones: each card shows its first lines; "Read more" opens the rest */
-.tg-more { display: none; }
-@media (max-width: 640px) {
-  .tg-card:not(.is-open) p {
-    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden;
-  }
-  .tg-card.is-clamped .tg-more {
-    display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.5rem; padding: 0.2rem 0;
-    background: none; border: none; cursor: pointer;
-    font-family: var(--serif, "EB Garamond", serif); font-style: italic; font-size: var(--t-body-sm, 0.9rem);
-    color: var(--accent-red);
-  }
-  body.dark .tg-card.is-clamped .tg-more { color: var(--accent-gold); }
-}
+.tg-card.is-open .tg-card-text { height: auto; -webkit-line-clamp: unset; line-clamp: none; display: block; }
+.tg-win .tg-win-link { margin-top: 1rem; font-size: var(--t-body-sm, 0.9rem); }
