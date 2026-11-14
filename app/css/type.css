@@ -125,3 +125,19 @@
 /* the line under the Places title */
 :root body .book-intro .book-sub { font-size: var(--t-sub-lg); font-style: italic; margin: 0.1rem 0 1.1rem; color: var(--folio-soft); }
 :root body .book-intro h1 { margin-bottom: 0.15rem; }
+
+/* The Places: how to turn the pages, on its own line under the introduction */
+:root body .book-howto {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem 0.9rem;
+  margin: 1rem auto 0; padding: 0.55rem 1.2rem; width: fit-content; max-width: 100%;
+  font-family: var(--sans); font-size: var(--t-label); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #8a6a2e; border-top: 1px solid #d2ae6380; border-bottom: 1px solid #d2ae6380;
+}
+body.dark .book-howto { color: var(--accent-gold); }
+.book-howto .bh-item { display: inline-flex; align-items: center; gap: 0.45rem; }
+.book-howto svg { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.book-howto .bh-sep { width: 0.38rem; height: 0.38rem; background: var(--deco-gold, #d2ae63); transform: rotate(45deg); }
+@media (max-width: 600px) {
+  .book-howto { flex-direction: column; gap: 0.35rem; }
+  .book-howto .bh-sep { display: none; }
+}
