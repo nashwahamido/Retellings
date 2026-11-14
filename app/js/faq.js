@@ -37,6 +37,35 @@
     });
   });
 
+  // phones: clamp long cards to a few lines with a "Read more" toggle
+  var narrow = window.matchMedia("(max-width: 640px)");
+  var cards = Array.prototype.slice.call(root.querySelectorAll(".tg-card"));
+  cards.forEach(function (card) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "tg-more";
+    btn.setAttribute("aria-expanded", "false");
+    btn.textContent = "Read more";
+    btn.addEventListener("click", function () {
+      var open = card.classList.toggle("is-open");
+      btn.setAttribute("aria-expanded", String(open));
+      btn.textContent = open ? "Show less" : "Read more";
+    });
+    card.appendChild(btn);
+  });
+  // only offer the toggle where the text is actually cut off
+  function measure() {
+    cards.forEach(function (card) {
+      var p = card.querySelector("p");
+      if (!p || card.classList.contains("is-open")) return;
+      card.classList.toggle("is-clamped", narrow.matches && p.scrollHeight > p.clientHeight + 2);
+    });
+  }
+  measure();
+  if (narrow.addEventListener) narrow.addEventListener("change", measure);
+  window.addEventListener("resize", measure);
+  tabs.forEach(function (t) { t.addEventListener("click", function () { setTimeout(measure, 0); }); });
+
   // initialise: first tab (or one already marked selected)
   var initial = tabs.filter(function (t) { return t.getAttribute("aria-selected") === "true"; })[0] || tabs[0];
   select(initial, false);

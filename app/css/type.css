@@ -74,10 +74,10 @@
 :root body :is(.cover-lead, .folio-lead, .page-lead, .tour-lead, .book-intro .page-lead) { font-size: var(--t-lead); }
 
 /* reading text */
-:root body :is(.measure, .win-desc, .tg-a p, .tg-lead, .shelf-book p) { font-size: var(--t-body); }
+:root body :is(.measure, .win-desc, .tg-lead, .shelf-book p, .tg-a-intro) { font-size: var(--t-body); }
 
 /* dense UI text */
-:root body :is(.src-list, .ta-help, .toc .toc-desc, .member p, .win-gmaps, .win-transcript p, .planner-count) { font-size: var(--t-body-sm); }
+:root body :is(.src-list, .ta-help, .toc .toc-desc, .member p, .tg-card p, .win-gmaps, .win-transcript p, .planner-count) { font-size: var(--t-body-sm); }
 
 /* captions */
 :root body :is(.plate figcaption, .plates .plate figcaption, .win-caption) { font-size: var(--t-caption); font-style: italic; line-height: 1.4; }
@@ -105,8 +105,6 @@
 :root body .win-stories .label { font-size: var(--t-body-sm); }
 :root body .endpaper-tag { font-size: var(--t-sub); }
 :root body .sc-title { font-size: var(--t-h3); }
-:root body .tg-q { font-size: var(--t-body); }
-:root body .tg-q .tg-num { font-size: var(--t-body); }
 :root body .leaflet-control-zoom a { font-family: var(--sans); }
 /* quotations: the same size wherever they appear */
 :root body :is(.epigraph blockquote, .erratum-quote p) { font-size: clamp(1.3rem, 2.4vw, 1.7rem); }

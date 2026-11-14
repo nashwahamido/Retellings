@@ -187,7 +187,7 @@ header nav ul a[aria-current="page"]::after {
 /* ------------------------------------------------------------------ *
    Frames: double gold line with corner diamonds for panels and cards
  * ------------------------------------------------------------------ */
-:root body :is(.tg-a, .about-link-card) {
+:root body :is(.about-link-card) {
   border-style: solid !important;
   border-width: 14px !important;
   border-image: url("deco/frame.svg") 20 / 14px stretch !important;
@@ -264,7 +264,6 @@ body.dark { --deco-window: url("deco/window-ink.svg"); }
 }
 :root body .story-chip:is(:hover, :focus-visible) { background: var(--plate-1) !important; color: #fff3cf !important; box-shadow: 0 0 6px #d2ae6380; }
 :root body .win-tag { letter-spacing: 0.14em; color: #8a6d35; font-weight: 600; }
-:root body .tg-a { padding: var(--sp-md) var(--sp-lg) var(--sp-lg); }
 
 /* select box: matching double gold rule */
 :root body .book-select {
@@ -281,9 +280,6 @@ body.dark { --deco-window: url("deco/window-ink.svg"); }
 :root body .book-jump-label { color: inherit; }
 
 /* the question list on the transport guide: deco rule for the active item */
-:root body .tg-q[aria-selected="true"] {
-  border-left: 3px double var(--deco-gold) !important;
-}
 
 /* ------------------------------------------------------------------ *
    Footer ("endpaper"): a framed plate like the windows and the nav bar
