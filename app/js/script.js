@@ -27,11 +27,13 @@ const body = document.querySelector("body");
 toggle = document.querySelectorAll(".toggle");
 
 //setting what color mode it's in
-let getMode = localStorage.getItem("mode");
-if (getMode && getMode === "dark"){
-    body.classList.toggle("dark");
-    toggle.forEach(t=>t.classList.toggle("active"));
-};
+// dark is the default; light only when the visitor has chosen it
+let getMode = null;
+try { getMode = localStorage.getItem("mode"); } catch (e) {}
+if (getMode !== "light") {
+    body.classList.add("dark");
+    toggle.forEach(t => t.classList.add("active"));
+}
 
 //toggling light vs dark mode
 toggle.forEach(t => {
