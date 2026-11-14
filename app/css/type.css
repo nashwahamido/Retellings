@@ -113,8 +113,6 @@
 :root body .win-transcript summary { font-family: var(--serif); font-size: var(--t-body-sm); font-style: italic; }
 
 /* ---------- layout tweaks that belong with the text ---------- */
-/* Colophon: "About this edition" runs the full width of its section */
-:root body .folio-section > .measure { max-width: none; }
 
 /* My Tour and The Places: the page title and introduction are centred, like the other pages */
 :root body :is(.tour-intro, .book-intro) { max-width: 52rem; margin-inline: auto; text-align: center; }
