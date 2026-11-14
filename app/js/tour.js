@@ -697,6 +697,16 @@
   // a print started from the browser menu still gets the header filled in
   window.addEventListener("beforeprint", function () { if (!document.body.classList.contains("print-prep")) fillPrintHead(); });
 
+  // "Pick from the place list" in the page intro: bring the planner's place menu into view and focus it
+  var focusAdd = document.querySelector("[data-focus-add]");
+  if (focusAdd) focusAdd.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (!editable()) setView("mine");
+    var sel = document.getElementById("add-place");
+    if (!sel) return;
+    sel.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(function () { sel.focus({ preventScroll: true }); if (sel.showPicker) { try { sel.showPicker(); } catch (x) {} } }, 450);
+  });
   document.addEventListener("tour:change", function () { render(false); });
   render(true);
   // the map may have been laid out before the fonts settled
