@@ -15,7 +15,7 @@ The site reads like a book, and the navigation is its table of contents.
 | --- | --- | --- |
 | The Cover | `pages/index.html` | Title, the 3D book as the way in, the contents, and plates of Joyce's Dublin |
 | I. The Preface | `pages/life-of-joyce.html` | Joyce's life, *Dubliners*, and further reading |
-| II. The Book | `pages/locations.html` | An interactive book: each story's lines naming Dublin places, with windows for every place |
+| II. The Places | `pages/locations.html` | The places of *Dubliners* in an interactive book: each story's lines naming Dublin places, with windows for every place |
 | III. My Tour | `pages/walking-tour.html` | Saved places on a map: reorder, best order, distances, eat & rest stops, a suggested walk |
 | IV. Colophon | `pages/about.html` | The edition, the original team, thanks, and every source (`credits.html` redirects here) |
 

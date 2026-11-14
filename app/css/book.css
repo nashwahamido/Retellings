@@ -429,3 +429,12 @@ body.dark .plain-toc-link:hover .tl-title, body.dark .plain-toc-link:focus-visib
 .book-plain .places-strip { border-color: currentColor; }
 
 @media (max-width: 768px) { .book-plain .rec-quote.plain { font-size: 1rem; } }
+
+/* arriving from the Cover's "Open the book": fade in from the dark of the transition */
+html.arrive body::after {
+  content: ""; position: fixed; inset: 0; z-index: 5000; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 40%, #1a1613 0%, #0d0b09 100%);
+  animation: arrive-fade 0.9s ease 0.2s forwards;
+}
+@keyframes arrive-fade { to { opacity: 0; visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { html.arrive body::after { animation-duration: 0.01s; animation-delay: 0s; } }
