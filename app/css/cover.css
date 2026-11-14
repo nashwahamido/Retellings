@@ -12,8 +12,8 @@
   font-family: var(--folio-serif);
   font-weight: 600;
   font-size: clamp(3.2rem, 7vw, 5.6rem);
-  line-height: 0.95;
-  margin: 0.4rem 0 0.3rem;
+  line-height: 1.05;
+  margin: 0.3rem 0 0.75rem;
 }
 .cover-title .folio-sub { font-size: var(--fs-h5); }
 .cover-title .folio-rule { margin: 1.1rem 0; width: 12rem; }
