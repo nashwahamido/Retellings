@@ -83,7 +83,7 @@
 :root body :is(.plate figcaption, .plates .plate figcaption, .win-caption) { font-size: var(--t-caption); font-style: italic; line-height: 1.4; }
 
 /* small print and notes */
-:root body :is(.endpaper-small, .stop-leg, .pt-note, .planner-note, .stop-sub, .leaflet-control-attribution) { font-size: var(--t-small); }
+:root body :is(.endpaper-small, .stop-leg, .pt-note, .planner-note, .stop-sub) { font-size: var(--t-small); }
 
 /* uppercase labels: tabs, chips, small buttons, field labels */
 :root body :is(
@@ -144,3 +144,8 @@ body.dark .book-howto { color: var(--accent-gold); }
 .book-howto a { color: inherit; text-decoration: underline; text-decoration-color: currentColor; text-underline-offset: 3px; }
 .book-howto a:hover { color: var(--accent-red); }
 body.dark .book-howto a:hover { color: #fff3cf; }
+
+/* the map's credit line: small print in the corner, kept clear of the map key */
+:root body .leaflet-control-attribution { font-size: 0.62rem; line-height: 1.5; padding: 0 0.4rem; background: #f4ecd6cc; }
+:root body .leaflet-control-attribution a { color: inherit; }
+:root body .map-legend span { white-space: nowrap; }

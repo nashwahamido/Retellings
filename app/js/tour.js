@@ -533,7 +533,7 @@
     drawNearby();
   });
   if (window.NEARBY) {
-    map.attributionControl.addAttribution("Eat &amp; rest data &copy; OpenStreetMap contributors (ODbL), " + esc(NEARBY.updated));
+    map.attributionControl.addAttribution("Eat &amp; rest &copy; OpenStreetMap (ODbL), " + esc(NEARBY.updated));
   } else {
     toggleBtn.hidden = true;
   }
@@ -707,6 +707,15 @@
     sel.scrollIntoView({ behavior: "smooth", block: "center" });
     setTimeout(function () { sel.focus({ preventScroll: true }); if (sel.showPicker) { try { sel.showPicker(); } catch (x) {} } }, 450);
   });
+  // keep the map key just above the credit line, however many lines the credit wraps to
+  (function () {
+    var legend = document.querySelector(".map-legend");
+    var attr = document.querySelector(".leaflet-control-attribution");
+    if (!legend || !attr || !window.ResizeObserver) return;
+    var place = function () { legend.style.bottom = (attr.offsetHeight + 8) + "px"; };
+    new ResizeObserver(place).observe(attr);
+    place();
+  })();
   document.addEventListener("tour:change", function () { render(false); });
   render(true);
   // the map may have been laid out before the fonts settled
