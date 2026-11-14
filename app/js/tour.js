@@ -115,7 +115,7 @@
 
   // ---- map ----
   var map = L.map("tour-map", { scrollWheelZoom: false, zoomControl: true }).setView(DUBLIN, 14);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  var tiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
@@ -184,6 +184,7 @@
         '<span class="stop-main">' +
           '<button type="button" class="stop-name">' + esc(p.name) + "</button>" +
           '<span class="stop-sub">' + esc(p.categoryLabel) + (p.stories && p.stories.length ? " · " + esc(p.stories[0]) : "") + "</span>" +
+          (p.description ? '<span class="stop-print-desc">' + esc(shorten(p.description, 170)) + "</span>" : "") +
         "</span>" +
         (editable() ? '<span class="stop-tools">' +
           '<button type="button" class="stop-tool" data-act="up" aria-label="Move ' + esc(p.name) + ' earlier"' + (i === 0 ? " disabled" : "") + ">&#9650;</button>" +
@@ -229,6 +230,7 @@
     }
     lastIds = key;
     drawNearby();
+    syncTakeAway();
     fillAddSelect(TourStore.list());
   }
 
@@ -535,6 +537,161 @@
   } else {
     toggleBtn.hidden = true;
   }
+
+
+  // ================= take it with you: print / Google Maps / KML / GPX =================
+  var takeEl = document.getElementById("take-away");
+  var gmapsEl = document.getElementById("ta-gmaps");
+  function shorten(t, n) {
+    t = String(t || "").replace(/\s+/g, " ").trim();
+    if (t.length <= n) return t;
+    return t.slice(0, t.lastIndexOf(" ", n)).replace(/[,;:.]$/, "") + "…";
+  }
+  function mapped() { return currentStops.filter(function (p) { return p.lat != null; }); }
+  function tourTitle() { return editable() ? "My Tour" : "The suggested walk"; }
+  function ll(p) { return p.lat.toFixed(6) + "," + p.lng.toFixed(6); }
+
+  // Google Maps takes an origin, a destination and a handful of waypoints per link,
+  // so long tours are split into parts that join up (each part starts where the last ended)
+  var PER_LINK = 10;
+  function gmapsLinks(stops) {
+    var parts = [], i = 0;
+    while (i < stops.length - 1) {
+      var chunk = stops.slice(i, i + PER_LINK);
+      var q = "https://www.google.com/maps/dir/?api=1&travelmode=walking" +
+        "&origin=" + ll(chunk[0]) + "&destination=" + ll(chunk[chunk.length - 1]);
+      if (chunk.length > 2) q += "&waypoints=" + chunk.slice(1, -1).map(ll).join("%7C");
+      parts.push({ url: q, from: i + 1, to: i + chunk.length });
+      i += PER_LINK - 1;
+    }
+    return parts;
+  }
+  function syncTakeAway() {
+    var stops = mapped();
+    takeEl.hidden = !stops.length;
+    if (!stops.length) return;
+    var html;
+    if (stops.length === 1) {
+      html = '<a class="ta-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=' + ll(stops[0]) + '">' +
+        '<span class="ta-btn-main">Open in Google Maps</span><span class="ta-btn-sub">' + esc(stops[0].name) + "</span></a>";
+    } else {
+      var parts = gmapsLinks(stops);
+      html = parts.map(function (pt, k) {
+        return '<a class="ta-btn' + (parts.length > 1 ? " ta-btn--half" : "") + '" target="_blank" rel="noopener" href="' + esc(pt.url) + '">' +
+          '<span class="ta-btn-main">' + (parts.length > 1 ? "Google Maps · part " + (k + 1) : "Open in Google Maps") + "</span>" +
+          '<span class="ta-btn-sub">' + (parts.length > 1 ? "Stops " + pt.from + "–" + pt.to : "Walking directions through all " + stops.length + " stops") + "</span></a>";
+      }).join("");
+    }
+    gmapsEl.innerHTML = html;
+    gmapsEl.classList.toggle("is-split", stops.length > PER_LINK);
+  }
+
+  // ---- files ----
+  function xml(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+  function fileName(ext) {
+    var d = new Date();
+    return "retellings-" + (editable() ? "my-tour" : "suggested-walk") + "-" + d.toISOString().slice(0, 10) + "." + ext;
+  }
+  function download(text, name, type) {
+    var blob = new Blob([text], { type: type });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }
+  function stopNote(p) {
+    return [p.categoryLabel, p.stories && p.stories.length ? "In “" + p.stories.join("”, “") + "”" : "", p.description || ""]
+      .filter(Boolean).join("\n\n");
+  }
+  function kml(stops) {
+    var marks = stops.map(function (p, i) {
+      return "    <Placemark>\n      <name>" + xml((i + 1) + ". " + p.name) + "</name>\n" +
+        "      <description>" + xml(stopNote(p)) + "</description>\n      <styleUrl>#stop</styleUrl>\n" +
+        "      <Point><coordinates>" + p.lng.toFixed(6) + "," + p.lat.toFixed(6) + ",0</coordinates></Point>\n    </Placemark>";
+    }).join("\n");
+    var line = stops.length > 1 ? "    <Placemark>\n      <name>Walking route</name>\n      <styleUrl>#route</styleUrl>\n" +
+      "      <LineString><tessellate>1</tessellate><coordinates>" +
+      stops.map(function (p) { return p.lng.toFixed(6) + "," + p.lat.toFixed(6) + ",0"; }).join(" ") +
+      "</coordinates></LineString>\n    </Placemark>\n" : "";
+    return '<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n  <Document>\n' +
+      "    <name>" + xml("Retellings — " + tourTitle()) + "</name>\n" +
+      "    <description>" + xml("A walk through the Dublin of James Joyce’s Dubliners, planned on Retellings. Distances are approximate.") + "</description>\n" +
+      '    <Style id="stop"><IconStyle><color>ff5e4637</color><scale>1.1</scale></IconStyle></Style>\n' +
+      '    <Style id="route"><LineStyle><color>ff23288f</color><width>4</width></LineStyle></Style>\n' +
+      line + marks + "\n  </Document>\n</kml>\n";
+  }
+  function gpx(stops) {
+    var w = function (tag, p, i) {
+      return "  <" + tag + ' lat="' + p.lat.toFixed(6) + '" lon="' + p.lng.toFixed(6) + '">\n' +
+        "    <name>" + xml((i + 1) + ". " + p.name) + "</name>\n    <desc>" + xml(stopNote(p)) + "</desc>\n  </" + tag + ">";
+    };
+    return '<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="Retellings" xmlns="http://www.topografix.com/GPX/1/1">\n' +
+      "  <metadata><name>" + xml("Retellings — " + tourTitle()) + "</name></metadata>\n" +
+      stops.map(function (p, i) { return w("wpt", p, i); }).join("\n") + "\n" +
+      "  <rte>\n    <name>" + xml("Retellings — " + tourTitle()) + "</name>\n" +
+      stops.map(function (p, i) { return w("rtept", p, i).replace(/^/gm, "  "); }).join("\n") + "\n  </rte>\n</gpx>\n";
+  }
+  document.getElementById("ta-kml").addEventListener("click", function () {
+    var st = mapped(); if (!st.length) return;
+    download(kml(st), fileName("kml"), "application/vnd.google-earth.kml+xml");
+    toast("Saved " + fileName("kml") + ". Import it in Google My Maps to see it in the Google Maps app.");
+  });
+  document.getElementById("ta-gpx").addEventListener("click", function () {
+    var st = mapped(); if (!st.length) return;
+    download(gpx(st), fileName("gpx"), "application/gpx+xml");
+    toast("Saved " + fileName("gpx") + ".");
+  });
+
+  // ---- print: size the map for the page, wait for its tiles, then print ----
+  var printBtn = document.getElementById("ta-print");
+  function fitStops(tight) {
+    var pts = mapped().map(function (p) { return [p.lat, p.lng]; });
+    map.options.zoomSnap = tight ? 0.25 : 1;
+    if (pts.length > 1) map.fitBounds(pts, { padding: tight ? [28, 28] : [36, 36], maxZoom: 16 });
+    else if (pts.length === 1) map.setView(pts[0], 16);
+  }
+  function fillPrintHead() {
+    var st = mapped(), total = 0;
+    for (var i = 1; i < st.length; i++) total += km(st[i - 1], st[i]);
+    document.getElementById("print-title").textContent = tourTitle();
+    document.getElementById("print-meta").textContent = st.length + (st.length === 1 ? " stop" : " stops") +
+      (st.length > 1 ? " · about " + fmtDist(total) + " · " + fmtTime(total) + " on foot" : "") +
+      " · planned " + new Date().toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" });
+  }
+  function endPrint() {
+    document.body.classList.remove("print-prep");
+    printBtn.disabled = false;
+    map.invalidateSize();
+    fitStops();
+  }
+  printBtn.addEventListener("click", function () {
+    if (!mapped().length) return;
+    printBtn.disabled = true;
+    fillPrintHead();
+    document.body.classList.add("print-prep");
+    setHot(null);
+    map.invalidateSize();
+    fitStops(true);
+    var done = false;
+    function go() {
+      if (done) return; done = true;
+      tiles.off("load", go);
+      setTimeout(function () {
+        window.print();
+        // some mobile browsers never send "afterprint": tidy up when the page is back in focus
+        setTimeout(function () {
+          window.addEventListener("focus", function () { if (document.body.classList.contains("print-prep")) endPrint(); }, { once: true });
+        }, 600);
+      }, 150);
+    }
+    tiles.on("load", go);
+    setTimeout(go, 2500); // print anyway if some tiles are slow
+  });
+  window.addEventListener("afterprint", function () { if (document.body.classList.contains("print-prep")) endPrint(); });
+  // a print started from the browser menu still gets the header filled in
+  window.addEventListener("beforeprint", function () { if (!document.body.classList.contains("print-prep")) fillPrintHead(); });
 
   document.addEventListener("tour:change", function () { render(false); });
   render(true);

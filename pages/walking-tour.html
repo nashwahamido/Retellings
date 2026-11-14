@@ -87,6 +87,14 @@
             <p class="tour-lead">The places you&rsquo;ve gathered from the book, set out on the map of Dublin. Reorder them to plan your walk, or start from our suggested route. Add places from <a href="locations.html">the book</a>, from the list below, or by selecting a faint pin on the map.</p>
         </section>
 
+        <!-- shown only when printing -->
+        <div class="print-head" id="print-head" aria-hidden="true">
+            <p class="print-kicker">Retellings &middot; A walk through James Joyce&rsquo;s <em>Dubliners</em></p>
+            <h2 class="print-title" id="print-title">My Tour</h2>
+            <p class="print-meta" id="print-meta"></p>
+        </div>
+        <p class="print-note print-only" aria-hidden="true">Distances are approximate: straight lines between stops, allowing for streets, at an easy 4.5&nbsp;km/h. Planned on Retellings.</p>
+
         <!-- SECTION 2 - PLANNER: list + map -->
         <section class="planner" aria-label="Tour planner">
             <div class="planner-panel">
@@ -129,6 +137,36 @@
                 <div class="planner-actions" id="actions-suggested" hidden>
                     <button type="button" class="book-btn" id="copy-suggested">Add these stops to my tour</button>
                 </div>
+
+                <section class="take-away" id="take-away" aria-labelledby="take-away-title" hidden>
+                    <h3 class="ta-title" id="take-away-title">Take it with you</h3>
+                    <div class="ta-buttons">
+                        <button type="button" class="ta-btn" id="ta-print">
+                            <span class="ta-btn-main">Print or save as PDF</span>
+                            <span class="ta-btn-sub">A one-page map and itinerary, for paper or offline</span>
+                        </button>
+                        <div class="ta-gmaps" id="ta-gmaps"></div>
+                        <div class="ta-files">
+                            <button type="button" class="ta-btn ta-btn--half" id="ta-kml">
+                                <span class="ta-btn-main">Download KML</span>
+                                <span class="ta-btn-sub">For Google My Maps</span>
+                            </button>
+                            <button type="button" class="ta-btn ta-btn--half" id="ta-gpx">
+                                <span class="ta-btn-main">Download GPX</span>
+                                <span class="ta-btn-sub">For Organic Maps &amp; others</span>
+                            </button>
+                        </div>
+                    </div>
+                    <details class="ta-help">
+                        <summary>How do I keep it on my phone?</summary>
+                        <ol>
+                            <li><strong>As a PDF:</strong> choose <em>Print or save as PDF</em>, then <em>Save as PDF</em> (on a phone: <em>Share</em> &rarr; <em>Save to Files</em>). It opens without signal.</li>
+                            <li><strong>Walking directions now:</strong> <em>Open in Google Maps</em> opens the app with your stops in order.</li>
+                            <li><strong>Saved in Google Maps:</strong> download the KML, go to <a href="https://www.google.com/mymaps" target="_blank" rel="noopener">Google My Maps</a>, choose <em>Create a new map</em> &rarr; <em>Import</em> and pick the file. It then appears in the Google Maps app under <em>Saved</em> &rarr; <em>Maps</em>.</li>
+                            <li><strong>Offline:</strong> in the Google Maps app, download an offline map of central Dublin, or open the GPX in an offline app such as Organic Maps.</li>
+                        </ol>
+                    </details>
+                </section>
 
                 <details class="suggested-card" id="suggested-card" hidden>
                     <summary>About the suggested walk</summary>
