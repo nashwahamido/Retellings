@@ -115,12 +115,12 @@
 @media (prefers-reduced-motion: reduce) { .loc-window { animation: none; } }
 
 /* ===================== the Sources window (sources.js) ===================== */
-.loc-window.win--sources { width: min(54rem, calc(100vw - 2rem)); height: min(82vh, 42rem); }
+.loc-window.win--sources { width: min(60rem, calc(100vw - 2rem)); height: min(82vh, 42rem); }
 .win--sources .win-body { display: flex; flex-direction: column; overflow: hidden; flex: 1; min-height: 0; }
 .src-wrap { display: flex; flex-direction: column; gap: 0.85rem; padding: 1.4rem 2.2rem 0; flex: 1; min-height: 0; }
 .win--sources.is-mobile .src-wrap { padding: 1rem 1.1rem 0; }
 .src-intro { margin: 0; font-style: italic; color: var(--win-ink-soft); font-size: 0.98rem; }
-.src-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.src-tabs { display: flex; flex-wrap: nowrap; gap: 0.35rem; }
 .src-tab {
   display: inline-flex; align-items: baseline; gap: 0.4rem;
   padding: 0.38rem 0.75rem; cursor: pointer;
@@ -161,3 +161,7 @@
 .loc-window.is-mobile .win-figure { margin: 1rem 1.1rem 0; }
 .loc-window.is-mobile .win-caption { padding: 0.5rem 1.1rem 0; }
 .loc-window.is-mobile .win-content { padding: 1rem 1.2rem 1.4rem; }
+
+/* the six tabs share one row evenly; they wrap only when the window is too narrow */
+.src-tab { flex: 1 1 auto; justify-content: center; white-space: nowrap; padding-inline: 0.6rem; }
+@media (max-width: 1000px) { .src-tabs { flex-wrap: wrap; } .src-tab { flex: 0 1 auto; } }

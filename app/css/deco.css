@@ -308,7 +308,7 @@ body.dark footer.endpaper { background: linear-gradient(180deg, #2a2520 0%, #131
   color: #ecd18e; letter-spacing: 0.02em;
 }
 .endpaper-tag {
-  margin: 0; max-width: 34rem;
+  margin: 0; max-width: none; text-wrap: balance;
   font-family: "EB Garamond", Georgia, serif; font-style: italic; font-size: 1.12rem; line-height: 1.5;
   color: #e9dcb8;
 }
