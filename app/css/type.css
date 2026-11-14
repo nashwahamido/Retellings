@@ -185,3 +185,26 @@ body.dark #book-progress { color: #b9ad91; }
 :root body :is(.tour-kicker, .book-kicker, .folio-kicker) { opacity: 1; }
 /* the counter is dimmed while the book is put down, but stays legible */
 :root body .book-controls.is-closed #book-progress { opacity: 0.8; }
+
+/* ---------- phone layout ---------- */
+@media (max-width: 600px) {
+  /* footer contents: a tidy column, no stray diamonds at line starts */
+  .endpaper-toc { flex-direction: column; gap: 0.55rem; }
+  .endpaper-toc li + li::before { display: none; }
+
+  /* the book's controls: an orderly grid
+     row 1: previous · contents · next   row 2: leaf counter
+     row 3: view the book                row 4: chapter menu   row 5: plain text */
+  :root body .book-controls {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem 0.5rem; justify-items: stretch; align-items: center;
+  }
+  :root body .book-controls .book-btn { width: 100%; padding: 0 0.9em !important; font-size: 0.78rem; }
+  :root body .book-controls #book-prev { grid-column: 1; grid-row: 1; }
+  :root body .book-controls #book-contents { grid-column: 2; grid-row: 1; }
+  :root body .book-controls #book-next { grid-column: 3; grid-row: 1; }
+  :root body .book-controls #book-progress { grid-column: 1 / -1; grid-row: 2; text-align: center; min-width: 0; }
+  :root body .book-controls #book-toggle { grid-column: 1 / -1; grid-row: 3; }
+  :root body .book-controls .book-jump { grid-column: 1 / -1; grid-row: 4; display: flex; align-items: center; gap: 0.6rem; }
+  :root body .book-controls .book-jump .book-select { flex: 1; min-width: 0; }
+  :root body .book-controls #book-mode { grid-column: 1 / -1; grid-row: 5; }
+}

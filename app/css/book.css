@@ -33,7 +33,7 @@
 .book-viewport {
   width: 100%;
   padding: clamp(1.5rem, 4vw, 3.5rem) 1rem;
-  border-radius: 0.8rem;
+  border-radius: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,7 +57,7 @@
   width: 100%;
   border: none;
   cursor: pointer;
-  border-radius: 0.8rem;
+  border-radius: 0;
   perspective: 1500px;
   background:
     radial-gradient(130% 100% at 50% 10%, #2a241d 0%, #171310 55%, #0d0b09 100%);
