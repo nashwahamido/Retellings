@@ -438,3 +438,14 @@ html.arrive body::after {
 }
 @keyframes arrive-fade { to { opacity: 0; visibility: hidden; } }
 @media (prefers-reduced-motion: reduce) { html.arrive body::after { animation-duration: 0.01s; animation-delay: 0s; } }
+
+/* opening straight into the stories: no put-down book while the pages are being laid out */
+html.read-now .book-hero { display: none; }
+
+/* ?embed — for showing the book inside another site (an iframe):
+   just the book and its controls, filling the frame */
+html.embed body { padding: 0 !important; gap: 0 !important; }
+html.embed :is(header, .mobile-menu, .book-intro, footer, .back-to-top, .skip-link) { display: none !important; }
+html.embed main { padding: 0; }
+html.embed .book-stage { margin: 0; }
+html.embed .book-controls { padding: 0.8rem 1rem 1rem; }

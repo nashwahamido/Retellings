@@ -6,6 +6,13 @@
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <script>
+      /* opening straight into the stories (#read, or embedded elsewhere with ?embed):
+         decide before the first paint, so the put-down book never flashes up */
+      (function(){var d=document.documentElement,q=new URLSearchParams(location.search);
+        if(q.has("embed")){d.classList.add("embed","read-now");}
+        if(location.hash==="#read"){d.classList.add("read-now");}})();
+    </script>
     <script>try{if(sessionStorage.getItem("retellings.arrive")){sessionStorage.removeItem("retellings.arrive");document.documentElement.classList.add("arrive");}}catch(e){}</script>
     <title>The Places — Retellings</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />

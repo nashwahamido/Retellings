@@ -466,6 +466,7 @@
     updateProgress();
   }
   function closeBook() {
+    document.documentElement.classList.remove("read-now");
     stage.classList.remove("is-open");
     setReadingControls(false);
     if (elToggle) { elToggle.textContent = "View the book"; elToggle.setAttribute("aria-pressed", "false"); }
@@ -492,12 +493,16 @@
       elMode.hidden = true; setMode(true); stage.hidden = true; return;
     }
     build(); setMode(false);
-    // arriving from the Cover ("Open the book"): open straight into the stories
-    if (location.hash === "#read") {
+    // arriving from the Cover ("Open the book") or embedded: open straight into the stories
+    var root = document.documentElement;
+    if (location.hash === "#read" || root.classList.contains("embed")) {
       openBook();
-      var top = stage.getBoundingClientRect().top + window.scrollY - 16;
-      window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
+      if (!root.classList.contains("embed")) {
+        var top = stage.getBoundingClientRect().top + window.scrollY - 16;
+        window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
+      }
     }
+    root.classList.remove("read-now");
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot).catch(boot);
   else boot();
