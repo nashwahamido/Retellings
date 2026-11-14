@@ -117,8 +117,11 @@
 /* My Tour and The Places: the page title and introduction are centred, like the other pages */
 :root body :is(.tour-intro, .book-intro) { max-width: 64rem; margin-inline: auto; text-align: center; }
 :root body :is(.tour-lead, .book-intro .page-lead) { margin-inline: auto; }
-:root body :is(.tour-lead, .book-intro .page-lead) { width: auto; max-width: 60rem; line-height: 1.55; text-align: justify; text-align-last: center; hyphens: none; }
+:root body :is(.tour-lead, .book-intro .page-lead) { width: auto; max-width: 60rem; margin-top: 0; line-height: 1.55; text-align: justify; text-align-last: center; hyphens: none; }
 /* on narrow screens justified lines open up wide gaps between words, so centre them instead */
 @media (max-width: 600px) {
   :root body :is(.tour-lead, .book-intro .page-lead) { text-align: center; }
 }
+/* the line under the Places title */
+:root body .book-intro .book-sub { font-size: var(--t-sub-lg); font-style: italic; margin: 0.1rem 0 1.1rem; color: var(--folio-soft); }
+:root body .book-intro h1 { margin-bottom: 0.15rem; }
