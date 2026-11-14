@@ -1,0 +1,115 @@
+/* =====================================================================
+   type.css — the type system, in one place. Loaded last on every page.
+
+   Two typefaces:
+     EB Garamond (serif)  headings, sub-lines, captions, quotations, the
+                          book itself, small "quiet" links and disclosures
+     Epilogue (sans)      body text, descriptions, labels, buttons, data
+
+   One size per role (rem, 1rem = 16px):
+     label     0.75   uppercase sans labels, tabs, chips, small buttons
+     nav       0.8    contents bar and footer links
+     small     0.8    small print, notes, distances
+     caption   0.9    serif italic captions under pictures
+     body-sm   0.9    dense UI text: lists, help, descriptions in cards
+     body      1      reading text
+     lead      1.1    the opening paragraph of a page
+     sub       1.1    serif italic sub-lines under section headings
+     sub-lg    1.3    serif italic sub-line under a page title
+     h3        1.3    serif card / panel headings
+     h2        2.1    serif section headings
+     h1        --fs-h1 serif page titles (the Cover title is larger)
+   The interactive book scales its own text with the page and is left as is.
+   ===================================================================== */
+:root {
+  --serif: "EB Garamond", Georgia, serif;
+  --sans: "Epilogue", sans-serif;
+  --t-label: 0.75rem;
+  --t-nav: 0.8rem;
+  --t-small: 0.8rem;
+  --t-caption: 0.9rem;
+  --t-body-sm: 0.9rem;
+  --t-body: 1rem;
+  --t-lead: 1.1rem;
+  --t-sub: 1.1rem;
+  --t-sub-lg: 1.3rem;
+  --t-h3: 1.3rem;
+  --t-h2: 2.1rem;
+}
+@media (max-width: 768px) {
+  :root { --t-h2: 1.75rem; --t-sub-lg: 1.15rem; }
+}
+
+/* ---------- which typeface ---------- */
+/* containers whose own text is serif but whose contents are ordinary UI text */
+:root body :is(.loc-window .win-body, .planner-panel, .map-legend, .leaflet-container, .win-close, .story-chip) {
+  font-family: var(--sans);
+}
+/* serif roles */
+:root body :is(
+  h1, .folio-h2, .book-intro h1, .tour-intro h1, .transit-guide h2,
+  #planner-heading, .ta-title, .src-head, .shelf-book h3, .member h3, .tg-a-title, .sources-group h3,
+  .folio-sub, .folio-kicker, .book-kicker, .tour-kicker,
+  figcaption, .win-caption, .link-quiet, .src-intro, .epigraph,
+  .ta-help summary, .suggested-card > summary, .win-transcript summary
+) { font-family: var(--serif); }
+
+/* ---------- sizes ---------- */
+/* page titles: one weight */
+:root body :is(.folio-head h1, .book-intro h1, .tour-intro h1) { font-size: var(--fs-h1); font-weight: 600; }
+
+/* section headings */
+:root body :is(.folio-h2, .folio-section > h2, .transit-guide h2) { font-size: var(--t-h2) !important; font-weight: 600; }
+
+/* card and panel headings */
+:root body :is(#planner-heading, .ta-title, .src-head, .shelf-book h3, .member h3, .tg-a-title, .sources-group h3) {
+  font-size: var(--t-h3); font-weight: 600;
+}
+
+/* sub-lines */
+:root body .folio-head .folio-sub, :root body .cover-title .folio-sub { font-size: var(--t-sub-lg); font-style: italic; }
+:root body .folio-section > .folio-sub, :root body .src-intro { font-size: var(--t-sub); font-style: italic; }
+
+/* leads */
+:root body :is(.cover-lead, .folio-lead, .page-lead, .tour-lead, .book-intro .page-lead) { font-size: var(--t-lead); }
+
+/* reading text */
+:root body :is(.measure, .win-desc, .tg-a p, .tg-lead, .shelf-book p) { font-size: var(--t-body); }
+
+/* dense UI text */
+:root body :is(.src-list, .ta-help, .toc .toc-desc, .member p, .win-gmaps, .win-transcript p, .planner-count) { font-size: var(--t-body-sm); }
+
+/* captions */
+:root body :is(.plate figcaption, .plates .plate figcaption, .win-caption) { font-size: var(--t-caption); font-style: italic; line-height: 1.4; }
+
+/* small print and notes */
+:root body :is(.endpaper-small, .stop-leg, .pt-note, .planner-note, .stop-sub, .leaflet-control-attribution) { font-size: var(--t-small); }
+
+/* uppercase labels: tabs, chips, small buttons, field labels */
+:root body :is(
+  .src-tab, .story-chip, .win-tag, .win-guide-label, .ta-btn-main, .tour-tab, .map-chip, .map-chip--main,
+  .pt-label, .planner-add label, .plate figcaption .plate-no, .sc-count, .toc .toc-go, .cover-stage-hint,
+  .np-kind, .map-legend
+) { font-size: var(--t-label); }
+
+/* the contents bar and the footer links */
+:root body :is(header nav ul a, .endpaper-toc a) { font-size: var(--t-nav); }
+
+/* disclosures ("How do I keep it on my phone?", "About the suggested walk") */
+:root body :is(.ta-help summary, .suggested-card > summary) {
+  font-size: var(--t-body); font-style: italic; font-weight: 400; color: var(--tp-red, #8f2a24);
+}
+
+/* ---------- stragglers, snapped to the scale ---------- */
+:root body .stop-name { font-size: var(--t-lead); }
+:root body .win-stories .label { font-size: var(--t-body-sm); }
+:root body .endpaper-tag { font-size: var(--t-sub); }
+:root body .sc-title { font-size: var(--t-h3); }
+:root body .tg-q { font-size: var(--t-body); }
+:root body .tg-q .tg-num { font-size: var(--t-body); }
+:root body .leaflet-control-zoom a { font-family: var(--sans); }
+/* quotations: the same size wherever they appear */
+:root body :is(.epigraph blockquote, .erratum-quote p) { font-size: clamp(1.3rem, 2.4vw, 1.7rem); }
+:root body :is(.epigraph cite, .erratum-quote cite) { font-size: var(--t-label); }
+/* the audio transcript disclosure in place windows matches the other disclosures */
+:root body .win-transcript summary { font-family: var(--serif); font-size: var(--t-body-sm); font-style: italic; }
