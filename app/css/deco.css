@@ -342,7 +342,7 @@ body.dark footer.endpaper { background: linear-gradient(180deg, #2a2520 0%, #131
 .endpaper-small:first-of-type { margin-top: 0.4rem; }
 .endpaper-finis { margin: 0.2rem 0 0; color: var(--deco-gold); font-size: 1.2rem; line-height: 1; }
 
-@media (max-width: 1100px) {
+@media (max-width: 1180px) {
   /* nav links are hidden behind the hamburger here; nothing to frame */
   header nav ul::before { display: none; }
 }
@@ -365,4 +365,33 @@ body.dark footer.endpaper { background: linear-gradient(180deg, #2a2520 0%, #131
 /* table-of-contents numerals in the navigation */
 header nav ul a .toc-no { font-family: "EB Garamond", Georgia, serif; font-size: 1.05em; letter-spacing: 0.04em; margin-right: 0.15em; }
 .mobile-menu ul a .toc-no { font-family: "EB Garamond", Georgia, serif; margin-right: 0.35em; opacity: 0.85; }
-.endpaper-tag em { font-family: inherit; font-style: normal; }
+.endpaper-tag em { font-family: inherit; font-style: normal; letter-spacing: 0.01em; }
+:root body header nav ul a { white-space: nowrap; }
+
+/* ------------------------------------------------------------------ *
+   Header: the contents bar sits in the middle; no logo above it.
+   Below 1180px the bar folds into the menu button and a small
+   serif title takes the left side.
+ * ------------------------------------------------------------------ */
+:root body header { justify-content: center; }
+.header-mark { display: none; }
+@media (max-width: 1180px) {
+  :root body header { justify-content: space-between; }
+  .header-mark {
+    display: block;
+    font-family: "EB Garamond", Georgia, serif; font-size: 1.6rem; font-weight: 600;
+    color: inherit; text-decoration: none; letter-spacing: 0.01em;
+  }
+  .header-mark:hover { color: var(--accent-red); }
+  body.dark .header-mark:hover { color: var(--accent-gold); }
+  header nav { margin-left: auto; }
+}
+
+/* the emblem: map pin + fountain pen (navy by day, leather by night) */
+.emblem { display: block; height: auto; }
+.emblem--dark { display: none; }
+body.dark .emblem--light { display: none; }
+body.dark .emblem--dark { display: block; }
+:root body footer.endpaper .endpaper-logo { width: 2.3rem; height: auto; }
+.cover-emblem { display: block; width: 3.6rem; margin-bottom: 1.1rem; filter: drop-shadow(0 6px 10px #00000033); }
+.cover-emblem .emblem { width: 100%; }
