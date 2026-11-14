@@ -449,3 +449,9 @@ html.embed :is(header, .mobile-menu, .book-intro, footer, .back-to-top, .skip-li
 html.embed main { padding: 0; }
 html.embed .book-stage { margin: 0; }
 html.embed .book-controls { padding: 0.8rem 1rem 1rem; }
+
+/* the still of the open book shows straight away; the live 3D book fades in over it once loaded */
+.book3d-img { width: clamp(280px, 62vmin, 620px); }
+.book3d-canvas { animation: book3d-in 0.6s ease both; }
+@keyframes book3d-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .book3d-canvas { animation: none; } }
