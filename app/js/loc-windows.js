@@ -29,9 +29,10 @@
     if (!layer) {
       layer = el("div", "window-layer");
       layer.id = "window-layer";
-      layer.setAttribute("aria-label", "Open location windows");
-      document.body.appendChild(layer);
     }
+    // keep the windows inside the page's main region (they are fixed-position, so this is invisible)
+    var main = document.querySelector("main") || document.body;
+    if (layer.parentNode !== main) main.appendChild(layer);
     return layer;
   }
 

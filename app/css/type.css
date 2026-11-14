@@ -149,3 +149,39 @@ body.dark .book-howto a:hover { color: #fff3cf; }
 :root body .leaflet-control-attribution { font-size: 0.62rem; line-height: 1.5; padding: 0 0.4rem; background: #f4ecd6cc; }
 :root body .leaflet-control-attribution a { color: inherit; }
 :root body .map-legend span { white-space: nowrap; }
+
+/* ---------- no italics anywhere ----------
+   Emphasis, book titles, captions, notes and sub-lines are all set upright. */
+:root *, :root *::before, :root *::after { font-style: normal !important; }
+
+/* ---------- accessibility helpers ---------- */
+/* skip link: hidden until focused with the keyboard */
+.skip-link {
+  position: absolute; left: 1rem; top: -4rem; z-index: 6000;
+  padding: 0.6rem 1rem; background: var(--plate-2, #141c33); color: #ecd18e;
+  font-family: var(--sans); font-size: var(--t-label); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  border: 2px solid #d2ae63; text-decoration: none; transition: top 0.15s ease;
+}
+.skip-link:focus { top: 1rem; outline: none; }
+main:focus { outline: none; }
+/* controls that are now real buttons keep their old look */
+button.back-to-top, button.close-menu { border: 0; background: none; padding: 0; cursor: pointer; }
+button.toggle { padding: 0; cursor: pointer; font: inherit; }
+:root body :is(button.toggle, button.back-to-top, button.close-menu, .nav-hamburger):focus-visible { outline: 2px solid #d2ae63; outline-offset: 3px; }
+/* gold numerals on light paper need a deeper gold to stay readable */
+:root body :is(.stage-no, .dub-coda-no, .tg-a-num) { color: #8a6a2e; }
+body.dark :is(.stage-no, .dub-coda-no, .tg-a-num) { color: var(--deco-gold, #d2ae63); }
+/* the book's page counter, readable in dark mode */
+:root body #book-progress { opacity: 1; }
+body.dark #book-progress { color: #b9ad91; }
+/* a navy backing behind the text of every plate button: hidden under the plate, but it keeps the
+   gold lettering readable if the plate image ever fails to load (and lets checkers see the contrast) */
+:root:root body :is(.book-btn, .btn-s1, .btn, .btnjump, .win-maplink, .mobile-menu ul a) {
+  background-color: var(--plate-2, #141c33) !important;
+  background-clip: content-box !important;
+}
+:root body .book-jump-label { opacity: 1; color: var(--folio-soft); }
+:root body .win-tag { color: #6f5626; }
+:root body :is(.tour-kicker, .book-kicker, .folio-kicker) { opacity: 1; }
+/* the counter is dimmed while the book is put down, but stays legible */
+:root body .book-controls.is-closed #book-progress { opacity: 0.8; }

@@ -47,27 +47,47 @@ toggle.forEach(t => {
 
 // activating toggle on click
 toggle.forEach(t => t.addEventListener("click", () => toggle.forEach(t => t.classList.toggle("active"))));
+// tell assistive technology whether dark mode is on
+function syncToggleState() {
+    const on = document.body.classList.contains("dark");
+    toggle.forEach(t => t.setAttribute("aria-checked", on ? "true" : "false"));
+}
+syncToggleState();
+toggle.forEach(t => t.addEventListener("click", syncToggleState));
 
-//hamburger-menu trigger
+//hamburger-menu trigger: a small dialog with the contents
 const hamburger = document.querySelector('.nav-hamburger');
-const menu = document.querySelector('.mobile-menu'); 
-const closeMenu = document.querySelector('.close-menu'); 
+const menu = document.querySelector('.mobile-menu');
+const closeMenu = document.querySelector('.close-menu');
 
-
-if (hamburger) hamburger.addEventListener('click', () => {
-    if(!menu.classList.contains('shown')){ 
+function openMobileMenu() {
+    if (!menu || menu.classList.contains('shown')) return;
     menu.classList.add('shown');
-    } 
-});
-
-if (closeMenu) closeMenu.addEventListener('click', () => {
-    if(menu.classList.contains('shown')){
-         menu.classList.remove('shown');
-         
-    }
-});
-
-
+    if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
+    const first = menu.querySelector('a, button');
+    if (first) first.focus();
+}
+function closeMobileMenu() {
+    if (!menu || !menu.classList.contains('shown')) return;
+    menu.classList.remove('shown');
+    if (hamburger) { hamburger.setAttribute('aria-expanded', 'false'); hamburger.focus(); }
+}
+if (hamburger) hamburger.addEventListener('click', openMobileMenu);
+if (closeMenu) closeMenu.addEventListener('click', closeMobileMenu);
+if (menu) {
+    // Esc closes; Tab stays inside the open menu
+    menu.addEventListener('keydown', e => {
+        if (e.key === 'Escape') { e.preventDefault(); closeMobileMenu(); return; }
+        if (e.key !== 'Tab') return;
+        const items = [...menu.querySelectorAll('a, button, .toggle')].filter(el => el.offsetParent !== null);
+        if (!items.length) return;
+        const first = items[0], last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+    // choosing a link closes the menu
+    menu.addEventListener('click', e => { if (e.target.closest('a')) menu.classList.remove('shown'); });
+}
 
 // mark the current page in the navigation (used by the deco nav styling)
 (function () {
