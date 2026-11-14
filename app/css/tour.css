@@ -38,10 +38,7 @@ body.dark .tour-lead a { text-decoration-color: var(--accent-gold); }
   border-image: url("deco/frame.svg") 20 / 14px stretch;
   font-family: "EB Garamond", Georgia, serif;
   overflow-y: auto;
-  scrollbar-width: thin; scrollbar-color: #c2ab78 transparent;
 }
-.planner-panel::-webkit-scrollbar { width: 6px; }
-.planner-panel::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #d8c08a, #b3934f); border-radius: 6px; }
 .planner-head { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 2px solid var(--tp-rule); padding-bottom: 0.45rem; }
 .planner-head h2 { font-size: 1.45rem; font-weight: 600; margin: 0; }
 .planner-count { font-size: 0.9rem; color: var(--tp-soft); font-style: italic; }

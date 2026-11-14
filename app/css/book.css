@@ -272,13 +272,6 @@ body.dark .book-select option { color: var(--dark-text-color); background: var(-
   list-style: none; margin: 0; padding: 0 0.35rem 0 0;
   flex: 1; min-height: 0; overflow-y: auto;
   display: flex; flex-direction: column; justify-content: space-evenly;
-  /* if a small page ever needs to scroll, the bar matches the book */
-  scrollbar-width: thin; scrollbar-color: #c2ab78 transparent;
-}
-.page .toc-entries::-webkit-scrollbar { width: 6px; }
-.page .toc-entries::-webkit-scrollbar-track { background: transparent; }
-.page .toc-entries::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #d8c08a, #b3934f); border-radius: 6px; border: 0;
 }
 .toc-link {
   display: grid; grid-template-columns: 2.1rem 1fr auto; align-items: end; column-gap: 0.55rem;
