@@ -15,9 +15,10 @@ const TOUR_PLACES = [
     "image": "assets/JJCenter_then-now.JPG",
     "alt": "James Joyce Center then and now",
     "description": "The James Joyce Center is a restored Georgian townhouse near the childhood home of James Joyce. Full of exhibitions, readings, lectures, and promoting Joyce's other works. It's a great place to get your bearings and expand your knowledge on the Irish famed author. Open from 10:30 AM to 4:30 PM Tuesday through Saturday. Tickets are €7 for adults, €5 for seniors and students (with a valid student ID) and free for children 12 and under.",
-    "mapLink": null,
-    "lat": 53.3546,
-    "lng": -6.26
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=James%20Joyce%20Centre%2C%20North%20Great%20George's%20Street%2C%20Dublin",
+    "lat": 53.35419,
+    "lng": -6.259969,
+    "mapQuery": "James Joyce Centre, North Great George's Street, Dublin"
   },
   {
     "id": "secret-book-and-record-store",
@@ -28,9 +29,10 @@ const TOUR_PLACES = [
     "image": "assets/Bookshop_then-now.jpg",
     "alt": "The Secret Book and Record Store then and now",
     "description": "Tucked in between several shops and restaurants on Wicklow Street visit this cosy, independent bookstore offering new and secondhand books at an affordable price with CDs and vinyl. Pick up your own James Joyce!",
-    "mapLink": null,
-    "lat": 53.3423,
-    "lng": -6.261
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=The%20Secret%20Book%20and%20Record%20Store%2C%20Wicklow%20Street%2C%20Dublin",
+    "lat": 53.343072,
+    "lng": -6.261045,
+    "mapQuery": "The Secret Book and Record Store, Wicklow Street, Dublin"
   },
   {
     "id": "museum-of-literature-ireland",
@@ -41,9 +43,10 @@ const TOUR_PLACES = [
     "image": "assets/MoLi.JPG",
     "alt": "A current image of the Museum of Literature, Dublin",
     "description": "If you were able to find the statue of James Joyce, turn around, exit the park and right in front of you, you'll find the entrance to the Museum of Literature Ireland. The Museum of Literature Ireland, celebrates Irish writers featuring not only James Joyce, but Oscar Wilde, Mary Murphy, and more! Visit the permanent exhibit \"Dear, Dirty Dublin\" a 3D experience of Dublin through Joyce's eyes. Joyce's works are featured throughout the museum, including his early writings and letters to other authors about, \"Dubliners\". If you need to take a quick break visit the Commons Cafe, which is set in the original student dining hall of UCD Newman House or enjoy the museum's gardens which is home to the protected ash tree that James Joyce had his graduation photo taken. Open from 10:30 AM to 5:30 PM. Tickets must be purchased on their website or in-person. First Fridays of the month are free from 6 PM to 9 PM.",
-    "mapLink": null,
-    "lat": 53.3363,
-    "lng": -6.2593
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=MoLI%20Museum%20of%20Literature%20Ireland%2C%20St%20Stephen's%20Green%2C%20Dublin",
+    "lat": 53.33679,
+    "lng": -6.260422,
+    "mapQuery": "MoLI Museum of Literature Ireland, St Stephen's Green, Dublin"
   },
   {
     "id": "kennedys-bar",
@@ -54,9 +57,10 @@ const TOUR_PLACES = [
     "image": "assets/KennedyBar_then-now.JPG",
     "alt": "A modern image of Kennedy's, Dublin",
     "description": "A short seven minute walk away from the park, celebrate the end of the \"Retelling's\" walking tour with a pint at Kennedy's Pub and Restaurant. Kennedy's has been a Dublin staple since 1850 and was frequented by not only James Joyce, but Samuel Beckett and Oscar Wilde as well. Ask to sit at the table where the honorary James Joyce plaque is located.",
-    "mapLink": null,
-    "lat": 53.3427,
-    "lng": -6.249
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=Kennedy's%20Pub%2C%20Westland%20Row%2C%20Dublin",
+    "lat": 53.342154,
+    "lng": -6.250752,
+    "mapQuery": "Kennedy's Pub, Westland Row, Dublin"
   }
 ];
 

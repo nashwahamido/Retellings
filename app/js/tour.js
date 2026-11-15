@@ -550,6 +550,8 @@
   function mapped() { return currentStops.filter(function (p) { return p.lat != null; }); }
   function tourTitle() { return editable() ? "My Tour" : "The suggested walk"; }
   function ll(p) { return p.lat.toFixed(6) + "," + p.lng.toFixed(6); }
+  // Google Maps finds the place itself by name; bare coordinates give the nearest street address
+  function gq(p) { return encodeURIComponent(p.mapQuery || (p.name + ", Dublin")); }
 
   // Google Maps takes an origin, a destination and a handful of waypoints per link,
   // so long tours are split into parts that join up (each part starts where the last ended)
@@ -559,8 +561,8 @@
     while (i < stops.length - 1) {
       var chunk = stops.slice(i, i + PER_LINK);
       var q = "https://www.google.com/maps/dir/?api=1&travelmode=walking" +
-        "&origin=" + ll(chunk[0]) + "&destination=" + ll(chunk[chunk.length - 1]);
-      if (chunk.length > 2) q += "&waypoints=" + chunk.slice(1, -1).map(ll).join("%7C");
+        "&origin=" + gq(chunk[0]) + "&destination=" + gq(chunk[chunk.length - 1]);
+      if (chunk.length > 2) q += "&waypoints=" + chunk.slice(1, -1).map(gq).join("%7C");
       parts.push({ url: q, from: i + 1, to: i + chunk.length });
       i += PER_LINK - 1;
     }
@@ -578,7 +580,7 @@
     };
     var html;
     if (stops.length === 1) {
-      html = row("https://www.google.com/maps/search/?api=1&query=" + ll(stops[0]), "Open in Google Maps", esc(stops[0].name));
+      html = row(stops[0].mapLink || ("https://www.google.com/maps/search/?api=1&query=" + gq(stops[0])), "Open in Google Maps", esc(stops[0].name));
     } else {
       var parts = gmapsLinks(stops);
       html = parts.map(function (pt, k) {
