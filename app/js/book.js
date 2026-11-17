@@ -472,6 +472,27 @@
     if (elToggle) { elToggle.textContent = "View the book"; elToggle.setAttribute("aria-pressed", "false"); }
   }
   if (elHero) elHero.addEventListener("click", openBook);
+
+  // clicking the dark desk around the open book puts it down.
+  // A margin around the book is kept safe, and only a clean click counts:
+  // a drag (turning a page by its corner) never puts the book down.
+  var DESK_MARGIN = 48;   // px around the book where clicks do nothing
+  var press = null;
+  document.addEventListener("pointerdown", function (e) {
+    press = isOpen() && !plainMode && e.button === 0 ? { x: e.clientX, y: e.clientY, t: Date.now() } : null;
+  });
+  document.addEventListener("pointerup", function (e) {
+    var p = press; press = null;
+    if (!p || !isOpen() || plainMode) return;
+    if (Math.hypot(e.clientX - p.x, e.clientY - p.y) > 6 || Date.now() - p.t > 600) return; // a drag, not a click
+    // controls, links, windows, menus and the page chrome keep their own jobs
+    if (e.target.closest("button, a, select, input, label, summary, .loc-window, .book-controls, header, .mobile-menu, footer, .deco-dialog-backdrop")) return;
+    if (window.getSelection && String(window.getSelection()).length) return; // selecting text
+    var r = bookCase.getBoundingClientRect();
+    var inside = e.clientX > r.left - DESK_MARGIN && e.clientX < r.right + DESK_MARGIN &&
+                 e.clientY > r.top - DESK_MARGIN && e.clientY < r.bottom + DESK_MARGIN;
+    if (!inside) closeBook();
+  });
   if (elToggle) elToggle.addEventListener("click", function () { isOpen() ? closeBook() : openBook(); });
 
   var rt = null;
